@@ -1,0 +1,4 @@
+id=carbon_bootanim
+name=UN1CA Carbon Boot Animation
+author=AlexsanderALRI
+description=Switches between custom UN1CA Carbon animation and stock QMG animation based on BOOTANIMATION_STYLE variable.

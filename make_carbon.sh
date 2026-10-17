@@ -15,6 +15,11 @@ TARGET_DEVICE="dm1q"
 # Or via CLI arguments: ./make_carbon.sh --no-telemetry-debloat
 export DEBLOAT_TELEMETRY="${DEBLOAT_TELEMETRY:-true}"
 
+# Configurable Boot Animation (default: "carbon")
+# - "carbon" : Custom UN1CA Carbon animation (p1.mp4 24fps intro + breathing pulse loop)
+# - "stock"  : Stock UN1CA / Samsung QMG animation
+export BOOTANIMATION_STYLE="${BOOTANIMATION_STYLE:-carbon}"
+
 CLEAN_ARGS=()
 for arg in "$@"; do
     case "$arg" in
@@ -23,6 +28,12 @@ for arg in "$@"; do
             ;;
         --telemetry-debloat|--enable-telemetry-debloat)
             export DEBLOAT_TELEMETRY=true
+            ;;
+        --bootanim=stock|--bootanim-stock)
+            export BOOTANIMATION_STYLE="stock"
+            ;;
+        --bootanim=carbon|--bootanim-carbon)
+            export BOOTANIMATION_STYLE="carbon"
             ;;
         -*)
             CLEAN_ARGS+=("$arg")
@@ -44,6 +55,7 @@ echo "  Target: $TARGET_DEVICE                                    "
 echo "  Lead Maintainer: AlexsAR (@alexsanderalri)                "
 echo "  Port & Engineering: AlexsanderALRI                        "
 echo "  Debloat Telemetry: $DEBLOAT_TELEMETRY                     "
+echo "  Boot Animation: $BOOTANIMATION_STYLE                      "
 echo "============================================================"
 
 # Ensure symlinked execution tree is present
@@ -78,6 +90,7 @@ done
 # 4. Carbon ours modules links
 [ ! -e "$ROOT_DIR/unica/mods/settings" ] && ln -s "$ROOT_DIR/carbon_ours/branding_settings" "$ROOT_DIR/unica/mods/settings"
 [ ! -e "$ROOT_DIR/unica/mods/telemetry_debloat" ] && ln -s "$ROOT_DIR/carbon_ours/telemetry_debloat" "$ROOT_DIR/unica/mods/telemetry_debloat"
+[ ! -e "$ROOT_DIR/unica/mods/carbon_bootanim" ] && ln -s "$ROOT_DIR/carbon_ours/bootanimation" "$ROOT_DIR/unica/mods/carbon_bootanim"
 
 echo "✔ Architecture tree verified and linked."
 echo "Starting ROM build for $TARGET_DEVICE..."
