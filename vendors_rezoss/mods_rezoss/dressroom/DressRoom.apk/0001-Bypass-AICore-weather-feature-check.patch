@@ -1,0 +1,35 @@
+AUTHOR Rezoss
+
+diff --git a/smali_classes2/cj/a.smali b/smali_classes2/cj/a.smali
+--- a/smali_classes2/cj/a.smali
++++ b/smali_classes2/cj/a.smali
+@@ -955,4 +955,29 @@
+ .method public static a(Landroid/content/Context;Ljava/lang/String;)I
+     .locals 13
++
++    const-string/jumbo v0, "FEATURE_WALLPAPER"
++
++    invoke-virtual {v0, p1}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
++
++    move-result v0
++
++    if-nez v0, :cond_rezoss_feature_supported
++
++    const-string/jumbo v0, "FEATURE_DOWNLOAD"
++
++    invoke-virtual {v0, p1}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
++
++    move-result v0
++
++    if-eqz v0, :cond_rezoss_stock_feature_check
++
++    :cond_rezoss_feature_supported
++    const/4 v0, 0x0
++
++    invoke-static {v0, p1}, Lcj/b;->a(ILjava/lang/String;)V
++
++    return v0
++
++    :cond_rezoss_stock_feature_check
+
+     const-string v0, "checkFeature(). "

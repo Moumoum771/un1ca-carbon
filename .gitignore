@@ -1,0 +1,19 @@
+# Build output
+out/
+build/
+dist/
+*.img
+*.zip
+
+# Temporary and log files
+*.tmp
+*.log
+*.bak
+*.orig
+*.rej
+
+# IDE and OS files
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db

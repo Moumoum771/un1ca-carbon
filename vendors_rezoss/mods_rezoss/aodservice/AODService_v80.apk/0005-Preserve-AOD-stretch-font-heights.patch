@@ -1,0 +1,51 @@
+AUTHOR Rezoss
+
+diff --git a/smali_classes3/com/samsung/android/uniform/widget/facewidget/AODFaceWidgetClockPage.smali b/smali_classes3/com/samsung/android/uniform/widget/facewidget/AODFaceWidgetClockPage.smali
+--- a/smali_classes3/com/samsung/android/uniform/widget/facewidget/AODFaceWidgetClockPage.smali
++++ b/smali_classes3/com/samsung/android/uniform/widget/facewidget/AODFaceWidgetClockPage.smali
+@@ -23,7 +23,7 @@
+ .end method
+
+ .method private getAODClockFontDataInternal()Lcom/samsung/android/clockpack/plugins/clock/ClockFontData;
+-    .locals 7
++    .locals 8
+
+     new-instance v0, Lcom/samsung/android/app/aodservice/common/provider/settingdata/LockClockSettingData;
+
+@@ -112,6 +112,18 @@
+     move-result v1
+
+     :cond_2
++    iget-object v7, v0, Lcom/samsung/android/app/aodservice/common/provider/settingdata/LockClockSettingData;->v:Laod/fc;
++
++    invoke-virtual {v7}, Laod/fc;->c()Ljava/lang/Object;
++
++    move-result-object v7
++
++    check-cast v7, Ljava/lang/Integer;
++
++    invoke-virtual {v7}, Ljava/lang/Integer;->intValue()I
++
++    move-result v7
++
+     iget-object v0, v0, Lcom/samsung/android/app/aodservice/common/provider/settingdata/LockClockSettingData;->u:Laod/fc;
+
+     invoke-virtual {v0}, Laod/fc;->c()Ljava/lang/Object;
+@@ -132,6 +144,17 @@
+
+     if-nez v0, :cond_3
+
++    if-eqz v7, :cond_unica_reset_heights
++
++    const/16 v0, 0x323
++
++    if-lt v2, v0, :cond_unica_reset_heights
++
++    const/16 v0, 0x325
++
++    if-le v2, v0, :cond_3
++
++    :cond_unica_reset_heights
+     const/high16 v0, 0x3f800000    # 1.0f
+
+     invoke-static {v0}, Ljava/lang/Float;->valueOf(F)Ljava/lang/Float;

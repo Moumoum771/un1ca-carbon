@@ -1,0 +1,8 @@
+AUTHOR Rezoss
+
+diff --git a/res/values/bools.xml b/res/values/bools.xml
+--- a/res/values/bools.xml
++++ b/res/values/bools.xml
+@@ -48 +48 @@
+-    <bool name="config_na_enable">false</bool>
++    <bool name="config_na_enable">true</bool>
