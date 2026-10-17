@@ -188,13 +188,13 @@ PRINT_HEADER()
 
     echo    'ui_print(" ");'
     PRINT_SEPARATOR
-    echo    'ui_print("                   UN1CA");'
-    echo    'ui_print("  ██████  █████  ██████  ██████   ██████  ███    ██ ");'
-    echo    'ui_print(" ██      ██   ██ ██   ██ ██   ██ ██    ██ ████   ██ ");'
-    echo    'ui_print(" ██      ███████ ██████  ██████  ██    ██ ██ ██  ██ ");'
-    echo    'ui_print(" ██      ██   ██ ██   ██ ██   ██ ██    ██ ██  ██ ██ ");'
-    echo    'ui_print("  ██████ ██   ██ ██   ██ ██████   ██████  ██   ████ ");'
-    echo    'ui_print("                      [ IX ]");'
+    echo    'ui_print("          █░█ █▄░█ ▄█ █▀▀ ▄▀█");'
+    echo    'ui_print("          █▄█ █░▀█ ░█ █▄▄ █▀█");'
+    echo    'ui_print(" ");'
+    echo    'ui_print("  █▀▀█  █▀▀█  █▀▀█  █▀▀█  █▀▀█  █▄  █");'
+    echo    'ui_print("  █     █▄▄█  █▄▄▀  █▀▀▄  █  █  █ █ █");'
+    echo    'ui_print("  █▄▄█  █  █  █  █  █▄▄█  █▄▄█  █  ▀█");'
+    echo    'ui_print("                 [ IX ]");'
     PRINT_SEPARATOR
     echo -n 'ui_print("'
     echo -n "ROM: UN1CA Carbon (Version: IX) for $TARGET_NAME"
