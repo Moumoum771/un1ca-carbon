@@ -54,3 +54,26 @@ system/priv-app/SamsungMagnifier3
 system/priv-app/SwiftkeyIme
 system/priv-app/SwiftkeySetting
 "
+
+# Configurable Telemetry & Diagnostics Debloat (controlled by DEBLOAT_TELEMETRY)
+if [ "${DEBLOAT_TELEMETRY:-true}" = "true" ]; then
+SYSTEM_DEBLOAT+="
+system/app/HiyaService
+system/app/SilentLog
+system/app/SmartManager_v6_DeviceSecurity_CN
+system/priv-app/DeviceQualityAgent38
+system/priv-app/DiagMonAgent97
+system/priv-app/RubinVersion38
+system/priv-app/WarrantyCare
+system/priv-app/knoxanalyticsagent
+"
+
+PRODUCT_DEBLOAT+="
+priv-app/CarrierWifi
+"
+
+SYSTEM_EXT_DEBLOAT+="
+priv-app/QaiorScreenUnderstandingService
+priv-app/screenunderstanding
+"
+fi

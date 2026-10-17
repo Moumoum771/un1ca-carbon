@@ -1,0 +1,4 @@
+id=telemetry_debloat
+name=UN1CA Carbon Telemetry Debloater
+author=AlexsAR
+description=Modular, configurable debloater for OEM diagnostics, tracking, analytics, and telemetry packages controlled by DEBLOAT_TELEMETRY.

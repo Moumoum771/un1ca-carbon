@@ -33,7 +33,7 @@ _GET_SRC_DIR()
 
 _PRINT_USAGE()
 {
-    echo "Usage: source buildenv.sh [--debug] <target>" >&2
+    echo "Usage: source buildenv.sh [--debug] [--no-telemetry-debloat|--telemetry-debloat] <target>" >&2
     echo "Available devices:" >&2
     printf '%s\n' "${TARGETS[@]}" >&2
 }
@@ -110,6 +110,9 @@ if [[ ":$PATH:" != *":$TOOLS_DIR/bin:"* ]]; then
     export PATH="$TOOLS_DIR/bin:$PATH"
 fi
 
+# Configurable Telemetry Debloater (default: true)
+export DEBLOAT_TELEMETRY="${DEBLOAT_TELEMETRY:-true}"
+
 TARGETS=()
 while IFS= read -r t; do
     TARGETS+=("$t")
@@ -118,6 +121,10 @@ done < <(find "$SRC_DIR/target" -mindepth 1 -maxdepth 1 -type d -printf "%f\n" |
 while [[ "$1" == "-"* ]]; do
     if [[ "$1" == "--debug" ]]; then
         export DEBUG=true
+    elif [[ "$1" == "--no-telemetry-debloat" ]] || [[ "$1" == "--disable-telemetry-debloat" ]]; then
+        export DEBLOAT_TELEMETRY=false
+    elif [[ "$1" == "--telemetry-debloat" ]] || [[ "$1" == "--enable-telemetry-debloat" ]]; then
+        export DEBLOAT_TELEMETRY=true
     elif [[ "$1" == "--help" ]] || [[ "$1" == "-h" ]]; then
         _PRINT_USAGE
         return 0
