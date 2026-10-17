@@ -695,7 +695,7 @@ unset -f _REZOSS_ENSURE_LOG_VIDEO_FILTER_SELINUX _REZOSS_ENSURE_BOOTANIMATION_SE
 # =============================================================================
 # Build Display Branding
 # =============================================================================
-NOW_BUILD="UN1CA-ROM built by Rezoss on $(GET_PROP "system" "ro.build.PDA")"
+NOW_BUILD="UN1CA Carbon ${ROM_VERSION:-IX} by AlexsAR & AlexsanderALRI ($(GET_PROP "system" "ro.build.PDA"))"
 SET_PROP "system" "ro.build.display.id" "${NOW_BUILD}"
 SET_PROP "product" "ro.build.display.id" "${NOW_BUILD}"
 

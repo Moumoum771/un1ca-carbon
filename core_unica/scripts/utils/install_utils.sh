@@ -187,6 +187,8 @@ PRINT_HEADER()
     TARGET_FINGERPRINT="$(grep "^target_fingerprint" <<< "$BUILD_INFO" | cut -d "=" -f 2 -s)"
 
     echo    'ui_print(" ");'
+    local VER_TAG="${ROM_VERSION:-IX}"
+    [[ "$VER_TAG" == *"IX"* ]] && VER_TAG="IX"
     PRINT_SEPARATOR
     echo    'ui_print("          █░█ █▄░█ ▄█ █▀▀ ▄▀█");'
     echo    'ui_print("          █▄█ █░▀█ ░█ █▄▄ █▀█");'
@@ -194,10 +196,10 @@ PRINT_HEADER()
     echo    'ui_print("  █▀▀█  █▀▀█  █▀▀█  █▀▀█  █▀▀█  █▄  █");'
     echo    'ui_print("  █     █▄▄█  █▄▄▀  █▀▀▄  █  █  █ █ █");'
     echo    'ui_print("  █▄▄█  █  █  █  █  █▄▄█  █▄▄█  █  ▀█");'
-    echo    'ui_print("                 [ IX ]");'
+    echo    "ui_print(\"                 [ $VER_TAG ]\");"
     PRINT_SEPARATOR
     echo -n 'ui_print("'
-    echo -n "ROM: UN1CA Carbon (Version: IX) for $TARGET_NAME"
+    echo -n "ROM: UN1CA Carbon (Version: $VER_TAG) for $TARGET_NAME"
     echo    '");'
     echo -n 'ui_print("'
     echo -n "One UI version: $ONEUI_VERSION (Android 17 • SDK 37)"
