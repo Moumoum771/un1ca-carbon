@@ -54,8 +54,6 @@ echo "  Version: IX (One UI 9.0 • Android 17)                     "
 echo "  Target: $TARGET_DEVICE                                    "
 echo "  Lead Maintainer: AlexsAR (@alexsanderalri)                "
 echo "  Port & Engineering: AlexsanderALRI                        "
-echo "  Debloat Telemetry: $DEBLOAT_TELEMETRY                     "
-echo "  Boot Animation: $BOOTANIMATION_STYLE                      "
 echo "============================================================"
 
 # Ensure symlinked execution tree is present
