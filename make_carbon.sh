@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # =============================================================================
 # UN1CA Carbon Build Orchestrator
-# Project: UN1CA Carbon IX (One UI 9.0 • Android 17 • SDK 37)
+# Project: UN1CA Carbon (Version: IX • One UI 9.0 • Android 17 • SDK 37)
 # Device:  Samsung Galaxy S23 Series (dm1q / dm2q / dm3q)
 # =============================================================================
 
@@ -11,7 +11,8 @@ ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 TARGET_DEVICE="${1:-dm1q}"
 
 echo "============================================================"
-echo "      UN1CA CARBON IX — ROM BUILD PIPELINE                  "
+echo "      UN1CA CARBON — ROM BUILD PIPELINE                     "
+echo "  Version: IX (One UI 9.0 • Android 17)                     "
 echo "  Target: $TARGET_DEVICE                                    "
 echo "  Lead Maintainer: AlexsAR (@alexsanderalri)                "
 echo "  Port & Engineering: AlexsanderALRI                        "

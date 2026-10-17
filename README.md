@@ -1,4 +1,4 @@
-# 👑 UN1CA Carbon (One UI 9.0 • Android 17)
+# 👑 UN1CA Carbon
 
 <div align="center">
 
@@ -12,6 +12,7 @@
 ```
 
 **Next-Generation One UI 9 Custom ROM for Samsung Galaxy S23 Series**  
+*Release Version: **IX** (One UI 9.0 • Android 17 • SDK 37)*  
 *Engineered, Ported & Stabilized for Galaxy S23 Base (`SM-S911B` / `dm1q`)*
 
 ---
