@@ -195,6 +195,11 @@ GENERATE_UPDATER_SCRIPT()
             fi
         fi
 
+        if [ -f "$TMP_DIR/recovery.img" ]; then
+            echo    'ui_print("Flashing TWRP Recovery...");'
+            echo    'package_extract_file("recovery.img", "/dev/block/by-name/recovery");'
+        fi
+
         echo    'show_progress(0.100000, 10);'
 
         if [ -f "$SRC_DIR/target/$TARGET_CODENAME/installer/install-end.edify" ]; then
@@ -238,6 +243,19 @@ if [ ! -d "$SRC_DIR/target/$TARGET_CODENAME" ]; then
     exit 1
 fi
 
+for rec_src in \
+    "$SRC_DIR/carbon_ours/recovery_twrp/recovery.img" \
+    "/home/alexsanderalri/Documentos/Un1ca_Carbon/carbon_ours/recovery_twrp/recovery.img" \
+    "$SRC_DIR/target/$TARGET_CODENAME/installer/recovery.img" \
+    "$SRC_DIR/out/target/$TARGET_CODENAME/work_dir/kernel/recovery.img" \
+    "$WORK_DIR/kernel/recovery.img"; do
+    if [ -f "$rec_src" ]; then
+        LOG "- Integrating TWRP Recovery from $rec_src"
+        cp -a "$rec_src" "$TMP_DIR/recovery.img"
+        break
+    fi
+done
+
 TARGET_USE_DYNAMIC_PARTITIONS="$(grep "^use_dynamic_partitions" <<< "$BUILD_INFO" | cut -d "=" -f 2 -s)"
 
 if $TARGET_USE_DYNAMIC_PARTITIONS; then
@@ -245,21 +263,29 @@ if $TARGET_USE_DYNAMIC_PARTITIONS; then
     GENERATE_OP_LIST
 fi
 
+P_PIDS=()
 for p in $PARTITIONS_LIST; do
     if [ ! -f "$TMP_DIR/$p.img" ]; then
         continue
     fi
 
-    LOG "- Converting $p.img to $p.new.dat"
-    EVAL "img2sdat -o \"$TMP_DIR\" --tgt-block-map \"$TMP_DIR/$p.map\" \"$TMP_DIR/$p.img\"" || exit 1
-    rm -f "$TMP_DIR/$p.img" "$TMP_DIR/$p.map"
+    (
+        LOG "- Converting $p.img to $p.new.dat"
+        img2sdat -o "$TMP_DIR" --tgt-block-map "$TMP_DIR/$p.map" "$TMP_DIR/$p.img" || exit 1
+        rm -f "$TMP_DIR/$p.img" "$TMP_DIR/$p.map"
 
-    if ! $DEBUG; then
-        LOG "- Compressing $p.new.dat"
-        # https://android.googlesource.com/platform/build/+/refs/tags/android-15.0.0_r1/tools/releasetools/common.py#3585
-        EVAL "brotli --quality=6 --output=\"$TMP_DIR/$p.new.dat.br\" \"$TMP_DIR/$p.new.dat\"" || exit 1
-        rm -f "$TMP_DIR/$p.new.dat"
-    fi
+        if ! $DEBUG; then
+            LOG "- Compressing $p.new.dat"
+            # https://android.googlesource.com/platform/build/+/refs/tags/android-15.0.0_r1/tools/releasetools/common.py#3585
+            brotli --quality=6 --output="$TMP_DIR/$p.new.dat.br" "$TMP_DIR/$p.new.dat" || exit 1
+            rm -f "$TMP_DIR/$p.new.dat"
+        fi
+    ) &
+    P_PIDS+=($!)
+done
+
+for pid in "${P_PIDS[@]}"; do
+    wait "$pid" || exit 1
 done
 
 LOG "- Generating updater-script"

@@ -5,6 +5,10 @@ dist/
 *.img
 *.zip
 
+# Allow specific prebuilts in carbon_ours
+!carbon_ours/**/*.img
+!carbon_ours/**/*.zip
+
 # Temporary and log files
 *.tmp
 *.log
