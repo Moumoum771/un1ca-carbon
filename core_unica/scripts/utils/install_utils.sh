@@ -188,16 +188,24 @@ PRINT_HEADER()
 
     echo    'ui_print(" ");'
     PRINT_SEPARATOR
+    echo    'ui_print("                   UN1CA");'
+    echo    'ui_print("  ██████  █████  ██████  ██████   ██████  ███    ██ ");'
+    echo    'ui_print(" ██      ██   ██ ██   ██ ██   ██ ██    ██ ████   ██ ");'
+    echo    'ui_print(" ██      ███████ ██████  ██████  ██    ██ ██ ██  ██ ");'
+    echo    'ui_print(" ██      ██   ██ ██   ██ ██   ██ ██    ██ ██  ██ ██ ");'
+    echo    'ui_print("  ██████ ██   ██ ██   ██ ██████   ██████  ██   ████ ");'
+    echo    'ui_print("                      [ IX ]");'
+    PRINT_SEPARATOR
     echo -n 'ui_print("'
-    echo -n "UN1CA Carbon IX 1.0 for $TARGET_NAME"
+    echo -n "ROM: UN1CA Carbon (Version: IX) for $TARGET_NAME"
+    echo    '");'
+    echo -n 'ui_print("'
+    echo -n "One UI version: $ONEUI_VERSION (Android 17 • SDK 37)"
     echo    '");'
     echo    'ui_print("Maintained by AlexsAR (@alexsanderalri)");'
     echo    'ui_print("Port & Stability by AlexsanderALRI");'
     echo    'ui_print("Core: salvo_giangri | Framework: Rezoss");'
     PRINT_SEPARATOR
-    echo -n 'ui_print("'
-    echo -n "One UI version: $ONEUI_VERSION"
-    echo    '");'
     echo -n 'ui_print("'
     echo -n "Source: $SOURCE_FINGERPRINT"
     echo    '");'
