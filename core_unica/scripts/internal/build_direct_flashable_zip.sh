@@ -256,23 +256,34 @@ GENERATE_UPDATER_SCRIPT()
         done
         $TARGET_USE_DYNAMIC_PARTITIONS && echo -e "\n# --- End patching dynamic partitions ---\n"
 
-        for b in $KERNEL_BINS; do
-            if [ -f "$TMP_DIR/$b.img" ]; then
-                echo -n 'ui_print("Full Patching '
-                echo -n "$b.img img..."
-                echo    '");'
-                echo -n 'package_extract_file("'
-                echo -n "$b.img"
-                echo -n '", '
-                GET_DEVICE_FROM_MOUNTPOINT "/$b"
+        if [[ "$TARGET_CODENAME" == "dm1q" ]]; then
+            if [ -f "$TMP_DIR/boot.img" ]; then
+                echo    'ui_print("Flashing boot image (GoRhanHee Kernel)...");'
+                echo    'package_extract_file("boot.img", "/dev/block/by-name/boot");'
+            fi
+            if [ -f "$TMP_DIR/vendor_boot.img" ]; then
+                echo    'ui_print("Flashing vendor_boot image...");'
+                echo    'package_extract_file("vendor_boot.img", "/dev/block/by-name/vendor_boot");'
+            fi
+        else
+            for b in $KERNEL_BINS; do
+                if [ -f "$TMP_DIR/$b.img" ]; then
+                    echo -n 'ui_print("Full Patching '
+                    echo -n "$b.img img..."
+                    echo    '");'
+                    echo -n 'package_extract_file("'
+                    echo -n "$b.img"
+                    echo -n '", '
+                    GET_DEVICE_FROM_MOUNTPOINT "/$b"
+                    echo    ");"
+                fi
+            done
+            if [ -f "$TMP_DIR/boot.img" ]; then
+                echo    'ui_print("Installing boot image...");'
+                echo -n 'package_extract_file("boot.img", '
+                GET_DEVICE_FROM_MOUNTPOINT "/boot"
                 echo    ");"
             fi
-        done
-        if [ -f "$TMP_DIR/boot.img" ]; then
-            echo    'ui_print("Installing boot image...");'
-            echo -n 'package_extract_file("boot.img", '
-            GET_DEVICE_FROM_MOUNTPOINT "/boot"
-            echo    ");"
         fi
 
         echo    'show_progress(0.100000, 10);'
