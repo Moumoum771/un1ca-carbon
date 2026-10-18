@@ -328,23 +328,26 @@ cp -a "$SRC_DIR/prebuilts/bootable/deprecated-ota/updater" "$TMP_DIR/META-INF/co
 BUILD_INFO="$(GENERATE_BUILD_INFO)"
 OUTPUT_FILE="$(GENERATE_OUTPUT_FILE)"
 
-LOG_STEP_IN "- Building OS partitions"
+LOG_STEP_IN "- Building OS partitions (Parallel)"
 while IFS= read -r f; do
     PARTITION=$(basename "$f")
     IS_VALID_PARTITION_NAME "$PARTITION" || continue
 
-    if $TARGET_USE_DYNAMIC_PARTITIONS; then
-        "$SRC_DIR/scripts/build_fs_image.sh" "$TARGET_OS_FILE_SYSTEM_TYPE" \
-            -o "$TMP_DIR/$PARTITION.img" -m -S \
-            "$WORK_DIR/$PARTITION" "$WORK_DIR/configs/file_context-$PARTITION" "$WORK_DIR/configs/fs_config-$PARTITION" || exit 1
-    else
-        _GET_PARTITION_SIZE "$PARTITION" > /dev/null || exit 1
+    (
+        if $TARGET_USE_DYNAMIC_PARTITIONS; then
+            "$SRC_DIR/scripts/build_fs_image.sh" "$TARGET_OS_FILE_SYSTEM_TYPE" \
+                -o "$TMP_DIR/$PARTITION.img" -m -S \
+                "$WORK_DIR/$PARTITION" "$WORK_DIR/configs/file_context-$PARTITION" "$WORK_DIR/configs/fs_config-$PARTITION" || exit 1
+        else
+            _GET_PARTITION_SIZE "$PARTITION" > /dev/null || exit 1
 
-        "$SRC_DIR/scripts/build_fs_image.sh" "$TARGET_OS_FILE_SYSTEM_TYPE" \
-            -o "$TMP_DIR/$PARTITION.img" -m -S -s "$(_GET_PARTITION_SIZE "$PARTITION")" \
-            "$WORK_DIR/$PARTITION" "$WORK_DIR/configs/file_context-$PARTITION" "$WORK_DIR/configs/fs_config-$PARTITION" || exit 1
-    fi
+            "$SRC_DIR/scripts/build_fs_image.sh" "$TARGET_OS_FILE_SYSTEM_TYPE" \
+                -o "$TMP_DIR/$PARTITION.img" -m -S -s "$(_GET_PARTITION_SIZE "$PARTITION")" \
+                "$WORK_DIR/$PARTITION" "$WORK_DIR/configs/file_context-$PARTITION" "$WORK_DIR/configs/fs_config-$PARTITION" || exit 1
+        fi
+    ) &
 done < <(find "$WORK_DIR" -maxdepth 1 -type d)
+wait
 LOG_STEP_OUT
 
 if $TARGET_USE_DYNAMIC_PARTITIONS; then
@@ -360,17 +363,19 @@ for p in $PARTITIONS_LIST; do
         continue
     fi
 
-    LOG "- Converting $p.img to $p.new.dat"
-    EVAL "img2sdat -o \"$TMP_DIR\" --tgt-block-map \"$TMP_DIR/$p.map\" \"$TMP_DIR/$p.img\"" || exit 1
-    rm -f "$TMP_DIR/$p.img" "$TMP_DIR/$p.map"
+    (
+        LOG "- Converting $p.img to $p.new.dat"
+        EVAL "img2sdat -o \"$TMP_DIR\" --tgt-block-map \"$TMP_DIR/$p.map\" \"$TMP_DIR/$p.img\"" || exit 1
+        rm -f "$TMP_DIR/$p.img" "$TMP_DIR/$p.map"
 
-    if ! $DEBUG; then
-        LOG "- Compressing $p.new.dat"
-        # https://android.googlesource.com/platform/build/+/refs/tags/android-15.0.0_r1/tools/releasetools/common.py#3585
-        EVAL "brotli --quality=6 --output=\"$TMP_DIR/$p.new.dat.br\" \"$TMP_DIR/$p.new.dat\"" || exit 1
-        rm -f "$TMP_DIR/$p.new.dat"
-    fi
+        if ! $DEBUG; then
+            LOG "- Compressing $p.new.dat"
+            EVAL "brotli --quality=6 --output=\"$TMP_DIR/$p.new.dat.br\" \"$TMP_DIR/$p.new.dat\"" || exit 1
+            rm -f "$TMP_DIR/$p.new.dat"
+        fi
+    ) &
 done
+wait
 
 if [ -d "$WORK_DIR/kernel" ]; then
     KERNEL_IMAGES="boot.img dt.img dtbo.img init_boot.img vendor_boot.img"

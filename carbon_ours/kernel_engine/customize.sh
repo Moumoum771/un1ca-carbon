@@ -48,11 +48,12 @@ for candidate in \
     "$TOOLS_DIR/bin/magiskboot" \
     "$(command -v magiskboot 2>/dev/null || true)"; do
     if [ -n "$candidate" ] && [ -x "$candidate" ]; then
-        MAGISKBOOT="$candidate"
+        MAGISKBOOT="$(realpath "$candidate")"
         break
     fi
 done
 
+mkdir -p "${TMP_DIR:-/tmp}"
 ENGINE_TMP="$(mktemp -d "${TMP_DIR:-/tmp}/kernel_engine.XXXXXX")"
 trap 'rm -rf "$ENGINE_TMP"' EXIT INT TERM
 

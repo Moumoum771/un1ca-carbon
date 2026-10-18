@@ -47,10 +47,10 @@ while IFS= read -r f; do
     f="${f//$MODPATH\/SecSettings.apk\//}"
 
     if [ ! -f "$APKTOOL_DIR/system/priv-app/SecSettings/SecSettings.apk/$f" ] || \
-            [[ "$f" != *".xml" ]]; then
+            [[ "$f" != *".xml" ]] || grep -qF "<?xml" "$MODPATH/SecSettings.apk/$f"; then
         LOG "- Adding \"$f\" to /system/system/priv-app/SecSettings.apk"
-        EVAL "mkdir -p \"$(dirname "$APKTOOL_DIR/system/priv-app/SecSettings/SecSettings.apk/$f")\""
-        EVAL "cp -a \"$MODPATH/SecSettings.apk/${f//\$/\\$}\" \"$APKTOOL_DIR/system/priv-app/SecSettings/SecSettings.apk/${f//\$/\\$}\""
+        mkdir -p "$(dirname "$APKTOOL_DIR/system/priv-app/SecSettings/SecSettings.apk/$f")"
+        cp -a "$MODPATH/SecSettings.apk/$f" "$APKTOOL_DIR/system/priv-app/SecSettings/SecSettings.apk/$f"
     else
         LOG "- Patching \"$f\" in /system/system/priv-app/SecSettings.apk"
         if [[ "$f" == *"res/values"* ]]; then

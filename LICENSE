@@ -1,28 +1,44 @@
 ARGLP - ALRI GROUP LICENSE PERMISSIVE
-Version 1.0 (2026)
+Version 2 – 2026
 
-Copyright (c) 2026 ALRIGROUP and its affiliates.
-Engineered and maintained by ALRI Development.
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+1. Definitions
+"The Work": Refers to the original software, source code, scripts, or documentation provided by ALRI Group.
 
-1. The above copyright notice and this permission notice shall be included in
-   all copies or substantial portions of the Software.
+"Modification": Refers to any alteration, transformation, or derivative work based on the original source code.
 
-2. Contributions, proprietary modules, and integrations originating from
-   ALRI Development shall preserve proper authorship and trademark attribution.
+"Licensor": ALRI Group (@ALRI GROUP).
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+2. Usage and Distribution
+The Work may be freely used, distributed, and incorporated into commercial and enterprise projects at no cost.
 
-Official license registry: https://github.com/alrigroup/licenses
+Commercial use is permitted, including use within proprietary products, internal company tools, SaaS platforms, and client deliverables, provided the restrictions in Section 4 are respected.
+
+For verbatim distribution (sharing the original files without changes), attribution is optional but encouraged.
+
+3. Rules for Modifications
+If you modify, adapt, or build upon The Work, the following conditions are mandatory:
+
+Source Attribution: You must include a clear notice stating that your project is a "Modification based on the original work developed by @ALRI GROUP". You do not need to list ALRI Group as the primary author, only as the original source.
+
+Share-Alike: Any modified version must be distributed under this exact same license (ARGLP). You may not change the license terms for derivative works.
+
+Identity Differentiation: The modified project must use a name that is clearly different from the original Work to prevent brand confusion.
+
+4. Commercial Use and Restrictions
+Permitted Commercial Use: You may use The Work in commercial products, enterprise applications, SaaS platforms, client projects, and internal business tools without restriction.
+
+Prohibition of Resale: It is strictly forbidden to sell, rent, sublicense, or distribute The Work (or its modifications) as a standalone product, library, or competing offering without express written authorization from ALRI Group.
+
+In summary: You may freely use The Work to build commercial products and services, but you may not sell The Work itself.
+
+5. Disclaimer of Liability (No Warranty)
+THE WORK IS PROVIDED "AS IS". ALRI Group shall not be held liable for any damages, data loss, technical failures, or legal issues arising from the use or misuse of the original project or its modifications. Use at your own risk.
+
+6. Trademark Protection
+This license does not grant permission to use the trade names, logos, or product names of ALRI Group for marketing or promotional purposes, except for the mandatory attribution required in Section 3.
+
+https://alrigroup.com
+https://github.com/alrigroup/licenses
+Created by AlexsanderAlRi
+Copyright © 2020-2026 ALRI Group. All rights reserved.

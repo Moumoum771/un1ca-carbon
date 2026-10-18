@@ -124,4 +124,4 @@ echo ""
 
 cd "$ROOT_DIR"
 source "$ROOT_DIR/core_unica/buildenv.sh" "$TARGET_DEVICE"
-exec "$ROOT_DIR/scripts/make_rom.sh" -z -f "${CLEAN_ARGS[@]}"
+exec "$ROOT_DIR/scripts/make_rom.sh" -r -f "${CLEAN_ARGS[@]}"

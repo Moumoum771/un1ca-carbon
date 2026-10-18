@@ -28,12 +28,16 @@ EVAL "echo \"ro.unica.device u:object_r:build_prop:s0 exact string\" >> \"$WORK_
 FINGERPRINT="unica/${TARGET_CODENAME}:"
 
 # version value is UN1CA version
-FINGERPRINT+="$(grep -o "^[0-9]\+\.[0-9]\+\.[0-9]\+" <<< "$ROM_VERSION")/"
+VER_NUM="$(grep -o "[0-9]\+\.[0-9]\+\(\.[0-9]\+\)\?" <<< "$ROM_VERSION" | head -n 1 || true)"
+[ -n "$VER_NUM" ] || VER_NUM="1.0"
+FINGERPRINT+="${VER_NUM}/"
 
 # build ID value is the UN1CA commit
-FINGERPRINT+="$(cut -d "-" -f 2 <<< "$ROM_VERSION")"
+BUILD_ID="$(cut -d "-" -f 2 <<< "$ROM_VERSION")"
+[ -n "$BUILD_ID" ] || BUILD_ID="carbon"
+FINGERPRINT+="${BUILD_ID}"
 # append .dirty if dirty
-if grep -q -- "-dirty" <<< "$ROM_VERSION"; then
+if grep -q -- "-dirty" <<< "$ROM_VERSION" 2>/dev/null; then
     FINGERPRINT+=".dirty/"
 else
     FINGERPRINT+="/"

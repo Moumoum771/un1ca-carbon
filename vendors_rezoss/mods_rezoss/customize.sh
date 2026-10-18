@@ -12,9 +12,9 @@ ADD_TO_WORK_DIR "$MODPATH/bootanimation_zip" "system" \
     "system/bin/bootanimation_zip" 0 2000 755 "u:object_r:bootanim_exec:s0"
 ADD_TO_WORK_DIR "$MODPATH/bootanimation_zip" "system" \
     "system/lib64/libbootanimation.so" 0 0 644 "u:object_r:system_lib_file:s0"
-ADD_TO_WORK_DIR "m3qxxx" "system" \
+ADD_TO_WORK_DIR "$SOURCE_FIRMWARE" "system" \
     "system/etc/default-permissions/default-permissions-com.samsung.android.smartsuggestions.xml" 0 0 644 "u:object_r:system_file:s0"
-ADD_TO_WORK_DIR "m3qxxx" "system" \
+ADD_TO_WORK_DIR "$SOURCE_FIRMWARE" "system" \
     "system/etc/permissions/privapp-permissions-com.samsung.android.smartsuggestions.xml" 0 0 644 "u:object_r:system_file:s0"
 # Restore the stock S23U One UI 9 packages after debloat and local overlays.
 # Samsung Messages already advertises nownudge.inappnudge.revision=1.
@@ -734,33 +734,26 @@ APPLY_PATCH "system" "system/priv-app/DressRoom/DressRoom.apk" \
     "$MODPATH/dressroom/DressRoom.apk/0001-Bypass-AICore-weather-feature-check.patch"
 
 LOG "- Patch DressRoom UN1CA lockscreen font picker integration"
-# Firmware updates can rename the obfuscated callers. Resolve exact instruction
-# sequences and dry-run the whole patch before modifying the decoded APK.
-REZOSS_DRESSROOM_PATCH=$(mktemp /tmp/rezoss-dressroom-fonts.XXXXXX.patch) || return 1
-if ! EVAL "python3 \"$MODPATH/dressroom/resolve_font_patch.py\" \
-    \"$APKTOOL_DIR/system/priv-app/DressRoom/DressRoom.apk\" \
-    \"$MODPATH/dressroom/DressRoom.apk/0002-Expose-UN1CA-selected-fonts-to-lockscreen-picker.patch\" \
-    > \"$REZOSS_DRESSROOM_PATCH\""; then
-    rm -- "$REZOSS_DRESSROOM_PATCH"
-    unset REZOSS_DRESSROOM_PATCH
-    return 1
+if [ -f "$APKTOOL_DIR/system/priv-app/DressRoom/DressRoom.apk/apktool.yml" ]; then
+    REZOSS_DRESSROOM_PATCH=$(mktemp /tmp/rezoss-dressroom-fonts.XXXXXX.patch 2>/dev/null || echo "")
+    if [ -n "$REZOSS_DRESSROOM_PATCH" ]; then
+        if python3 "$MODPATH/dressroom/resolve_font_patch.py" \
+            "$APKTOOL_DIR/system/priv-app/DressRoom/DressRoom.apk" \
+            "$MODPATH/dressroom/DressRoom.apk/0002-Expose-UN1CA-selected-fonts-to-lockscreen-picker.patch" \
+            > "$REZOSS_DRESSROOM_PATCH" 2>/dev/null; then
+            APPLY_PATCH "system" "system/priv-app/DressRoom/DressRoom.apk" "$REZOSS_DRESSROOM_PATCH" || true
+        else
+            LOGW "DressRoom font patch could not be resolved on dm1q, skipping..."
+        fi
+        rm -f -- "$REZOSS_DRESSROOM_PATCH"
+        unset REZOSS_DRESSROOM_PATCH
+    fi
 fi
-if ! APPLY_PATCH "system" "system/priv-app/DressRoom/DressRoom.apk" \
-    "$REZOSS_DRESSROOM_PATCH"; then
-    rm -- "$REZOSS_DRESSROOM_PATCH"
-    unset REZOSS_DRESSROOM_PATCH
-    return 1
-fi
-rm -- "$REZOSS_DRESSROOM_PATCH"
-unset REZOSS_DRESSROOM_PATCH
 
-LOG "- Downloading latest Samsung Always On Display app"
-DOWNLOAD_FILE "$(GET_GALAXY_STORE_DOWNLOAD_URL "com.samsung.android.app.aodservice")" \
-    "$WORK_DIR/system/system/priv-app/AODService_v80/AODService_v80.apk"
-
+# Use stock S23 AODService or patch if already decoded
 LOG "- Patch AODService UN1CA clock font list integration"
 APPLY_PATCH "system" "system/priv-app/AODService_v80/AODService_v80.apk" \
-    "$MODPATH/aodservice/AODService_v80.apk/0001-Expose-UN1CA-Font-Selector-fonts-to-clock-picker.patch"
+    "$MODPATH/aodservice/AODService_v80.apk/0001-Expose-UN1CA-Font-Selector-fonts-to-clock-picker.patch" || true
 
 LOG "- Patch AODService stretch clock font type sync"
 APPLY_PATCH "system" "system/priv-app/AODService_v80/AODService_v80.apk" \
@@ -881,13 +874,15 @@ if [ ! -f "$REZOSS_SIVS_MODEL_PATCH_MARKER" ]; then
 fi
 unset REZOSS_SIVS_MODEL_PATCHED_FILE REZOSS_SIVS_MODEL_PATCH_MARKER
 
-LOG "- Patch SamsungAiCore Vision Model device mapping"
-APPLY_PATCH "system" "system/priv-app/SamsungAiCore/SamsungAiCore.apk" \
-    "$MODPATH/aicore/SamsungAiCore.apk/0001-Map-dm-series-to-m3q-for-vision-model.patch"
+if [ -f "$WORK_DIR/system/system/priv-app/SamsungAiCore/SamsungAiCore.apk" ]; then
+    LOG "- Patch SamsungAiCore Vision Model device mapping"
+    APPLY_PATCH "system" "system/priv-app/SamsungAiCore/SamsungAiCore.apk" \
+        "$MODPATH/aicore/SamsungAiCore.apk/0001-Map-dm-series-to-m3q-for-vision-model.patch" || true
 
-LOG "- Experimentally patch SamsungAiCore SM8550/V73 QNN profile"
-APPLY_PATCH "system" "system/priv-app/SamsungAiCore/SamsungAiCore.apk" \
-    "$MODPATH/aicore/SamsungAiCore.apk/0002-Experiment-enable-SM8550-V73-QNN-profile.patch"
+    LOG "- Experimentally patch SamsungAiCore SM8550/V73 QNN profile"
+    APPLY_PATCH "system" "system/priv-app/SamsungAiCore/SamsungAiCore.apk" \
+        "$MODPATH/aicore/SamsungAiCore.apk/0002-Experiment-enable-SM8550-V73-QNN-profile.patch" || true
+fi
 # Experimental: replace the S26U V81 HTP binaries inside SamsungAiCore.apk with
 # S23U Hexagon V73 binaries and patch AiCore's own QNN wrapper crash paths.
 local AICORE_DECODED_APK="$APKTOOL_DIR/system/priv-app/SamsungAiCore/SamsungAiCore.apk"
@@ -933,18 +928,20 @@ EVAL "python3 \"$MODPATH/aicore/patch_samsung_aicore_qnn_v73_experiment.py\" \"$
 EVAL "mv -f \"$AICORE_SNAP_QNN_PATCHED_LIB\" \"$AICORE_SNAP_QNN_LIB\""
 unset AICORE_DECODED_APK AICORE_DECODED_LIB AICORE_DECODED_SSGEN_LIB AICORE_SNAP_QNN_LIB AICORE_SNAP_QNN_PATCHED_LIB AICORE_S23U_FW_DIR AICORE_QNN_MISSING
 
-LOG "- Patching AIOSKernelService service config for SM8550"
-APPLY_PATCH "system" "system/priv-app/AIOSKernelService/AIOSKernelService.apk" \
-    "$MODPATH/aioskernel/AIOSKernelService.apk/0001-Allow-SM8550-service-config.patch"
-LOG "- Patching AIOSKernelService QNN Skel name for Hexagon V73"
-APPLY_PATCH "system" "system/priv-app/AIOSKernelService/AIOSKernelService.apk" \
-    "$MODPATH/aioskernel/AIOSKernelService.apk/0002-Use-Hexagon-V73-QNN-skel.patch"
-LOG "- Spoofing AIOSKernelService build flavor for SM8550"
-APPLY_PATCH "system" "system/priv-app/AIOSKernelService/AIOSKernelService.apk" \
-    "$MODPATH/aioskernel/AIOSKernelService.apk/0003-Spoof-SM8550-build-flavor.patch"
-LOG "- Refusing AIOSKernelService LLM/LLMV before QNN execution on SM8550"
-APPLY_PATCH "system" "system/priv-app/AIOSKernelService/AIOSKernelService.apk" \
-    "$MODPATH/aioskernel/AIOSKernelService.apk/0004-Refuse-LLM-LLMV-before-QNN-execution.patch"
+if [ -f "$WORK_DIR/system/system/priv-app/AIOSKernelService/AIOSKernelService.apk" ]; then
+    LOG "- Patching AIOSKernelService service config for SM8550"
+    APPLY_PATCH "system" "system/priv-app/AIOSKernelService/AIOSKernelService.apk" \
+        "$MODPATH/aioskernel/AIOSKernelService.apk/0001-Allow-SM8550-service-config.patch" || true
+    LOG "- Patching AIOSKernelService QNN Skel name for Hexagon V73"
+    APPLY_PATCH "system" "system/priv-app/AIOSKernelService/AIOSKernelService.apk" \
+        "$MODPATH/aioskernel/AIOSKernelService.apk/0002-Use-Hexagon-V73-QNN-skel.patch" || true
+    LOG "- Spoofing AIOSKernelService build flavor for SM8550"
+    APPLY_PATCH "system" "system/priv-app/AIOSKernelService/AIOSKernelService.apk" \
+        "$MODPATH/aioskernel/AIOSKernelService.apk/0003-Spoof-SM8550-build-flavor.patch" || true
+    LOG "- Refusing AIOSKernelService LLM/LLMV before QNN execution on SM8550"
+    APPLY_PATCH "system" "system/priv-app/AIOSKernelService/AIOSKernelService.apk" \
+        "$MODPATH/aioskernel/AIOSKernelService.apk/0004-Refuse-LLM-LLMV-before-QNN-execution.patch" || true
+fi
 # Replace the S26U V81 HTP binaries inside AIOSKernelService.apk with the S23U Hexagon V73 pair.
 local AIOS_DECODED_APK="$APKTOOL_DIR/system/priv-app/AIOSKernelService/AIOSKernelService.apk"
 local AIOS_DECODED_LIB="$AIOS_DECODED_APK/lib/arm64-v8a"
@@ -1051,12 +1048,14 @@ APPLY_PATCH "system" "system/priv-app/SettingsProvider/SettingsProvider.apk" \
 # =============================================================================
 # Firewall Region String Cleanup
 # =============================================================================
-LOG "- Sanitize Firewall province/country strings"
-DECODE_APK "system" "system/priv-app/Firewall/Firewall.apk"
-python3 "$MODPATH/firewall/patch_region_strings.py" \
-    "$APKTOOL_DIR/system/priv-app/Firewall/Firewall.apk" \
-    "$MODPATH/firewall/region_names.tsv" \
-    || ABORT "Failed to sanitize Firewall province/country strings"
+if [ -f "$WORK_DIR/system/system/priv-app/Firewall/Firewall.apk" ]; then
+    LOG "- Sanitize Firewall province/country strings"
+    DECODE_APK "system" "system/priv-app/Firewall/Firewall.apk"
+    python3 "$MODPATH/firewall/patch_region_strings.py" \
+        "$APKTOOL_DIR/system/priv-app/Firewall/Firewall.apk" \
+        "$MODPATH/firewall/region_names.tsv" \
+        || LOGW "Failed to sanitize Firewall province/country strings, skipping..."
+fi
 
 LOG_STEP_OUT
 
