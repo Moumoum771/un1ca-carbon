@@ -262,4 +262,19 @@ if [ -n "$KSU_APK_SRC" ]; then
     SET_METADATA "system" "system/app/KernelSU_Next/KernelSU_Next.apk" 0 0 644 "u:object_r:system_file:s0"
 fi
 
+# Preload Carbon animated video wallpaper
+CARBON_VIDEO_WP="$SRC_DIR/carbon_ours/wallpapers/carbon_animated_lockscreen.mp4"
+if [ ! -f "$CARBON_VIDEO_WP" ]; then
+    CARBON_VIDEO_WP="/home/alexsanderalri/Documentos/Un1ca_Carbon/carbon_ours/wallpapers/carbon_animated_lockscreen.mp4"
+fi
+if [ -f "$CARBON_VIDEO_WP" ]; then
+    LOG "- Preloading Carbon animated lockscreen video"
+    mkdir -p "$WORK_DIR/system/system/media/video"
+    cp -p "$CARBON_VIDEO_WP" "$WORK_DIR/system/system/media/video/carbon_animated_lockscreen.mp4"
+    chmod 755 "$WORK_DIR/system/system/media/video"
+    chmod 644 "$WORK_DIR/system/system/media/video/carbon_animated_lockscreen.mp4"
+    SET_METADATA "system" "system/media/video" 0 0 755 "u:object_r:system_file:s0"
+    SET_METADATA "system" "system/media/video/carbon_animated_lockscreen.mp4" 0 0 644 "u:object_r:system_file:s0"
+fi
+
 LOG_STEP_OUT

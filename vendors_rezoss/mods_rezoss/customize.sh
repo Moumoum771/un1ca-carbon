@@ -1065,4 +1065,4 @@ LOG_STEP_OUT
 # =============================================================================
 # shellcheck source=unica/mods/rezoss/kernel.sh
 source "$MODPATH/kernel.sh"
-REZOSS_APPLY_KERNEL_PATCHES "edgars+ksu"
+# REZOSS_APPLY_KERNEL_PATCHES "edgars+ksu"

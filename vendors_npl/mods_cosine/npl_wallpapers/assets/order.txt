@@ -1,4 +1,5 @@
-# NPL wallpaper picker order (Sagarmatha first — matches NPL branding)
+# UN1CA Carbon wallpaper picker order (Carbon Official first)
+carbon_official.jpg
 sagarmatha_everest_zone.jpg
 dodhara_chadani_mahakali_bridge.jpg
 everest_himalayas.jpg

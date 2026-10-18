@@ -1,5 +1,6 @@
 # Featured row in the Samsung wallpaper picker (left to right).
 # Catalog-only — Wallpaper_001.webp is never replaced (that bootloops).
+npl:carbon_official.jpg
 npl:sagarmatha_everest_zone.jpg
 npl:dodhara_chadani_mahakali_bridge.jpg
 npl:everest_himalayas.jpg
