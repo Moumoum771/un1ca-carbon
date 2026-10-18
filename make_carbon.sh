@@ -76,28 +76,46 @@ mkdir -p "$ROOT_DIR/unica/configs"
 [ ! -e "$ROOT_DIR/tools" ] && ln -s "$ROOT_DIR/core_unica/tools" "$ROOT_DIR/tools"
 [ ! -e "$ROOT_DIR/platform" ] && ln -s "$ROOT_DIR/core_unica/platform" "$ROOT_DIR/platform"
 [ ! -e "$ROOT_DIR/security" ] && ln -s "$ROOT_DIR/carbon_ours/security_keys" "$ROOT_DIR/security"
+[ ! -e "$ROOT_DIR/prebuilts" ] && ln -s "$ROOT_DIR/core_unica/prebuilts" "$ROOT_DIR/prebuilts"
+
+# Link all core patches
+for p in "$ROOT_DIR"/core_unica/patches/*; do
+    [ -d "$p" ] || continue
+    pname="$(basename "$p")"
+    [ ! -e "$ROOT_DIR/unica/patches/$pname" ] && ln -s "$p" "$ROOT_DIR/unica/patches/$pname"
+done
+
+# Link all core mods
+for m in "$ROOT_DIR"/core_unica/mods/*; do
+    [ -d "$m" ] || continue
+    mname="$(basename "$m")"
+    [ ! -e "$ROOT_DIR/unica/mods/$mname" ] && ln -s "$m" "$ROOT_DIR/unica/mods/$mname"
+done
 
 # Config links
 for cfg in "$ROOT_DIR"/carbon_ours/configs/*.sh; do
     [ -f "$cfg" ] || continue
     cname="$(basename "$cfg")"
-    [ ! -e "$ROOT_DIR/unica/configs/$cname" ] && ln -s "$cfg" "$ROOT_DIR/unica/configs/$cname"
+    rm -f "$ROOT_DIR/unica/configs/$cname"
+    ln -s "$cfg" "$ROOT_DIR/unica/configs/$cname"
 done
 
 # 2. Target links
-[ ! -e "$ROOT_DIR/target/dm1q" ] && ln -s "$ROOT_DIR/carbon_ours/target_dm1q" "$ROOT_DIR/target/dm1q"
+rm -f "$ROOT_DIR/target/dm1q"
+ln -s "$ROOT_DIR/carbon_ours/target_dm1q" "$ROOT_DIR/target/dm1q"
 
 # 3. Vendors modules links
-[ ! -e "$ROOT_DIR/unica/mods/rezoss" ] && ln -s "$ROOT_DIR/vendors_rezoss/mods_rezoss" "$ROOT_DIR/unica/mods/rezoss"
-[ ! -e "$ROOT_DIR/unica/mods/hma" ] && ln -s "$ROOT_DIR/vendors_rezoss/mods_hma" "$ROOT_DIR/unica/mods/hma"
-[ ! -e "$ROOT_DIR/unica/patches/signature" ] && ln -s "$ROOT_DIR/vendors_rezoss/patches_signature" "$ROOT_DIR/unica/patches/signature"
-
-[ ! -e "$ROOT_DIR/unica/mods/cosine" ] && ln -s "$ROOT_DIR/vendors_npl/mods_cosine" "$ROOT_DIR/unica/mods/cosine"
+rm -f "$ROOT_DIR/unica/mods/rezoss" "$ROOT_DIR/unica/mods/hma" "$ROOT_DIR/unica/patches/signature" "$ROOT_DIR/unica/mods/cosine"
+ln -s "$ROOT_DIR/vendors_rezoss/mods_rezoss" "$ROOT_DIR/unica/mods/rezoss"
+ln -s "$ROOT_DIR/vendors_rezoss/mods_hma" "$ROOT_DIR/unica/mods/hma"
+ln -s "$ROOT_DIR/vendors_rezoss/patches_signature" "$ROOT_DIR/unica/patches/signature"
+ln -s "$ROOT_DIR/vendors_npl/mods_cosine" "$ROOT_DIR/unica/mods/cosine"
 
 # 4. Carbon ours modules links
-[ ! -e "$ROOT_DIR/unica/mods/settings" ] && ln -s "$ROOT_DIR/carbon_ours/branding_settings" "$ROOT_DIR/unica/mods/settings"
-[ ! -e "$ROOT_DIR/unica/mods/telemetry_debloat" ] && ln -s "$ROOT_DIR/carbon_ours/telemetry_debloat" "$ROOT_DIR/unica/mods/telemetry_debloat"
-[ ! -e "$ROOT_DIR/unica/mods/carbon_bootanim" ] && ln -s "$ROOT_DIR/carbon_ours/bootanimation" "$ROOT_DIR/unica/mods/carbon_bootanim"
+rm -f "$ROOT_DIR/unica/mods/settings" "$ROOT_DIR/unica/mods/telemetry_debloat" "$ROOT_DIR/unica/mods/carbon_bootanim"
+ln -s "$ROOT_DIR/carbon_ours/branding_settings" "$ROOT_DIR/unica/mods/settings"
+ln -s "$ROOT_DIR/carbon_ours/telemetry_debloat" "$ROOT_DIR/unica/mods/telemetry_debloat"
+ln -s "$ROOT_DIR/carbon_ours/bootanimation" "$ROOT_DIR/unica/mods/carbon_bootanim"
 
 echo "✔ Architecture tree verified and linked."
 echo "Starting ROM build for $TARGET_DEVICE..."
