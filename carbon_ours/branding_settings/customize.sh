@@ -46,20 +46,22 @@ LOG_STEP_IN "- Adding UN1CA Settings"
 while IFS= read -r f; do
     f="${f//$MODPATH\/SecSettings.apk\//}"
 
-    if [ ! -f "$APKTOOL_DIR/system/priv-app/SecSettings/SecSettings.apk/$f" ] || \
+    if [[ "$f" == *"res/values"* ]] && [ -f "$APKTOOL_DIR/system/priv-app/SecSettings/SecSettings.apk/$f" ]; then
+        LOG "- Patching \"$f\" in /system/system/priv-app/SecSettings.apk"
+        PATCH_INST="/<\/resources>/i"
+        CONTENT="$(sed -e "/?xml/d" -e "/resources>/d" "$MODPATH/SecSettings.apk/$f")"
+        CONTENT="$(sed -e "s/\"/\\\\\"/g" -e "s/\\$/\\\\$/g" -e "s/ /\\\ /g" -e "s/\\\\n/\\\\\\\\\n/g" <<< "$CONTENT")"
+        CONTENT="$(sed -E ':a;N;$!ba;s/\r{0,1}\n/\\n/g' <<< "$CONTENT")"
+        EVAL "sed -i \"$PATCH_INST $CONTENT\" \"$APKTOOL_DIR/system/priv-app/SecSettings/SecSettings.apk/$f\""
+    elif [ ! -f "$APKTOOL_DIR/system/priv-app/SecSettings/SecSettings.apk/$f" ] || \
             [[ "$f" != *".xml" ]] || grep -qF "<?xml" "$MODPATH/SecSettings.apk/$f"; then
         LOG "- Adding \"$f\" to /system/system/priv-app/SecSettings.apk"
         mkdir -p "$(dirname "$APKTOOL_DIR/system/priv-app/SecSettings/SecSettings.apk/$f")"
         cp -a "$MODPATH/SecSettings.apk/$f" "$APKTOOL_DIR/system/priv-app/SecSettings/SecSettings.apk/$f"
     else
         LOG "- Patching \"$f\" in /system/system/priv-app/SecSettings.apk"
-        if [[ "$f" == *"res/values"* ]]; then
-            PATCH_INST="/<\/resources>/i"
-            CONTENT="$(sed -e "/?xml/d" -e "/resources>/d" "$MODPATH/SecSettings.apk/$f")"
-        else
-            PATCH_INST="$(head -n 1 "$MODPATH/SecSettings.apk/$f")"
-            CONTENT="$(tail -n +2 "$MODPATH/SecSettings.apk/$f")"
-        fi
+        PATCH_INST="$(head -n 1 "$MODPATH/SecSettings.apk/$f")"
+        CONTENT="$(tail -n +2 "$MODPATH/SecSettings.apk/$f")"
         CONTENT="$(sed -e "s/\"/\\\\\"/g" -e "s/\\$/\\\\$/g" -e "s/ /\\\ /g" -e "s/\\\\n/\\\\\\\\\n/g" <<< "$CONTENT")"
         CONTENT="$(sed -E ':a;N;$!ba;s/\r{0,1}\n/\\n/g' <<< "$CONTENT")"
         EVAL "sed -i \"$PATCH_INST $CONTENT\" \"$APKTOOL_DIR/system/priv-app/SecSettings/SecSettings.apk/$f\""

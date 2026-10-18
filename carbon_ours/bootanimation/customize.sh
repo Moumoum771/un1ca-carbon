@@ -29,12 +29,6 @@ if [ "$STYLE" == "carbon" ]; then
         mkdir -p "$WORK_DIR/system/system/media"
         cp -a "$CARBON_ZIP" "$WORK_DIR/system/system/media/bootanimation.zip"
         SET_METADATA "system" "system/media/bootanimation.zip" 0 0 644 "u:object_r:system_file:s0"
-
-        if [ -d "$WORK_DIR/product" ]; then
-            mkdir -p "$WORK_DIR/product/media"
-            cp -a "$CARBON_ZIP" "$WORK_DIR/product/media/bootanimation.zip"
-            SET_METADATA "product" "media/bootanimation.zip" 0 0 644 "u:object_r:system_file:s0"
-        fi
     else
         LOGW "bootanimation_carbon.zip not found at $CARBON_ZIP, keeping stock"
     fi
@@ -42,8 +36,5 @@ else
     LOG "- Keeping stock UN1CA boot animation (QMG mode)"
     if [ -f "$WORK_DIR/system/system/media/bootanimation.zip" ]; then
         rm -f "$WORK_DIR/system/system/media/bootanimation.zip"
-    fi
-    if [ -f "$WORK_DIR/product/media/bootanimation.zip" ]; then
-        rm -f "$WORK_DIR/product/media/bootanimation.zip"
     fi
 fi
