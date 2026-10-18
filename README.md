@@ -2,14 +2,13 @@
 
 <div align="center">
 
-```
- ██╗   ██╗███╗   ██╗ ██╗ ██████╗ █████╗      ██████╗ █████╗ ██████╗ ██████╗  ██████╗ ███╗   ██╗
- ██║   ██║████╗  ██║███║██╔════╝██╔══██╗    ██╔════╝██╔══██╗██╔══██╗██╔══██╗██╔═══██╗████╗  ██║
- ██║   ██║██╔██╗ ██║╚██║██║     ███████║    ██║     ███████║██████╔╝██████╔╝██║   ██║██╔██╗ ██║
- ██║   ██║██║╚██╗██║ ██║██║     ██╔══██║    ██║     ██╔══██║██╔══██╗██╔══██╗██║   ██║██║╚██╗██║
- ╚██████╔╝██║ ╚████║ ██║╚██████╗██║  ██║    ╚██████╗██║  ██║██║  ██║██████╔╝╚██████╔╝██║ ╚████║
-  ╚═════╝ ╚═╝  ╚═══╝ ╚═╝ ╚═════╝╚═╝  ╚═╝     ╚═════╝╚═╝  ╚═╝╚═╝  ╚═╝╚═════╝  ╚═════╝ ╚═╝  ╚═══╝
-```
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/logo_white.png">
+  <source media="(prefers-color-scheme: light)" srcset="docs/assets/logo_dark.png">
+  <img alt="UN1CA Carbon" src="docs/assets/logo_white.png" width="480">
+</picture>
+
+<br><br>
 
 **Next-Generation One UI 9 Custom ROM for Samsung Galaxy S23 Series**  
 *Release Version: **IX** (One UI 9.0 • Android 17 • SDK 37)*  
