@@ -330,13 +330,6 @@ _REZOSS_ADD_SYSTEM_LIB64()
     local SOURCE="$1"
     local FILE="$2"
 
-    # Never overwrite native libraries that exist in the S23 stock firmware
-    if [ -f "$FW_DIR/SM-S911B_OXM/system/system/lib64/$FILE" ] || \
-       [ -f "$FW_DIR/SM-S918B_EUX/system/system/lib64/$FILE" ]; then
-        LOG "- Preserving native S23 /system/lib64/$FILE"
-        return 0
-    fi
-
     ADD_TO_WORK_DIR "$SOURCE" "system" "system/lib64/$FILE" 0 0 644 "u:object_r:system_lib_file:s0"
     _REZOSS_SET_SYSTEM_LIB64_METADATA "$FILE"
 }
@@ -529,7 +522,7 @@ _REZOSS_ADD_SYSTEM_LIB64 "m3qxxx" "libStereoWarp.camera.samsung.so"
 _REZOSS_ADD_SYSTEM_LIB64 "m3qxxx" "libTextEnhancementV2.camera.samsung.so"
 _REZOSS_ADD_SYSTEM_LIB64 "m3qxxx" "libVirtualApertureCapture.camera.samsung.so"
 _REZOSS_ADD_SYSTEM_LIB64 "m3qxxx" "libframebooster.so"
-# _REZOSS_ADD_SYSTEM_LIB64 "m3qxxx" "libphotohdr.so"
+_REZOSS_ADD_SYSTEM_LIB64 "m3qxxx" "libphotohdr.so"
 
 # =============================================================================
 # S26U Prebuilts - PhotoHDR Simba / HEIF Stack
@@ -602,6 +595,7 @@ for f in \
     "libTextEnhancementV2.camera.samsung.so" \
     "libVirtualApertureCapture.camera.samsung.so" \
     "libframebooster.so" \
+    "libphotohdr.so" \
     "libsamsungSoundbooster_plus_legacy.so" \
     "libsoundboostereq_legacy.so"; do
     _REZOSS_SET_SYSTEM_LIB64_METADATA "$f"
