@@ -190,6 +190,14 @@ PRINT_HEADER()
     local VER_TAG="${ROM_VERSION:-IX}"
     [[ "$VER_TAG" == *"IX"* ]] && VER_TAG="IX"
     PRINT_SEPARATOR
+    echo    'ui_print("          █░█ █▄░█ ▄█ █▀▀ ▄▀█");'
+    echo    'ui_print("          █▄█ █░▀█ ░█ █▄▄ █▀█");'
+    echo    'ui_print(" ");'
+    echo    'ui_print("  █▀▀█  █▀▀█  █▀▀█  █▀▀█  █▀▀█  █▄  █");'
+    echo    'ui_print("  █     █▄▄█  █▄▄▀  █▀▀▄  █  █  █ █ █");'
+    echo    'ui_print("  █▄▄█  █  █  █  █  █▄▄█  █▄▄█  █  ▀█");'
+    echo    "ui_print(\"                 [ $VER_TAG ]\");"
+    PRINT_SEPARATOR
     echo -n 'ui_print("'
     echo -n "UN1CA Carbon ($VER_TAG) for $TARGET_NAME"
     echo    '");'
