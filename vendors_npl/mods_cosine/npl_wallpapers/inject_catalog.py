@@ -29,8 +29,7 @@ def main() -> int:
 
     phone[:] = [e for e in phone if not str(e.get("filename", "")).startswith("npl_")]
     max_index = max((entry.get("index", 0) for entry in phone), default=-1)
-    template = next((e for e in phone if e.get("type") == 0), phone[0])
-    cmf_info = list(template.get("cmf_info", ["ze", "zr"]))
+    cmf_info = ["ze", "zr", "zk", "za", "lb", "zg", "lg", "li", ""]
 
     which = 1
     for catalog_name in names:

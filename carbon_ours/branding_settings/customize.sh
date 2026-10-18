@@ -262,7 +262,14 @@ for src in \
 done
 
 if [ -n "$KSU_APK_SRC" ]; then
-    LOG "- Pre-installing KernelSU Next APK from $KSU_APK_SRC"
+    LOG "- Pre-installing KernelSU Next APK from $KSU_APK_SRC into priv-app and app"
+    mkdir -p "$WORK_DIR/system/system/priv-app/KernelSU_Next"
+    cp -p "$KSU_APK_SRC" "$WORK_DIR/system/system/priv-app/KernelSU_Next/KernelSU_Next.apk"
+    chmod 755 "$WORK_DIR/system/system/priv-app/KernelSU_Next"
+    chmod 644 "$WORK_DIR/system/system/priv-app/KernelSU_Next/KernelSU_Next.apk"
+    SET_METADATA "system" "system/priv-app/KernelSU_Next" 0 0 755 "u:object_r:system_file:s0"
+    SET_METADATA "system" "system/priv-app/KernelSU_Next/KernelSU_Next.apk" 0 0 644 "u:object_r:system_file:s0"
+
     mkdir -p "$WORK_DIR/system/system/app/KernelSU_Next"
     cp -p "$KSU_APK_SRC" "$WORK_DIR/system/system/app/KernelSU_Next/KernelSU_Next.apk"
     chmod 755 "$WORK_DIR/system/system/app/KernelSU_Next"

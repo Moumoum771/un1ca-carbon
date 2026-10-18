@@ -160,6 +160,38 @@ for src in "${ASSET_FILES[@]}"; do
   NPL_ENSURE_APKTOOL_ENTRY "$APK_DIR/apktool.yml" "${DRAWABLE_DIR#"$APK_DIR"/}/${stem}.webp"
 done
 
+# Set UN1CA Carbon as out-of-the-box default wallpaper across all Samsung CMF color variants
+CARBON_SRC="$ASSETS_DIR/carbon_official.jpg"
+if [ -f "$CARBON_SRC" ]; then
+    LOG "- Setting UN1CA Carbon as default boot wallpaper across all S23 device colors"
+    CARBON_WEBP="/tmp/carbon_default_3088.webp"
+    cwebp -q 95 -resize 3088 3088 "$CARBON_SRC" -o "$CARBON_WEBP" >/dev/null 2>&1 || true
+    CARBON_THUMB="/tmp/carbon_default_thumb.webp"
+    cwebp -q 90 -resize 572 572 "$CARBON_SRC" -o "$CARBON_THUMB" >/dev/null 2>&1 || true
+
+    if [ -f "$CARBON_WEBP" ]; then
+        for wp_target in Wallpaper_001.webp Wallpaper_003.webp Wallpaper_005.webp Wallpaper_007.webp; do
+            [ -f "$DRAWABLE_DIR/$wp_target" ] && cp -f "$CARBON_WEBP" "$DRAWABLE_DIR/$wp_target"
+        done
+        rm -f "$CARBON_WEBP"
+    fi
+    if [ -f "$CARBON_THUMB" ]; then
+        [ -f "$DRAWABLE_DIR/default_thumb.webp" ] && cp -f "$CARBON_THUMB" "$DRAWABLE_DIR/default_thumb.webp"
+        rm -f "$CARBON_THUMB"
+    fi
+fi
+
+# Set UN1CA Carbon animated video as default lockscreen video across all color variants
+CARBON_LOCK_VIDEO="$SRC_DIR/carbon_ours/wallpapers/carbon_animated_lockscreen.mp4"
+if [ -f "$CARBON_LOCK_VIDEO" ] && [ -d "$APK_DIR/res/raw" ]; then
+    for vid_target in Default_Video_Wallpaper_ZE.mp4 Default_Video_Wallpaper_ZK.mp4 Default_Video_Wallpaper_ZG.mp4 Default_Video_Wallpaper_LI.mp4; do
+        if [ -f "$APK_DIR/res/raw/$vid_target" ]; then
+            LOG "- Setting UN1CA Carbon animated video as default lockscreen for $vid_target"
+            cp -f "$CARBON_LOCK_VIDEO" "$APK_DIR/res/raw/$vid_target"
+        fi
+    done
+fi
+
 if [ "${#CATALOG_NAMES[@]}" -eq 0 ]; then
   LOGW "No wallpapers were converted"
   exit 0
