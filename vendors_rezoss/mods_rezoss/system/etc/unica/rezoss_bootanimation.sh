@@ -40,6 +40,11 @@ find_module_zip_once()
 {
     FOUND_ZIP=""
 
+    if [ -s "/system/media/bootanimation.zip" ]; then
+        FOUND_ZIP="/system/media/bootanimation.zip"
+        return 0
+    fi
+
     [ -d "$MODULE_ROOT" ] || return 1
 
     for MODULE_DIR in "$MODULE_ROOT"/*; do
