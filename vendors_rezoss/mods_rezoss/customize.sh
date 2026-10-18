@@ -320,8 +320,9 @@ _REZOSS_SET_VENDOR_CONFIG_DIR_METADATA()
 _REZOSS_SET_SYSTEM_LIB64_METADATA()
 {
     local FILE="$1"
-
-    SET_METADATA "system" "system/lib64/$FILE" 0 0 644 "u:object_r:system_lib_file:s0"
+    if [ -e "$WORK_DIR/system/system/lib64/$FILE" ] || [ -e "$WORK_DIR/system/lib64/$FILE" ]; then
+        SET_METADATA "system" "system/lib64/$FILE" 0 0 644 "u:object_r:system_lib_file:s0"
+    fi
 }
 
 _REZOSS_ADD_SYSTEM_LIB64()
@@ -528,7 +529,7 @@ _REZOSS_ADD_SYSTEM_LIB64 "m3qxxx" "libStereoWarp.camera.samsung.so"
 _REZOSS_ADD_SYSTEM_LIB64 "m3qxxx" "libTextEnhancementV2.camera.samsung.so"
 _REZOSS_ADD_SYSTEM_LIB64 "m3qxxx" "libVirtualApertureCapture.camera.samsung.so"
 _REZOSS_ADD_SYSTEM_LIB64 "m3qxxx" "libframebooster.so"
-_REZOSS_ADD_SYSTEM_LIB64 "m3qxxx" "libphotohdr.so"
+# _REZOSS_ADD_SYSTEM_LIB64 "m3qxxx" "libphotohdr.so"
 
 # =============================================================================
 # S26U Prebuilts - PhotoHDR Simba / HEIF Stack
@@ -601,7 +602,6 @@ for f in \
     "libTextEnhancementV2.camera.samsung.so" \
     "libVirtualApertureCapture.camera.samsung.so" \
     "libframebooster.so" \
-    "libphotohdr.so" \
     "libsamsungSoundbooster_plus_legacy.so" \
     "libsoundboostereq_legacy.so"; do
     _REZOSS_SET_SYSTEM_LIB64_METADATA "$f"
