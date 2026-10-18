@@ -265,6 +265,10 @@ GENERATE_UPDATER_SCRIPT()
                 echo    'ui_print("Flashing vendor_boot image...");'
                 echo    'package_extract_file("vendor_boot.img", "/dev/block/by-name/vendor_boot");'
             fi
+            if [ -f "$TMP_DIR/recovery.img" ]; then
+                echo    'ui_print("Flashing recovery image (TWRP)...");'
+                echo    'package_extract_file("recovery.img", "/dev/block/by-name/recovery");'
+            fi
         else
             for b in $KERNEL_BINS; do
                 if [ -f "$TMP_DIR/$b.img" ]; then
@@ -381,6 +385,11 @@ if [ -d "$WORK_DIR/kernel" ]; then
         fi
         LOG_STEP_OUT
     done
+fi
+
+if [ -f "$SRC_DIR/carbon_ours/recovery_twrp/recovery.img" ]; then
+    LOG "- Including TWRP recovery.img in package"
+    cp -a "$SRC_DIR/carbon_ours/recovery_twrp/recovery.img" "$TMP_DIR/recovery.img"
 fi
 
 LOG "- Generating updater-script"
