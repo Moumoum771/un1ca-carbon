@@ -49,6 +49,9 @@ UN1CA Carbon is built upon a transparent, modular foundation combining upstream 
 
 | Component / Layer | Upstream Project | Branch / Tag | Pinned Commit Hash |
 | :--- | :--- | :---: | :--- |
+| **Custom Kernel Engine** | [GoRhanHee](https://github.com/GoRhanHee) | `main` | `Linux 5.15.216` (SM8550 + SUSFS) |
+| **Root Solution** | [rifsxd/KernelSU-Next](https://github.com/rifsxd/KernelSU-Next) | `v3.4.2` | `33355` (Next-gen LKM) |
+| **Recovery Engine** | [TeamWin/TWRP](https://github.com/TeamWin) | `android-12.1` | `3.7.1_12-0_archer` (`dm1q`) |
 | **One UI 9 Framework Engine** | [Rezoss-Reza/UN1CA](https://github.com/Rezoss-Reza) | `sembilan` | [`9212d8fd95444cee0f28a7af8dff8e96f18555fb`](https://github.com/Rezoss-Reza/UN1CA/commit/9212d8fd95444cee0f28a7af8dff8e96f18555fb) |
 | **Visual Assets & Wallpapers** | [cosinemyan/NPLROM_UN1CA](https://github.com/cosinemyan) | `npl-oneui9` | [`d859c51e78916299f76ffeea0e9820123fd67d3a`](https://github.com/cosinemyan/NPLROM_UN1CA/commit/d859c51e78916299f76ffeea0e9820123fd67d3a) |
 | **UN1CA Core Engine** | [salvogiangri/UN1CA](https://github.com/salvogiangri) | `sixteen` / `3.2.1` | [`0c2ea1d61ddc78ae8e6900787f9f9e7269b7b439`](https://github.com/salvogiangri/UN1CA/commit/0c2ea1d61ddc78ae8e6900787f9f9e7269b7b439) / [`9f8add9e`](https://github.com/salvogiangri/UN1CA/commit/9f8add9e7fbb60ad4bb13704cb8ffa1f882f0edc) |
@@ -104,7 +107,7 @@ Accessible directly at the top level of the primary Samsung Settings app:
 
 ### 📞 4. Telephony, Audio & Productivity
 * **Native Call Recording:** High-definition voice call recording embedded directly into the Samsung Phone dialer (`ril.call.recording=true`), with zero audible recording disclaimers.
-* **Universal Dual Messenger (`daagent`):** Unlocks application cloning for **all** user-installed applications, bypassing Samsung's hardcoded whitelist.
+* **Dual Messenger & Multi-App Cloning:** Stable Samsung Dual Messenger support for multiple messaging and social accounts without APK assembly conflicts.
 * **Multi-User Support:** Enables secondary user profiles and guest accounts across Samsung One UI.
 * **Custom Boot & Call Audio:** Custom boot audio playback and vintage Samsung call connection/disconnection tones (2018, 2024, ACH Galaxy Bells).
 
@@ -117,7 +120,9 @@ Accessible directly at the top level of the primary Samsung Settings app:
 ---
 
 ### 🛠️ 6. Core Engineering & System Architecture (ALRI Carbon Layer)
-* **Native DFE (Disable Force Encryption):** Storage fstab entry (`vendor/etc/fstab.qcom`) configured as `encryptable`, ensuring the Android 17 runtime never enforces hardware storage locking. TWRP retains full unencrypted access to `/data` across reboots.
+* **Hardware-Backed File-Based Encryption (FBE):** Preserves authentic Samsung One UI 9 FBE storage security on UFS 4.0 (`/dev/block/sda41`), avoiding the fatal `vold` daemon crashes and black-screen hangs caused by legacy `encryptable` hacks, while ensuring full compatibility with TWRP recovery formatting.
+* **Integrated GoRhanHee Kernel (Linux 5.15.216):** High-performance Snapdragon 8 Gen 2 kernel pre-packaged with KernelSU-Next v3.4.2 and SUSFS, fully synchronized with matching DLKM drivers.
+* **Automated TWRP Recovery Flashing:** Preserves and flashes the official Team Win Recovery Project (`recovery.img`) directly in the installer package.
 * **Reinforced SurfaceFlinger:** Corrected dynamic linker binding against Samsung Snapdragon 8 Gen 2 native `libbase.so` (`fmt::v12`), eliminating fatal display compositor crashes (`CANNOT LINK EXECUTABLE`).
 * **Official Samsung Keyboard (`HoneyBoard`):** Original Samsung certificate (`CN=Samsung Cert`) and `oat/arm64` ahead-of-time compiled binaries preserved, ensuring instant keyboard rendering during FRP-protected initial device setup.
 * **Hardware TrustZone Lockdown Guard:** Strict preservation of `KnoxGuard.apk` and `com.samsung.android.kgclient` permissions, preventing TrustZone hardware lockouts (`tz_kg`).
@@ -161,9 +166,12 @@ Un1ca_Carbon/
 
 ## 👥 Credits & Acknowledgements
 
-* **Organization & Official Maintainer:** **ALRI Development** (ALRIGROUP)
+* **Organization & Official Maintainer:** **ALRI Development** ([ALRIGROUP](https://github.com/alrigroup))
 * **Lead Maintainer & Lead Developer:** **Alexsander "AlexsAR" ALRI** ([@alexsanderalri](https://github.com/alexsanderalri))
 * **Port, Systems & Display Engineering:** **ALRI Development**
+* **Custom Kernel (Linux 5.15.216):** **GoRhanHee** ([@GoRhanHee](https://github.com/GoRhanHee)) — High-performance Snapdragon 8 Gen 2 kernel with SUSFS & KernelSU integration
+* **Root Solution (KernelSU-Next):** **rifsxd** ([@rifsxd](https://github.com/rifsxd)) & [KernelSU-Next Contributors](https://github.com/rifsxd/KernelSU-Next), based on KernelSU by **tiann** ([@tiann](https://github.com/tiann))
+* **Custom Recovery (TWRP):** [Team Win Recovery Project](https://github.com/TeamWin) ([twrp.me](https://twrp.me)) & Galaxy S23 maintainers ([@archer9634](https://github.com/archer9634))
 * **One UI 9 Framework Engine:** [@Rezoss-Reza](https://github.com/Rezoss-Reza)
 * **UN1CA Core Architecture:** Salvo Giangri ([@salvogiangri](https://github.com/salvogiangri))
 * **Visuals & Wallpapers:** [@cosinemyan](https://github.com/cosinemyan) (NPL ROM Team)

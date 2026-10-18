@@ -18,6 +18,15 @@
     <PreferenceCategory android:title="@string/carbon_credits_category_title">
         <Preference android:title="@string/carbon_credit_lead_maintainer" android:summary="ALRI Development (Lead: Alexsander &quot;AlexsAR&quot; ALRI)" />
         <Preference android:title="@string/carbon_credit_port_stability" android:summary="ALRI Development — Systems &amp; Display Engineering" />
+        <Preference android:title="@string/carbon_credit_kernel" android:summary="GoRhanHee (Linux 5.15.216 • KernelSU + SUSFS)">
+            <intent android:action="android.intent.action.VIEW" android:data="https://github.com/GoRhanHee" />
+        </Preference>
+        <Preference android:title="@string/carbon_credit_root" android:summary="rifsxd &amp; tiann (KernelSU-Next v3.4.2)">
+            <intent android:action="android.intent.action.VIEW" android:data="https://github.com/rifsxd/KernelSU-Next" />
+        </Preference>
+        <Preference android:title="@string/carbon_credit_recovery" android:summary="Team Win Recovery Project (TWRP)">
+            <intent android:action="android.intent.action.VIEW" android:data="https://twrp.me" />
+        </Preference>
         <Preference android:title="@string/carbon_credit_upstream_framework" android:summary="Rezoss-Reza (@Rezoss-Reza)">
             <intent android:action="android.intent.action.VIEW" android:data="https://github.com/Rezoss-Reza" />
         </Preference>
@@ -27,8 +36,8 @@
         <Preference android:title="@string/carbon_credit_visuals_wallpapers" android:summary="Cosine &amp; NPL ROM Team">
             <intent android:action="android.intent.action.VIEW" android:data="https://github.com/cosinemyan" />
         </Preference>
-        <Preference android:title="@string/carbon_credit_github_repo" android:summary="https://github.com/alexsanderalri/Un1ca_Carbon">
-            <intent android:action="android.intent.action.VIEW" android:data="https://github.com/alexsanderalri/Un1ca_Carbon" />
+        <Preference android:title="@string/carbon_credit_github_repo" android:summary="https://github.com/alrigroup/un1ca-carbon">
+            <intent android:action="android.intent.action.VIEW" android:data="https://github.com/alrigroup/un1ca-carbon" />
         </Preference>
     </PreferenceCategory>
 </PreferenceScreen>

@@ -105,6 +105,9 @@
     <string name="carbon_credits_category_title">Credits &amp; Contributors</string>
     <string name="carbon_credit_lead_maintainer">Lead Maintainer</string>
     <string name="carbon_credit_port_stability">Port &amp; Stability S23</string>
+    <string name="carbon_credit_kernel">Custom Kernel (SM8550)</string>
+    <string name="carbon_credit_root">Root Engine</string>
+    <string name="carbon_credit_recovery">Custom Recovery</string>
     <string name="carbon_credit_upstream_framework">One UI 9 Framework Engine</string>
     <string name="carbon_credit_core_engine">UN1CA Core Engine</string>
     <string name="carbon_credit_visuals_wallpapers">Visuals &amp; Wallpapers</string>
