@@ -240,4 +240,26 @@ fi
 unset -f ADD_UNICA_SETTINGS_SEARCH_INDEX_DATA_PROVIDER
 unset PATCH_INST CONTENT SEARCH_INDEX_RESOURCES SEARCH_INDEX_RESOURCES_SMALI TOP_LEVEL_KEYS_COLLECTOR TOP_LEVEL_KEYS_COLLECTOR_SMALI
 
+# Pre-install KernelSU Next
+KSU_APK_SRC=""
+for src in \
+    "$SRC_DIR/carbon_ours/prebuilt_apps/KernelSU_Next.apk" \
+    "/home/alexsanderalri/Documentos/Un1ca_Carbon/carbon_ours/prebuilt_apps/KernelSU_Next.apk" \
+    "/home/alexsanderalri/Downloads/KernelSU_Next_v3.4.2_33355-release.apk"; do
+    if [ -f "$src" ]; then
+        KSU_APK_SRC="$src"
+        break
+    fi
+done
+
+if [ -n "$KSU_APK_SRC" ]; then
+    LOG "- Pre-installing KernelSU Next APK from $KSU_APK_SRC"
+    mkdir -p "$WORK_DIR/system/system/app/KernelSU_Next"
+    cp -p "$KSU_APK_SRC" "$WORK_DIR/system/system/app/KernelSU_Next/KernelSU_Next.apk"
+    chmod 755 "$WORK_DIR/system/system/app/KernelSU_Next"
+    chmod 644 "$WORK_DIR/system/system/app/KernelSU_Next/KernelSU_Next.apk"
+    SET_METADATA "system" "system/app/KernelSU_Next" 0 0 755 "u:object_r:system_file:s0"
+    SET_METADATA "system" "system/app/KernelSU_Next/KernelSU_Next.apk" 0 0 644 "u:object_r:system_file:s0"
+fi
+
 LOG_STEP_OUT
