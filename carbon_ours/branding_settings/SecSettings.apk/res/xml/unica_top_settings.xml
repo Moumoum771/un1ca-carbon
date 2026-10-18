@@ -16,16 +16,16 @@
     <io.mesalabs.unica.settings.preference.IconPreference android:icon="@drawable/ic_unica_settings_extra" android:title="@string/unica_extra_settings_title" android:key="unica_extra_settings" android:fragment="io.mesalabs.unica.settings.extra.ExtraSettingsFragment" settings:controller="io.mesalabs.unica.settings.extra.ExtraSettingsPreferenceController" />
     <com.samsung.android.settings.widget.SecInsetCategoryPreference />
     <PreferenceCategory android:title="@string/carbon_credits_category_title">
-        <Preference android:title="@string/carbon_credit_lead_maintainer" android:summary="ALRI Development (Lead: AlexsAR)" />
-        <Preference android:title="@string/carbon_credit_port_stability" android:summary="ALRI Development (Lead: AlexsanderALRI)" />
+        <Preference android:title="@string/carbon_credit_lead_maintainer" android:summary="ALRI Development (Lead: Alexsander &quot;AlexsAR&quot; ALRI)" />
+        <Preference android:title="@string/carbon_credit_port_stability" android:summary="ALRI Development — Systems &amp; Display Engineering" />
         <Preference android:title="@string/carbon_credit_upstream_framework" android:summary="Rezoss-Reza (@Rezoss-Reza)">
-            <intent android:action="android.intent.action.VIEW" android:data="https://github.com/Rezoss-Reza/UN1CA" />
+            <intent android:action="android.intent.action.VIEW" android:data="https://github.com/Rezoss-Reza" />
         </Preference>
         <Preference android:title="@string/carbon_credit_core_engine" android:summary="Salvo Giangri (@salvogiangri)">
-            <intent android:action="android.intent.action.VIEW" android:data="https://github.com/salvogiangri/UN1CA" />
+            <intent android:action="android.intent.action.VIEW" android:data="https://github.com/salvogiangri" />
         </Preference>
         <Preference android:title="@string/carbon_credit_visuals_wallpapers" android:summary="Cosine &amp; NPL ROM Team">
-            <intent android:action="android.intent.action.VIEW" android:data="https://github.com/cosinemyan/NPLROM_UN1CA" />
+            <intent android:action="android.intent.action.VIEW" android:data="https://github.com/cosinemyan" />
         </Preference>
         <Preference android:title="@string/carbon_credit_github_repo" android:summary="https://github.com/alexsanderalri/Un1ca_Carbon">
             <intent android:action="android.intent.action.VIEW" android:data="https://github.com/alexsanderalri/Un1ca_Carbon" />

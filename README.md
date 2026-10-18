@@ -128,14 +128,22 @@ Un1ca_Carbon/
 ## 👥 Créditos e Reconhecimentos
 
 * **Organização & Mantenedora Oficial:** **ALRI Development** (ALRIGROUP)
-* **Lead Maintainer & Lead Developer:** **AlexsAR** ([@alexsanderalri](https://github.com/alexsanderalri))
-* **Port, Estabilização Gráfica e Engenharia S23:** **ALRI Development** (Lead: AlexsanderALRI)
-* **One UI 9 Framework Engine:** **@Rezoss-Reza**
-* **UN1CA Core Architecture:** **Salvo Giangri** ([@salvogiangri](https://github.com/salvogiangri))
-* **Visuals & Wallpapers:** **@cosinemyan** (NPL ROM Team)
+* **Lead Maintainer & Lead Developer:** **Alexsander "AlexsAR" ALRI** ([@alexsanderalri](https://github.com/alexsanderalri))
+* **Port, Estabilização Gráfica e Engenharia S23:** **ALRI Development**
+* **One UI 9 Framework Engine:** [@Rezoss-Reza](https://github.com/Rezoss-Reza)
+* **UN1CA Core Architecture:** Salvo Giangri ([@salvogiangri](https://github.com/salvogiangri))
+* **Visuals & Wallpapers:** [@cosinemyan](https://github.com/cosinemyan) (NPL ROM Team)
 
 ---
 
-## 📄 Licença
+## 📄 Licenças de Código Aberto
 
-Este projeto é distribuído sob a licença **GNU General Public License v3.0 (GPL-3.0)**.
+Este projeto adota uma estrutura de licenciamento transparente e compatível com as criações originais:
+
+* **Módulos, Calibração e Engenharia ALRI (`carbon_ours/`):**  
+  Licenciado sob a **ARGLP — ALRI GROUP LICENSE PERMISSIVE**  
+  Disponível no arquivo `LICENSE` e em: [https://github.com/alrigroup/licenses](https://github.com/alrigroup/licenses).
+* **UN1CA Core Engine (`core_unica/`):**  
+  Mantém sua licença original **GNU General Public License v3.0 (GPL-3.0)** por Salvo Giangri.
+* **Componentes de Colaboradores (`vendors_rezoss/` e `vendors_npl/`):**  
+  Preservam suas respectivas licenças e avisos de direitos autorais atribuídos por @Rezoss-Reza e @cosinemyan.

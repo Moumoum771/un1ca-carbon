@@ -3,6 +3,10 @@
 # Copyright (c) 2026 ALRIGROUP and its affiliates.
 # Engineered and maintained by ALRI Development.
 #
+# This code is licensed under the ARGLP - ALRI GROUP LICENSE PERMISSIVE
+# found in the LICENSE file in the root directory of this source tree
+# and at: https://github.com/alrigroup/licenses
+#
 # =============================================================================
 # UN1CA Carbon Build Orchestrator
 # Project: UN1CA Carbon (Version: IX • One UI 9.0 • Android 17 • SDK 37)
@@ -56,8 +60,9 @@ echo "============================================================"
 echo "      UN1CA CARBON — ROM BUILD PIPELINE                     "
 echo "  Version: IX (One UI 9.0 • Android 17)                     "
 echo "  Target: $TARGET_DEVICE                                    "
-echo "  Maintained by: ALRI Development (Lead: AlexsAR)           "
-echo "  Port & Systems: ALRI Development (AlexsanderALRI)         "
+echo "  Organization: ALRI Development (ALRIGROUP)                "
+echo "  Lead Developer: Alexsander \"AlexsAR\" ALRI (@alexsanderalri)"
+echo "  Port & Systems Engineering: ALRI Development              "
 echo "============================================================"
 
 # Ensure symlinked execution tree is present

@@ -406,6 +406,7 @@ ADD_TO_WORK_DIR()
                     LOGW "No file_context entry found for \"$f\" in \"${SOURCE//$SRC_DIR\//}\". Using default value"
 
                     LABEL="$(_GET_SELINUX_LABEL "$PARTITION" "/$f")"
+                    [ -z "$LABEL" ] && LABEL="u:object_r:system_file:s0"
 
                     echo "/$(_HANDLE_SPECIAL_CHARS "$f") $LABEL" >> "$WORK_DIR/configs/file_context-$PARTITION"
                 fi
@@ -441,6 +442,7 @@ ADD_TO_WORK_DIR()
                     LOGW "No file_context entry found for \"$TMP\" in \"${SOURCE//$SRC_DIR\//}\". Using default value"
 
                     LABEL="$(_GET_SELINUX_LABEL "$PARTITION" "/$TMP")"
+                    [ -z "$LABEL" ] && LABEL="u:object_r:system_file:s0"
 
                     echo "/$(_HANDLE_SPECIAL_CHARS "$TMP") $LABEL" >> "$WORK_DIR/configs/file_context-$PARTITION"
                 fi
