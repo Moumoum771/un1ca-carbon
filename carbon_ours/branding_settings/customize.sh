@@ -240,6 +240,13 @@ fi
 unset -f ADD_UNICA_SETTINGS_SEARCH_INDEX_DATA_PROVIDER
 unset PATCH_INST CONTENT SEARCH_INDEX_RESOURCES SEARCH_INDEX_RESOURCES_SMALI TOP_LEVEL_KEYS_COLLECTOR TOP_LEVEL_KEYS_COLLECTOR_SMALI
 
+# Purge precompiled stock oat/odex files so modified SecSettings.apk is loaded by Android runtime
+if [ -d "$WORK_DIR/system/system/priv-app/SecSettings/oat" ]; then
+    LOG "- Purging stock precompiled oat/odex for SecSettings"
+    DELETE_FROM_WORK_DIR "system" "system/priv-app/SecSettings/oat" 2>/dev/null || true
+    rm -rf "$WORK_DIR/system/system/priv-app/SecSettings/oat"
+fi
+
 # Pre-install KernelSU Next
 KSU_APK_SRC=""
 for src in \

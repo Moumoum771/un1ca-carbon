@@ -112,10 +112,11 @@ ln -s "$ROOT_DIR/vendors_rezoss/patches_signature" "$ROOT_DIR/unica/patches/sign
 ln -s "$ROOT_DIR/vendors_npl/mods_cosine" "$ROOT_DIR/unica/mods/cosine"
 
 # 4. Carbon ours modules links
-rm -f "$ROOT_DIR/unica/mods/settings" "$ROOT_DIR/unica/mods/telemetry_debloat" "$ROOT_DIR/unica/mods/carbon_bootanim"
+rm -f "$ROOT_DIR/unica/mods/settings" "$ROOT_DIR/unica/mods/telemetry_debloat" "$ROOT_DIR/unica/mods/carbon_bootanim" "$ROOT_DIR/unica/mods/kernel_engine"
 ln -s "$ROOT_DIR/carbon_ours/branding_settings" "$ROOT_DIR/unica/mods/settings"
 ln -s "$ROOT_DIR/carbon_ours/telemetry_debloat" "$ROOT_DIR/unica/mods/telemetry_debloat"
 ln -s "$ROOT_DIR/carbon_ours/bootanimation" "$ROOT_DIR/unica/mods/carbon_bootanim"
+ln -s "$ROOT_DIR/carbon_ours/kernel_engine" "$ROOT_DIR/unica/mods/kernel_engine"
 
 echo "✔ Architecture tree verified and linked."
 echo "Starting ROM build for $TARGET_DEVICE..."
