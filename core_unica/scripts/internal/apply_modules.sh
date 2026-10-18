@@ -135,6 +135,6 @@ fi
 
 while IFS= read -r f; do
     APPLY_MODULE "$f"
-done < <(find "$1" -mindepth 1 -maxdepth 1 -type d | LC_ALL=C sort)
+done < <(find -L "$1" -mindepth 1 -maxdepth 1 -type d | LC_ALL=C sort)
 
 exit 0
