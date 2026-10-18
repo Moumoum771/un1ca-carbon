@@ -19,7 +19,8 @@
 [![Android](https://img.shields.io/badge/Android-17-green.svg)](https://developer.android.com)
 [![OneUI](https://img.shields.io/badge/OneUI-9.0--Beta2-blue.svg)](https://www.samsung.com)
 [![Device](https://img.shields.io/badge/Target-Galaxy%20S23%20(dm1q)-orange.svg)](https://github.com/alrigroup/un1ca-carbon)
-[![DFE](https://img.shields.io/badge/Encryption-DFE%20Enabled-success.svg)](https://github.com/alrigroup/un1ca-carbon)
+[![Kernel](https://img.shields.io/badge/Kernel-GoRhanHee%205.15.216-red.svg)](https://github.com/alrigroup/un1ca-carbon)
+[![Root](https://img.shields.io/badge/Root-KernelSU--Next-blueviolet.svg)](https://github.com/alrigroup/un1ca-carbon)
 [![License](https://img.shields.io/badge/License-ARGLP-brightgreen.svg)](LICENSE)
 
 </div>
@@ -35,7 +36,10 @@ While initial upstream One UI 9 experimental ports were built exclusively for th
 - Fixes SystemUI media and dynamic wallpaper linkage aborts;
 - Calibrates 120Hz adaptive refresh rate for the native 1080x2340 FHD+ AMOLED panel;
 - Restores official Samsung-signed input method components to guarantee out-of-the-box keyboard input across FRP-locked initial setup wizards;
-- Introduces native **DFE (Disable Force Encryption)**, leaving the `/data` filesystem unencrypted for full TWRP recovery backups.
+- Directly integrates the **GoRhanHee Custom Kernel (Linux 5.15.216)** with **KernelSU-Next v3.4.2** and **SUSFS**;
+- Preserves and automates the flashing of official **TWRP Recovery** in a single seamless installation package;
+- Features the exclusive **UN1CA Carbon Boot Animation** and **Featured Wallpaper Suite**;
+- Implements a configurable **Telemetry Debloater** (`DEBLOAT_TELEMETRY=true`) stripping OEM tracking daemons.
 
 ---
 
@@ -133,17 +137,18 @@ Un1ca_Carbon/
 │
 ├── 📁 carbon_ours/          # ALRI DEVELOPMENT EXCLUSIVE ENGINEERING
 │   ├── target_dm1q/         # S23 Hardware Calibration: Flat FHD+ (1080x2340), HFR Mode 2, Super Partition
-│   ├── dfe_engine/          # Storage Fstab with Active DFE (encryptable) — Free TWRP /data access
-│   ├── branding_settings/   # SecSettings with native "Carbon Settings" menu, inverted logo & credits
-│   ├── bootanimation/       # Custom UN1CA Carbon boot animation with BOOTANIMATION_STYLE toggle
+│   ├── branding_settings/   # SecSettings with native "Carbon Settings" menu, molecular icon & credits
+│   ├── bootanimation/       # Custom UN1CA Carbon boot animation (24fps intro + breathing pulse loop)
 │   ├── telemetry_debloat/   # Configurable Telemetry Debloater controlled via DEBLOAT_TELEMETRY
-│   ├── prebuilt_apps/       # Integrated KernelSU-Next v3.4.2 manager package
+│   ├── kernel_engine/       # Combo integration engine for GoRhanHee Kernel, DLKM drivers, and TWRP
+│   ├── kernel_gorhanhee/    # GoRhanHee Linux 5.15.216 kernel Image & matching DLKM drivers
+│   ├── prebuilt_apps/       # Pre-installed KernelSU-Next v3.4.2 manager package
 │   ├── recovery_twrp/       # Built-in TWRP Recovery image (104 MB) for automated installer flashing
-│   ├── kernel_gorhanhee/    # GoRhanHee Kernel AnyKernel3 package (KernelSU + SUSFS for SM8550)
+│   ├── wallpapers/          # Carbon official wallpapers (static FHD+ & animated lockscreen video)
 │   └── security_keys/       # Platform and testkey signature credentials
 │
 ├── 📁 docs/                 # Technical Documentation & Architectural Specifications
-│   ├── relatorio.md         # Forensic Engineering Report detailing every resolved failure & bootloop
+│   ├── engineering_report.md# Forensic Engineering Report detailing every resolved failure & bootloop
 │   ├── telemetry_debloat.md # Complete telemetry debloater specification & toggle guide
 │   └── debloat_inventory.md # Complete binary audit of all 340 default rootfs APK packages
 │

@@ -103,10 +103,10 @@ To transform an experimental S23 Ultra port into a rock-solid, production-grade 
 
 ---
 
-### 🔴 Failure 3: Post-Android 17 TWRP Storage Mount Rejection
-* **Symptom:** TWRP reported `Failed to mount '/data' (Invalid argument)` and could not mount `/sdcard`.
-* **Root Cause:** During its initial boot sequence, the Android 17 runtime initializes updated File-Based Encryption (FBE) metadata structures within the F2FS filesystem on `/dev/block/sda41`. Because older TWRP recovery kernels lack backward-compatible keyring hooks for Android 17 superblock changes, mounting failed without a clean format.
-* **Resolution:** Performed a clean **Format Data** operation within TWRP to reset the F2FS superblock, followed by the activation of native DFE (`encryptable` in `fstab.qcom`) to prevent re-encryption.
+### 🔴 Failure 3: DFE `encryptable` Vold Rejection & Black Screen Hang
+* **Symptom:** Modifying `vendor/etc/fstab.qcom` from `fileencryption=aes-256-xts:aes-256-cts:v2+inlinecrypt_optimized+wrappedkey_v0` to `encryptable` caused the One UI 9 boot sequence to hang indefinitely on a black screen.
+* **Root Cause:** Android 17 / One UI 9 `vold` (Volume Daemon) strictly enforces modern hardware-backed File-Based Encryption (FBE) metadata policies on Samsung UFS 4.0 storage (`/dev/block/sda41`). The legacy Android 9/10 `encryptable` flag caused `vold` to crash silently during early stage storage initialization, preventing `/data` from mounting and halting zygote spawn.
+* **Resolution:** Discarded the non-viable `encryptable` hack. Restored authentic Samsung One UI 9 FBE encryption parameters. Instructed users to utilize TWRP's native **Format Data** workflow to wipe metadata structures when clean-flashing.
 
 ---
 
@@ -117,7 +117,63 @@ To transform an experimental S23 Ultra port into a rock-solid, production-grade 
 
 ---
 
-## 🚀 4. Current Device State & Operating Profile
+### 🔴 Failure 5: Upstream Build Toolchain Symlink Bypass (Pure Stock Boot Loop)
+* **Symptom:** The compiled flashable package booted into 100% pure stock One UI 9 without applying custom boot animations, Carbon wallpapers, Settings modifications, or kernel patches.
+* **Log Evidence (`out/build_rom.log`):**
+  ```text
+  (scripts/make_rom.sh:89) No changes have been detected in the build environment
+  Applying ROM patches
+  Applying ROM mods
+  Creating target-files zip
+  ```
+* **Root Cause:** In `scripts/internal/apply_modules.sh` and `scripts/make_rom.sh`, directory discovery was implemented using `find "$1" -mindepth 1 -maxdepth 1 -type d`. In Linux POSIX semantics, symbolic links pointing to directories (`unica/mods/*` and `unica/patches/*`) are evaluated as type `l` (link), NOT type `d` (directory). Consequently, `find` returned zero directories, causing `apply_modules.sh` to silently skip all 49 patches and mods.
+* **Resolution:** Upgraded all module and patch discovery routines to `find -L`, ensuring symbolic links are fully traversed. Added mandatory force flag (`-f`) in `make_carbon.sh` to prevent stale build cache hits.
+
+---
+
+### 🔴 Failure 6: Kernel & Driver Vermagic Discrepancy (Black Screen on Kernel Flash)
+* **Symptom:** Flashing custom kernel packages on top of the ROM resulted in an unrecoverable black screen where display and ADB failed to initialize.
+* **Root Cause:** The GoRhanHee custom kernel is compiled against **Linux 5.15.216**, whereas the stock Samsung One UI 9 firmware provides kernel loadable modules (`vendor_dlkm` and `system_dlkm`) compiled against **Linux 5.15.197**. Flashing the kernel `Image` without replacing matching DLKM modules triggered a fatal `vermagic` mismatch during early boot, preventing the Qualcomm display driver (`msm_drm.ko`) and touch panel drivers from loading.
+* **Resolution:** Implemented **Approach 1 (Combo Integration Engine)** inside `carbon_ours/kernel_engine`:
+  1. Automatically repacks `boot.img` with GoRhanHee Linux 5.15.216 kernel `Image`.
+  2. Unpacks `vendor_boot.img` and updates the ramdisk with GoRhanHee SM8550 modules while stripping AVB verification flags from `fstab.qcom`.
+  3. Replaces all modules in `vendor_dlkm` and `system_dlkm` with matching 5.15.216 binaries and dynamically regenerates `fs_config` and `file_contexts`.
+  4. Flashes GoRhanHee `boot.img`, updated `vendor_boot.img`, and official `recovery.img` (TWRP) directly to device block devices in the installer.
+
+---
+
+### 🔴 Failure 7: `SecSettings.apk` AAPT2 Link Symbol Eviction
+* **Symptom:** Resource compilation failed with `error: no definition for declared symbol 'com.android.settings:color/Android_Auto_menu_icon_color'`.
+* **Root Cause:** The module installer in `branding_settings` overwrote `res/values/colors.xml` instead of appending new Carbon colors before `</resources>`, evicting hundreds of Samsung's stock color definitions declared in `public.xml`.
+* **Resolution:** Re-engineered the injection logic in `carbon_ours/branding_settings/customize.sh`: existing `res/values/*.xml` files are strictly patched via sed interpolation before `</resources>`, while standalone layouts and drawables (`res/xml/unica_*.xml`, `res/drawable/*.xml`) are copied cleanly without modifying existing symbol tables.
+
+---
+
+### 🔴 Failure 8: Duplicate Smali Labels in `services.jar` and `DAAgent.apk`
+* **Symptom:** Apktool smali assembly failed with `There is already a label with that name` in `AttestationUtils.smali[692,4]`.
+* **Root Cause:** A legacy ICD bypass patch from Android 14 attempted to rename a branch target to `:cond_9`, which was already an existing label in One UI 9's 64-bit smali bytecode.
+* **Resolution:** Pruned the conflicting patch since `isVerifiableIntegrity()Z` is already handled via `samsungkeystoreutils.jar`, and disabled the redundant `daagent` module.
+
+---
+
+### 🔴 Failure 9: `product.img` EROFS Canned FS-Config Rejection
+* **Symptom:** Filesystem generation aborted with `failed to find product/media in canned fs_config`.
+* **Root Cause:** Creating `/product/media` for bootanimation placement introduced an unregistered directory into the target tree, which `mkfs.erofs` rejected because `fs_config-product` contained no security or ownership entries for `/product/media`.
+* **Resolution:** Standardized bootanimation installation to `/system/media/bootanimation.zip`, where system permissions and SELinux file contexts already exist, and purged `/product/media`.
+
+---
+
+## ⚡ 4. Build Pipeline Performance Optimization (28-Thread Xeon Architecture)
+
+To reduce build times from ~30 minutes down to 5–8 minutes on multi-core workstation hardware (Intel Xeon E5-2680 v4, 28 threads, 32 GB RAM):
+1. **Direct Flashable Zip Mode (`-r`):** Eliminated the creation and re-extraction of the intermediate 8.2 GB `target-files.zip`.
+2. **Parallel Partition Generation:** All 7 OS partitions (`system`, `vendor`, `product`, `system_ext`, `odm`, `vendor_dlkm`, `system_dlkm`) are compiled concurrently via `mkfs.erofs` in background threads.
+3. **Concurrent Brotli Compression:** Block image conversion (`img2sdat`) and brotli compression (`.new.dat.br`) run simultaneously across all 28 available threads.
+4. **Multithreaded 7z Packaging:** Final packaging utilizes `7z a -tzip -mx=1 -mmt=28` for near-instant archive creation.
+
+---
+
+## 🚀 5. Current Device State & Operating Profile
 
 Following these resolutions:
 1. **Samsung One UI 9.0 (Android 17)** runs natively with high stability on the Galaxy S23 (`dm1q`).
