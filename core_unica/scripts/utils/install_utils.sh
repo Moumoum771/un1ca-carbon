@@ -196,8 +196,8 @@ PRINT_HEADER()
     echo -n 'ui_print("'
     echo -n "One UI version: $ONEUI_VERSION (Android 17 • SDK 37)"
     echo    '");'
-    echo    'ui_print("Maintained by AlexsAR (@alexsanderalri)");'
-    echo    'ui_print("Port & Stability by AlexsanderALRI");'
+    echo    'ui_print("Maintained by ALRI Development (Lead: AlexsAR)");'
+    echo    'ui_print("Port & Systems by ALRI Development (AlexsanderALRI)");'
     echo    'ui_print("Core: salvo_giangri | Framework: Rezoss");'
     PRINT_SEPARATOR
     echo -n 'ui_print("'

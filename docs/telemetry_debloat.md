@@ -1,7 +1,8 @@
 # UN1CA Carbon — Modular Telemetry Debloater Specification
 
-**Maintainer:** AlexsAR (@alexsanderalri)  
-**Port & Engineering:** AlexsanderALRI  
+**Organization:** ALRI Development (ALRIGROUP)  
+**Lead Maintainer:** AlexsAR (@alexsanderalri)  
+**Port & Systems Engineering:** ALRI Development (Lead: AlexsanderALRI)  
 **Project:** UN1CA Carbon (Version: IX • One UI 9.0 • Android 17 • SDK 37)  
 **Target:** Samsung Galaxy S23 Series (`dm1q`, `dm2q`, `dm3q` / Snapdragon 8 Gen 2 / SM8550)  
 **Module Identifier:** `telemetry_debloat`  

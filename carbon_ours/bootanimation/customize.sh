@@ -1,6 +1,13 @@
 #!/usr/bin/env bash
+#
+# Copyright (c) 2026 ALRIGROUP and its affiliates.
+# Engineered and maintained by ALRI Development.
+#
 # =============================================================================
 # UN1CA Carbon - Boot Animation Switcher
+# Organization: ALRI Development (ALRIGROUP)
+# Lead:         AlexsAR (@alexsanderalri)
+# Systems:      AlexsanderALRI
 # Allows developer to select at build time between:
 # - "carbon" : Custom UN1CA Carbon animation (p1.mp4 24fps intro + breathing pulse loop)
 # - "stock"  : Stock UN1CA / Samsung QMG animation

@@ -127,8 +127,9 @@ Un1ca_Carbon/
 
 ## 👥 Créditos e Reconhecimentos
 
-* **Mantenedor Principal & Lead Developer:** **AlexsAR** ([@alexsanderalri](https://github.com/alexsanderalri))
-* **Port, Estabilização Gráfica e Engenharia S23:** **AlexsanderALRI** (ALRI GROUP)
+* **Organização & Mantenedora Oficial:** **ALRI Development** (ALRIGROUP)
+* **Lead Maintainer & Lead Developer:** **AlexsAR** ([@alexsanderalri](https://github.com/alexsanderalri))
+* **Port, Estabilização Gráfica e Engenharia S23:** **ALRI Development** (Lead: AlexsanderALRI)
 * **One UI 9 Framework Engine:** **@Rezoss-Reza**
 * **UN1CA Core Architecture:** **Salvo Giangri** ([@salvogiangri](https://github.com/salvogiangri))
 * **Visuals & Wallpapers:** **@cosinemyan** (NPL ROM Team)

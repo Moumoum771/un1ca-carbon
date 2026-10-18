@@ -1,3 +1,8 @@
+#!/usr/bin/env bash
+#
+# Copyright (c) 2026 ALRIGROUP and its affiliates.
+# Engineered and maintained by ALRI Development.
+#
 # Applied by scripts/internal/apply_modules.sh during make_rom (same path as displayconfig).
 SKIPUNZIP=1
 

@@ -1,8 +1,13 @@
 #!/usr/bin/env bash
+#
+# Copyright (c) 2026 ALRIGROUP and its affiliates.
+# Engineered and maintained by ALRI Development.
+#
 # =============================================================================
 # UN1CA Carbon — Modular Telemetry & Bloatware Debloater
-# Module:  carbon_ours/telemetry_debloat
-# Author:  AlexsAR (@alexsanderalri)
+# Organization: ALRI Development (ALRIGROUP)
+# Lead:         AlexsAR (@alexsanderalri)
+# Systems:      AlexsanderALRI
 #
 # Logic:
 #   Controls debloating via $DEBLOAT_TELEMETRY (default: true).

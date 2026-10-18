@@ -1,14 +1,16 @@
-# Copyright (c) 2025 Salvo Giangreco
-# SPDX-License-Identifier: GPL-3.0-or-later
-# UN1CA Carbon IX (One UI 9.0 • Android 17 • SDK 37)
+#
+# Copyright (c) 2026 ALRIGROUP and its affiliates.
+# Engineered and maintained by ALRI Development.
+#
+# UN1CA Carbon (Release: IX • One UI 9.0 • Android 17 • SDK 37)
 
-export UN1CA_NAME="UN1CA Carbon IX"
+export UN1CA_NAME="UN1CA Carbon"
 export NPL_VERSION="Carbon_IX-1.0"
 export NPL_BUILD_TYPE="Official"
 export NPL_CODENAME="Carbon"
-export NPL_MAINTAINER="AlexsAR (@alexsanderalri)"
-export NPL_MAINTAINERS="AlexsAR (@alexsanderalri)"
-export ROM_PORTER="AlexsanderALRI"
+export NPL_MAINTAINER="ALRI Development (Lead: AlexsAR)"
+export NPL_MAINTAINERS="ALRI Development (Lead: AlexsAR)"
+export ROM_PORTER="ALRI Development (Lead: AlexsanderALRI)"
 
 # Configurable Telemetry Debloater (default: true)
 export DEBLOAT_TELEMETRY="${DEBLOAT_TELEMETRY:-true}"

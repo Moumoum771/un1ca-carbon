@@ -1,4 +1,8 @@
 #!/usr/bin/env bash
+#
+# Copyright (c) 2026 ALRIGROUP and its affiliates.
+# Engineered and maintained by ALRI Development.
+#
 # =============================================================================
 # UN1CA Carbon Build Orchestrator
 # Project: UN1CA Carbon (Version: IX • One UI 9.0 • Android 17 • SDK 37)
@@ -52,8 +56,8 @@ echo "============================================================"
 echo "      UN1CA CARBON — ROM BUILD PIPELINE                     "
 echo "  Version: IX (One UI 9.0 • Android 17)                     "
 echo "  Target: $TARGET_DEVICE                                    "
-echo "  Lead Maintainer: AlexsAR (@alexsanderalri)                "
-echo "  Port & Engineering: AlexsanderALRI                        "
+echo "  Maintained by: ALRI Development (Lead: AlexsAR)           "
+echo "  Port & Systems: ALRI Development (AlexsanderALRI)         "
 echo "============================================================"
 
 # Ensure symlinked execution tree is present
