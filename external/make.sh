@@ -8,7 +8,8 @@
 # and at: https://github.com/alrigroup/licenses
 #
 
-TOOLS_DIR="${TOOLS_DIR:-$SRC_DIR/out/tools}"
+ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+TOOLS_DIR="${TOOLS_DIR:-${SRC_DIR:-$ROOT_DIR}/out/tools}"
 
 if [ "$1" == "--check-tools" ]; then
     if [ -f "$TOOLS_DIR/bin/apktool" ] && [ -f "$TOOLS_DIR/bin/mkfs.erofs" ] && [ -f "$TOOLS_DIR/bin/signapk" ]; then
