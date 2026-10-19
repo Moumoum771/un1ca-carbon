@@ -176,19 +176,14 @@ GENERATE_OUTPUT_FILE()
 {
     local FILE
     local SUFFIX
+    local DEVICE
 
-    FILE="$OUT_DIR/UN1CA_"
-    FILE+="$(grep "^version" <<< "$BUILD_INFO" | cut -d "=" -f 2 -s)"
-    FILE+="_"
-    FILE+="$(date +%d%m%y-%H%M%S)"
-    FILE+="_"
-    FILE+="$(grep "^device" <<< "$BUILD_INFO" | cut -d "=" -f 2 -s)"
-    if ! $DEBUG || $ROM_IS_OFFICIAL; then
-        FILE+="-sign"
-    fi
+    DEVICE="$(grep "^device" <<< "$BUILD_INFO" | cut -d "=" -f 2 -s)"
+    [ -z "$DEVICE" ] && DEVICE="$TARGET_CODENAME"
     SUFFIX="$(GET_PROP "system" "ro.build.PDA")"
     SUFFIX="${SUFFIX: -4}"
-    FILE+="_${SUFFIX}.zip"
+
+    FILE="$OUT_DIR/UN1CA_Carbon_IX_1.0_${DEVICE}_${SUFFIX}.zip"
 
     echo "$FILE"
 }
@@ -268,6 +263,10 @@ GENERATE_UPDATER_SCRIPT()
             if [ -f "$TMP_DIR/recovery.img" ]; then
                 echo    'ui_print("Flashing recovery image (TWRP)...");'
                 echo    'package_extract_file("recovery.img", "/dev/block/by-name/recovery");'
+            fi
+            if [ -f "$TMP_DIR/KernelSU_Next.apk" ]; then
+                echo    'ui_print("Extracting KernelSU-Next to /sdcard...");'
+                echo    'package_extract_file("KernelSU_Next.apk", "/sdcard/KernelSU_Next.apk");'
             fi
         else
             for b in $KERNEL_BINS; do
@@ -395,6 +394,14 @@ fi
 if [ -f "$SRC_DIR/carbon_ours/recovery_twrp/recovery.img" ]; then
     LOG "- Including TWRP recovery.img in package"
     cp -a "$SRC_DIR/carbon_ours/recovery_twrp/recovery.img" "$TMP_DIR/recovery.img"
+elif [ -f "$SRC_DIR/carbon_ours/recovery_twrp/recovery.img.00" ]; then
+    LOG "- Rebuilding TWRP recovery.img from split parts"
+    cat "$SRC_DIR/carbon_ours/recovery_twrp/recovery.img."[0-9][0-9] > "$TMP_DIR/recovery.img"
+fi
+
+if [ -f "$SRC_DIR/carbon_ours/prebuilt_apps/KernelSU_Next.apk" ]; then
+    LOG "- Including official KernelSU_Next.apk in package"
+    cp -a "$SRC_DIR/carbon_ours/prebuilt_apps/KernelSU_Next.apk" "$TMP_DIR/KernelSU_Next.apk"
 fi
 
 LOG "- Generating updater-script"

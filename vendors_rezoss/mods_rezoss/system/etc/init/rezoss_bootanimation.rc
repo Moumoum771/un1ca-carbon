@@ -1,4 +1,4 @@
-service rezoss_bootanim /system/bin/bootanimation_zip
+service rezoss_bootanim /system/bin/bootanimation
     class core
     user graphics
     group graphics system
@@ -8,8 +8,6 @@ service rezoss_bootanim /system/bin/bootanimation_zip
 on post-fs-data
     exec_background -- /system/bin/sh /system/etc/unica/rezoss_bootanimation.sh --apply
 
-on property:init.svc.bootanim=running
+on property:persist.sys.unica.bootanim=*
     exec_background -- /system/bin/sh /system/etc/unica/rezoss_bootanimation.sh --apply
 
-on boot
-    exec_background -- /system/bin/sh /system/etc/unica/rezoss_bootanimation.sh --apply

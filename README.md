@@ -43,6 +43,46 @@ While initial upstream One UI 9 experimental ports were built exclusively for th
 
 ---
 
+## 📥 Official Download & Release Package
+
+### UN1CA Carbon IX (v1.0) — Galaxy S23 Base (`SM-S911B` / `dm1q`) ONLY
+
+> **⚠️ DEVICE NOTICE:** This release package is strictly engineered and calibrated for the **Samsung Galaxy S23 Base (`SM-S911B` / `dm1q`)**. Do not flash on other Galaxy models or Ultra variants (`dm3q`).
+
+| Release Parameter | Specification / Value |
+| :--- | :--- |
+| **Release Tag** | `IX-v1.0` |
+| **Android Version** | Android 17 (One UI 9.0 • SDK 37) |
+| **Source Firmware** | `S911BXXUAZZI8` (Official Samsung Base) |
+| **Target Device** | Samsung Galaxy S23 (`SM-S911B` / `dm1q`) |
+| **Linux Kernel** | GoRhanHee 5.15.216 + KernelSU-Next v3.4.2 + SUSFS |
+| **Recovery** | Team Win Recovery Project (TWRP 3.7.1_12-0) integrated |
+| **Encryption Type** | Authentic Samsung Hardware FBE v2 (No DFE hack) |
+| **Package Filename**| `UN1CA_Carbon_IX_1.0_dm1q_ZZI8.zip` |
+| **Package Size** | **8.05 GB** (8,644,680,502 bytes) |
+| **SHA-1 Checksum** | `2c639ccf447eebe479482408ccf05157c9db29a6` |
+| **SHA-256 Checksum**| `eccace0f815258597a7ff35c6f6a45961f11992e35e8142a19e83c626c367f9d` |
+| **Download Mirror** | 🔗 **[Google Drive (Official Release Mirror)](https://drive.google.com/file/d/12n76Q7DNkFw9zbyqrgREkDOJSfZDKoff/view?usp=sharing)** |
+
+---
+
+## 📲 Clean Installation Guide (TWRP Recovery)
+
+Follow this verified installation workflow to ensure flawless first boot:
+
+1. **Boot into Recovery:** Power off your Galaxy S23 and boot into TWRP Recovery.
+2. **Format Userdata (Crucial):** Navigate to **Wipe > Format Data**, type `yes`, and confirm.  
+   *(Required on clean installations to create authentic FBE metadata structures).*
+3. **Transfer the ROM Package:**
+   - Connect your phone to your PC via USB and copy `UN1CA_Carbon_IX_1.0_dm1q_ZZI8.zip` to `/sdcard/`, or
+   - Use USB-OTG flash drive, or
+   - Use `adb sideload UN1CA_Carbon_IX_1.0_dm1q_ZZI8.zip`.
+4. **Flash the ROM:** Go to **Install**, select `UN1CA_Carbon_IX_1.0_dm1q_ZZI8.zip`, and swipe to confirm flash.  
+   *(The installer will flash system partitions, GoRhanHee kernel, TWRP recovery, and extract `KernelSU_Next.apk`).*
+5. **Reboot:** Tap **Reboot System** and enjoy UN1CA Carbon IX!
+
+---
+
 ## 🏛️ Upstream Lineage & Pinned Commit Hashes
 
 UN1CA Carbon is built upon a transparent, modular foundation combining upstream core engines, community enhancements, and custom ALRI engineering:
@@ -131,6 +171,40 @@ Accessible directly at the top level of the primary Samsung Settings app:
 
 ---
 
+## 🤝 Open Source, Non-Profit & Community Contributions
+
+**UN1CA Carbon is built 100% for the community as a strictly non-profit, open-source initiative.**
+
+We firmly believe in community-driven development, transparency, and freedom of choice. **Any and all contributions are 100% welcome!** Whether you are submitting pull requests, testing builds, reporting edge-case bugs, improving kernel parameters, optimizing battery profiles, translating interfaces, or contributing device trees for other Galaxy models — your participation is deeply valued.
+
+Feel free to open issues, submit pull requests, or share feedback. Let's push custom Android firmware forward together.
+
+---
+
+## 🛡️ Root Access & KernelSU-Next Management
+
+UN1CA Carbon integrates the **GoRhanHee Custom Kernel (Linux 5.15.216)** with **KernelSU-Next** and **SUSFS** built directly into the kernel driver at ring 0.
+
+### Recommended Manager Installation
+To grant and manage superuser permissions, users should install the official KernelSU-Next Manager:
+* **Official Release:** [KernelSU-Next v3.4.2](https://github.com/KernelSU-Next/KernelSU-Next/releases/tag/v3.4.2)
+* **Standard vs. Spoofed Package:** The choice between the standard release APK (`KernelSU_Next_v3.4.2_33355-release.apk`) and the spoofed manager package is **100% up to the user** based on personal preferences, banking detection evasion strategies, and hiding configurations.
+* **Offline Convenience:** During ROM installation, the flashable installer automatically extracts the official untouched KernelSU-Next APK to `/sdcard/KernelSU_Next.apk` so it is immediately accessible for installation without requiring internet access.
+
+---
+
+## ⚙️ Carbon Engine — Next-Generation Build System (Prototype Status)
+
+Located in `carbon_engine/`, **Carbon Engine** is our vision for the future of custom ROM compilation.
+
+### 🧪 Current Status: PROTOTYPE (Under Active Development)
+* **What is ready:** The native **C++20** engine core—featuring OpenSSL SIMD composite fingerprinting, ACID SQLite3 build ledger (`ledger.db`), topological Kahn DAG resolution, and the asynchronous Process Supervisor—is fully compiled and achieves **100% pass rates across all unit tests** (`test_engine`).
+* **Current Challenge & Production Reality:** Porting a massive, multi-vendor custom ROM (with over 49 legacy bash modules, APKTool hooks, and smali injectors) into a **100% content-addressed, phase-cached DAG** requires making every single patch idempotent. Because legacy scripts perform in-place mutations on decoded folders, running iterative phase caching directly on legacy scripts can cause resource collisions.
+* **Current Production Compiler:** In this release, production flashable ZIPs are built using the highly optimized, 28-thread parallelized orchestrator (`make_carbon.sh`), which builds clean, deterministic packages in ~3 to 4 minutes.
+* **The Long-Term Roadmap:** We are actively migrating legacy imperative scripts into declarative `Carbonfile.json` recipes. The ultimate goal is a universal compiler where altering a single string in Settings recompiles ONLY that APK and regenerates the flashable ZIP in **under 45 seconds**, completely eliminating redundant whole-ROM rebuilds. We invite developers interested in compiler engineering to collaborate with us!
+
+---
+
 ## 🏛️ Modular Repository Architecture
 
 ```text
@@ -140,6 +214,12 @@ Un1ca_Carbon/
 ├── 📁 vendors_rezoss/       # One UI 9 Framework Engine (Rezoss-Reza): TEE-Sim, HMA OSS, 4-Certs Bypass
 ├── 📁 vendors_npl/          # Visual Enhancements (NPL Team): Sagarmatha Wallpapers, ThemeCenter Trial
 │
+├── 📁 carbon_engine/        # C++20 NATIVE BUILD ORCHESTRATOR & DAG ENGINE (PROTOTYPE)
+│   ├── CMakeLists.txt       # Modern CMake C++20 build definition
+│   ├── Carbonfile.json      # Declarative 160-step universal build recipe
+│   ├── make_carbon_engine.sh# Self-compiling build entrypoint
+│   └── src/                 # Engine sources (DAG, SQLite3 Ledger, OpenSSL Hasher, Supervisor)
+│
 ├── 📁 carbon_ours/          # ALRI DEVELOPMENT EXCLUSIVE ENGINEERING
 │   ├── target_dm1q/         # S23 Hardware Calibration: Flat FHD+ (1080x2340), HFR Mode 2, Super Partition
 │   ├── branding_settings/   # SecSettings with native "Carbon Settings" menu, molecular icon & credits
@@ -148,7 +228,7 @@ Un1ca_Carbon/
 │   ├── kernel_engine/       # Combo integration engine for GoRhanHee Kernel, DLKM drivers, and TWRP
 │   ├── kernel_gorhanhee/    # GoRhanHee Linux 5.15.216 kernel Image & matching DLKM drivers
 │   ├── prebuilt_apps/       # Pre-installed KernelSU-Next v3.4.2 manager package
-│   ├── recovery_twrp/       # Built-in TWRP Recovery image (104 MB) for automated installer flashing
+│   ├── recovery_twrp/       # Built-in TWRP Recovery image (split into recovery.img.00/.01 under 55 MB for GitHub compliance)
 │   ├── wallpapers/          # Carbon official wallpapers (static FHD+ & animated lockscreen video)
 │   └── security_keys/       # Platform and testkey signature credentials
 │
@@ -161,6 +241,17 @@ Un1ca_Carbon/
 ├── 📄 README.md             # Project documentation & feature specifications
 └── 📄 LICENSE               # ARGLP (ALRI Group License Permissive)
 ```
+
+---
+
+## 📚 Developer Guides & Engineering Specifications
+
+For maintainers, developers, and porters extending UN1CA Carbon, comprehensive technical documentation is available under [`docs/dev_guides/`](docs/dev_guides/):
+
+1. **[Carbon Engine Architecture](docs/dev_guides/01_CARBON_ENGINE_ARCHITECTURE.md):** Deep dive into the native C++20 build orchestrator, Process Supervisor, SQLite ledger, and the 9 macroscopic pipeline stages.
+2. **[Porting UN1CA Scripts to Engine](docs/dev_guides/02_PORTING_UN1CA_SCRIPTS_TO_ENGINE.md):** Step-by-step tutorial on translating legacy imperative bash scripts (`customize.sh`, `apply_modules.sh`) into declarative `Carbonfile.json` actions, multi-target macros, and idempotency patterns.
+3. **[DAG Caching & SQLite Ledger](docs/dev_guides/03_DAG_CACHING_AND_LEDGER.md):** Detailed guide on OpenSSL SHA-256 fingerprinting, cache invalidation, topological task ordering, and incremental phase skipping.
+4. **[Boot Animation & Graphics Subsystem](docs/dev_guides/04_BOOTANIMATION_AND_GRAPHICS_SUBSYSTEM.md):** Architecture of Frame-0 SurfaceFlinger rendering, removal of Samsung QMG daemons, and runtime dynamic switching between Carbon and Android 17.
 
 ---
 

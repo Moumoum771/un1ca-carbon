@@ -47,6 +47,10 @@ while IFS= read -r f; do
     f="${f//$MODPATH\/SecSettings.apk\//}"
 
     if [[ "$f" == *"res/values"* ]] && [ -f "$APKTOOL_DIR/system/priv-app/SecSettings/SecSettings.apk/$f" ]; then
+        if grep -q "unica_allow_downgrade_title" "$APKTOOL_DIR/system/priv-app/SecSettings/SecSettings.apk/$f"; then
+            LOG "- \"$f\" already patched in SecSettings.apk, skipping..."
+            continue
+        fi
         LOG "- Patching \"$f\" in /system/system/priv-app/SecSettings.apk"
         PATCH_INST="/<\/resources>/i"
         CONTENT="$(sed -e "/?xml/d" -e "/resources>/d" "$MODPATH/SecSettings.apk/$f")"
@@ -247,35 +251,6 @@ if [ -d "$WORK_DIR/system/system/priv-app/SecSettings/oat" ]; then
     LOG "- Purging stock precompiled oat/odex for SecSettings"
     DELETE_FROM_WORK_DIR "system" "system/priv-app/SecSettings/oat" 2>/dev/null || true
     rm -rf "$WORK_DIR/system/system/priv-app/SecSettings/oat"
-fi
-
-# Pre-install KernelSU Next
-KSU_APK_SRC=""
-for src in \
-    "$SRC_DIR/carbon_ours/prebuilt_apps/KernelSU_Next.apk" \
-    "/home/alexsanderalri/Documentos/Un1ca_Carbon/carbon_ours/prebuilt_apps/KernelSU_Next.apk" \
-    "/home/alexsanderalri/Downloads/KernelSU_Next_v3.4.2_33355-release.apk"; do
-    if [ -f "$src" ]; then
-        KSU_APK_SRC="$src"
-        break
-    fi
-done
-
-if [ -n "$KSU_APK_SRC" ]; then
-    LOG "- Pre-installing KernelSU Next APK from $KSU_APK_SRC into priv-app and app"
-    mkdir -p "$WORK_DIR/system/system/priv-app/KernelSU_Next"
-    cp -p "$KSU_APK_SRC" "$WORK_DIR/system/system/priv-app/KernelSU_Next/KernelSU_Next.apk"
-    chmod 755 "$WORK_DIR/system/system/priv-app/KernelSU_Next"
-    chmod 644 "$WORK_DIR/system/system/priv-app/KernelSU_Next/KernelSU_Next.apk"
-    SET_METADATA "system" "system/priv-app/KernelSU_Next" 0 0 755 "u:object_r:system_file:s0"
-    SET_METADATA "system" "system/priv-app/KernelSU_Next/KernelSU_Next.apk" 0 0 644 "u:object_r:system_file:s0"
-
-    mkdir -p "$WORK_DIR/system/system/app/KernelSU_Next"
-    cp -p "$KSU_APK_SRC" "$WORK_DIR/system/system/app/KernelSU_Next/KernelSU_Next.apk"
-    chmod 755 "$WORK_DIR/system/system/app/KernelSU_Next"
-    chmod 644 "$WORK_DIR/system/system/app/KernelSU_Next/KernelSU_Next.apk"
-    SET_METADATA "system" "system/app/KernelSU_Next" 0 0 755 "u:object_r:system_file:s0"
-    SET_METADATA "system" "system/app/KernelSU_Next/KernelSU_Next.apk" 0 0 644 "u:object_r:system_file:s0"
 fi
 
 # Preload Carbon animated video wallpaper

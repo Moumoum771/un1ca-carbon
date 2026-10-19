@@ -184,6 +184,10 @@ HEX_PATCH()
     TO="$(tr "[:upper:]" "[:lower:]" <<< "$TO")"
 
     if ! xxd -p -c 0 "$FILE" | grep -q "$FROM"; then
+        if xxd -p -c 0 "$FILE" | grep -q "$TO"; then
+            LOG "- \"${FILE//$WORK_DIR/}\" already patched to \"$TO\", skipping..."
+            return 0
+        fi
         LOGE "No \"$FROM\" match in ${FILE//$WORK_DIR/}"
         return 1
     fi

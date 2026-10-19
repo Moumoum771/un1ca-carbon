@@ -135,4 +135,7 @@
     <string name="unica_now_nudge_reply_negative_title">Negative Reply</string>
     <string name="unica_now_nudge_reply_save_title">Save Reply Fallbacks</string>
     <string name="unica_now_nudge_reply_save_summary">Apply and persist custom fallback replies</string>
+    <string name="unica_bootanim_style_title">Boot animation style</string>
+    <string name="unica_bootanim_style_carbon">UN1CA Carbon</string>
+    <string name="unica_bootanim_style_rezoss">Android 17 (REZOSS)</string>
 </resources>

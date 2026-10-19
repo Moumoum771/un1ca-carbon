@@ -165,9 +165,28 @@ CARBON_SRC="$ASSETS_DIR/carbon_official.jpg"
 if [ -f "$CARBON_SRC" ]; then
     LOG "- Setting UN1CA Carbon as default boot wallpaper across all S23 device colors"
     CARBON_WEBP="/tmp/carbon_default_3088.webp"
-    cwebp -q 95 -resize 3088 3088 "$CARBON_SRC" -o "$CARBON_WEBP" >/dev/null 2>&1 || true
     CARBON_THUMB="/tmp/carbon_default_thumb.webp"
-    cwebp -q 90 -resize 572 572 "$CARBON_SRC" -o "$CARBON_THUMB" >/dev/null 2>&1 || true
+    python3 -c "
+from PIL import Image
+src = Image.open('$CARBON_SRC').convert('RGB')
+w, h = src.size
+
+# 3088x3088 portrait-centered canvas (no stretching)
+ch, cw = 3088, 3088
+scaled_w = int(round(w * ch / h))
+scaled = src.resize((scaled_w, ch), Image.Resampling.LANCZOS)
+canvas = Image.new('RGB', (cw, ch), (0, 0, 0))
+canvas.paste(scaled, ((cw - scaled_w) // 2, 0))
+canvas.save('$CARBON_WEBP', 'WEBP', quality=95)
+
+# 572x572 thumbnail canvas (no stretching)
+th, tw = 572, 572
+scaled_tw = int(round(w * th / h))
+scaled_t = src.resize((scaled_tw, th), Image.Resampling.LANCZOS)
+canvas_t = Image.new('RGB', (tw, th), (0, 0, 0))
+canvas_t.paste(scaled_t, ((tw - scaled_tw) // 2, 0))
+canvas_t.save('$CARBON_THUMB', 'WEBP', quality=90)
+" >/dev/null 2>&1 || true
 
     if [ -f "$CARBON_WEBP" ]; then
         for wp_target in Wallpaper_001.webp Wallpaper_003.webp Wallpaper_005.webp Wallpaper_007.webp; do
@@ -182,7 +201,8 @@ if [ -f "$CARBON_SRC" ]; then
 fi
 
 # Set UN1CA Carbon animated video as default lockscreen video across all color variants
-CARBON_LOCK_VIDEO="$SRC_DIR/carbon_ours/wallpapers/carbon_animated_lockscreen.mp4"
+ROOT_SRC="${SRC_DIR:-$(cd "$(dirname "${BASH_SOURCE[0]}")/../../../.." && pwd)}"
+CARBON_LOCK_VIDEO="$ROOT_SRC/carbon_ours/wallpapers/carbon_animated_lockscreen.mp4"
 if [ -f "$CARBON_LOCK_VIDEO" ] && [ -d "$APK_DIR/res/raw" ]; then
     for vid_target in Default_Video_Wallpaper_ZE.mp4 Default_Video_Wallpaper_ZK.mp4 Default_Video_Wallpaper_ZG.mp4 Default_Video_Wallpaper_LI.mp4; do
         if [ -f "$APK_DIR/res/raw/$vid_target" ]; then

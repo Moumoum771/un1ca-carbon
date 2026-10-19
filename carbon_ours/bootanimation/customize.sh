@@ -30,19 +30,41 @@ if [ "$STYLE" == "carbon" ]; then
         cp -a "$CARBON_ZIP" "$WORK_DIR/system/system/media/bootanimation.zip"
         SET_METADATA "system" "system/media/bootanimation.zip" 0 0 644 "u:object_r:system_file:s0"
 
+        cp -a "$CARBON_ZIP" "$WORK_DIR/system/system/media/bootanimation_carbon.zip"
+        SET_METADATA "system" "system/media/bootanimation_carbon.zip" 0 0 644 "u:object_r:system_file:s0"
+
         # Direct native replacement of Samsung stock QMG bootanimation with AOSP zip player
-        AOSP_BIN="$SRC_DIR/vendors_rezoss/mods_rezoss/bootanimation_zip/system/bin/bootanimation_zip"
+        AOSP_BIN="$MODPATH/system/bin/bootanimation_zip"
+        [ -f "$AOSP_BIN" ] || AOSP_BIN="$SRC_DIR/vendors_rezoss/mods_rezoss/bootanimation_zip/system/bin/bootanimation_zip"
+
         if [ -f "$AOSP_BIN" ]; then
             LOG "- Installing AOSP zip bootanimation player as primary /system/bin/bootanimation"
             cp -a "$AOSP_BIN" "$WORK_DIR/system/system/bin/bootanimation"
             SET_METADATA "system" "system/bin/bootanimation" 0 2000 755 "u:object_r:bootanim_exec:s0"
+
+            cp -a "$AOSP_BIN" "$WORK_DIR/system/system/bin/bootanimation_zip"
+            SET_METADATA "system" "system/bin/bootanimation_zip" 0 2000 755 "u:object_r:bootanim_exec:s0"
         fi
+
+        # Remove Samsung stock QMG files so stock Samsung animation never plays
+        rm -f "$WORK_DIR/system/system/media/bootsamsung.qmg" 2>/dev/null
+        rm -f "$WORK_DIR/system/system/media/bootsamsungloop.qmg" 2>/dev/null
+
+        AOSP_LIB="$MODPATH/system/lib64/libbootanimation.so"
+        [ -f "$AOSP_LIB" ] || AOSP_LIB="$SRC_DIR/vendors_rezoss/mods_rezoss/bootanimation_zip/system/lib64/libbootanimation.so"
+        if [ -f "$AOSP_LIB" ]; then
+            cp -a "$AOSP_LIB" "$WORK_DIR/system/system/lib64/libbootanimation.so"
+            SET_METADATA "system" "system/lib64/libbootanimation.so" 0 0 644 "u:object_r:system_lib_file:s0"
+        fi
+
+        # Purge product media to avoid SELinux denial avc: denied
+        rm -f "$WORK_DIR/product/media/bootanimation.zip" 2>/dev/null
     else
         LOGW "bootanimation_carbon.zip not found at $CARBON_ZIP, keeping stock"
     fi
 else
     LOG "- Keeping stock UN1CA boot animation (QMG mode)"
-    if [ -f "$WORK_DIR/system/system/media/bootanimation.zip" ]; then
-        rm -f "$WORK_DIR/system/system/media/bootanimation.zip"
-    fi
+    rm -f "$WORK_DIR/system/system/media/bootanimation.zip" 2>/dev/null
+    rm -f "$WORK_DIR/system/system/media/bootanimation_carbon.zip" 2>/dev/null
+    rm -f "$WORK_DIR/product/media/bootanimation.zip" 2>/dev/null
 fi

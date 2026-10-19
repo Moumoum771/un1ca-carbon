@@ -56,4 +56,7 @@
     <string name="unica_updates_title">Atualizações da UN1CA</string>
     <string name="unica_vulkan_summary">Isto é instável e pode causar problemas!</string>
     <string name="unica_vulkan_title">Habilitar renderizador Vulkan</string>
+    <string name="unica_bootanim_style_title">Estilo da animação de boot</string>
+    <string name="unica_bootanim_style_carbon">UN1CA Carbon</string>
+    <string name="unica_bootanim_style_rezoss">Android 17 (REZOSS)</string>
 </resources>

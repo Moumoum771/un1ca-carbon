@@ -7,16 +7,30 @@
 /security/
 /prebuilts/
 
-# Build output
+# Build output and symlinks
+/out
 out/
 build/
 dist/
+**/build/
+**/CMakeFiles/
 *.img
 *.zip
 
 # Allow specific prebuilts in carbon_ours
 !carbon_ours/**/*.img
 !carbon_ours/**/*.zip
+# Ignore monolithic >100MB recovery image; repo tracks split recovery.img.00 / .01
+carbon_ours/recovery_twrp/recovery.img
+
+# Carbon Engine build artifacts, caches and databases
+*.db
+*.db-shm
+*.db-wal
+.carbon_cache/
+CMakeCache.txt
+*.a
+*.o
 
 # Temporary and log files
 *.tmp

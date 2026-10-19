@@ -1,0 +1,1985 @@
+{
+  "project": "UN1CA Carbon IX",
+  "target": "${TARGET}",
+  "engine_version": "1.0.0-PROD",
+  "author": "ALRI Development (Lead: AlexsAR & AlexsanderALRI)",
+  "pipeline": [
+    {
+      "id": "base_system_overlay",
+      "category": "Base Framework",
+      "description": "Overlay base system files",
+      "credit": "Rezoss Patches & Upstream S26U Stuffs by Rezoss-Reza (@Rezoss-Reza), adapted and maintained by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "fs.copy",
+      "source": "vendors_rezoss/mods_rezoss/system",
+      "destination": "${WORK_DIR}/system/system"
+    },
+    {
+      "id": "base_system_ext_overlay",
+      "category": "Base Framework",
+      "description": "Overlay base system_ext files",
+      "credit": "Rezoss Patches & Upstream S26U Stuffs by Rezoss-Reza (@Rezoss-Reza), adapted and maintained by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "fs.copy",
+      "source": "vendors_rezoss/mods_rezoss/system_ext",
+      "destination": "${WORK_DIR}/system_ext"
+    },
+    {
+      "id": "restore_app_allshareaware",
+      "category": "Samsung Stock Apps",
+      "description": "Restore stock S23U One UI 9 app/AllShareAware",
+      "credit": "Rezoss Patches & Upstream S26U Stuffs by Rezoss-Reza (@Rezoss-Reza), adapted and maintained by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "fs.copy",
+      "source": "${FW_DIR}/system/system/app/AllShareAware",
+      "destination": "${WORK_DIR}/system/system/app/AllShareAware",
+      "metadata": {
+        "uid": 0,
+        "gid": 0,
+        "mode": "0755",
+        "selabel": "u:object_r:system_file:s0"
+      }
+    },
+    {
+      "id": "restore_app_honeyboard",
+      "category": "Samsung Stock Apps",
+      "description": "Restore stock S23U One UI 9 app/HoneyBoard",
+      "credit": "Rezoss Patches & Upstream S26U Stuffs by Rezoss-Reza (@Rezoss-Reza), adapted and maintained by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "fs.copy",
+      "source": "${FW_DIR}/system/system/app/HoneyBoard",
+      "destination": "${WORK_DIR}/system/system/app/HoneyBoard",
+      "metadata": {
+        "uid": 0,
+        "gid": 0,
+        "mode": "0755",
+        "selabel": "u:object_r:system_file:s0"
+      }
+    },
+    {
+      "id": "restore_priv-app_sharelive",
+      "category": "Samsung Stock Apps",
+      "description": "Restore stock S23U One UI 9 priv-app/ShareLive",
+      "credit": "Rezoss Patches & Upstream S26U Stuffs by Rezoss-Reza (@Rezoss-Reza), adapted and maintained by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "fs.copy",
+      "source": "${FW_DIR}/system/system/priv-app/ShareLive",
+      "destination": "${WORK_DIR}/system/system/priv-app/ShareLive",
+      "metadata": {
+        "uid": 0,
+        "gid": 0,
+        "mode": "0755",
+        "selabel": "u:object_r:system_file:s0"
+      }
+    },
+    {
+      "id": "restore_priv-app_samsungmessages",
+      "category": "Samsung Stock Apps",
+      "description": "Restore stock S23U One UI 9 priv-app/SamsungMessages",
+      "credit": "Rezoss Patches & Upstream S26U Stuffs by Rezoss-Reza (@Rezoss-Reza), adapted and maintained by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "fs.copy",
+      "source": "${FW_DIR}/system/system/priv-app/SamsungMessages",
+      "destination": "${WORK_DIR}/system/system/priv-app/SamsungMessages",
+      "metadata": {
+        "uid": 0,
+        "gid": 0,
+        "mode": "0755",
+        "selabel": "u:object_r:system_file:s0"
+      }
+    },
+    {
+      "id": "perm_default_permissions_com_samsung_android_messaging",
+      "category": "Permissions",
+      "description": "Restore permission XML default-permissions-com.samsung.android.messaging.xml",
+      "credit": "Rezoss Patches & Upstream S26U Stuffs by Rezoss-Reza (@Rezoss-Reza), adapted and maintained by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "fs.copy",
+      "source": "${FW_DIR}/system/system/etc/permissions/privapp-permissions-com.samsung.android.messaging.xml",
+      "destination": "${WORK_DIR}/system/system/etc/permissions/privapp-permissions-com.samsung.android.messaging.xml",
+      "metadata": {
+        "uid": 0,
+        "gid": 0,
+        "mode": "0644",
+        "selabel": "u:object_r:system_file:s0"
+      }
+    },
+    {
+      "id": "perm_privapp_permissions_com_samsung_android_messaging",
+      "category": "Permissions",
+      "description": "Restore permission XML permissions/privapp-permissions-com.samsung.android.messaging.xml",
+      "credit": "Rezoss Patches & Upstream S26U Stuffs by Rezoss-Reza (@Rezoss-Reza), adapted and maintained by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "fs.copy",
+      "source": "${FW_DIR}/system/system/etc/permissions/privapp-permissions-com.samsung.android.messaging.xml",
+      "destination": "${WORK_DIR}/system/system/etc/permissions/privapp-permissions-com.samsung.android.messaging.xml",
+      "metadata": {
+        "uid": 0,
+        "gid": 0,
+        "mode": "0644",
+        "selabel": "u:object_r:system_file:s0"
+      }
+    },
+    {
+      "id": "perm_default_permissions_com_samsung_android_smartsuggestions",
+      "category": "Permissions",
+      "description": "Restore permission XML default-permissions/default-permissions-com.samsung.android.smartsuggestions.xml",
+      "credit": "Rezoss Patches & Upstream S26U Stuffs by Rezoss-Reza (@Rezoss-Reza), adapted and maintained by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "fs.copy",
+      "source": "${FW_DIR}/system/system/etc/permissions/privapp-permissions-com.samsung.android.smartsuggestions.xml",
+      "destination": "${WORK_DIR}/system/system/etc/permissions/privapp-permissions-com.samsung.android.smartsuggestions.xml",
+      "metadata": {
+        "uid": 0,
+        "gid": 0,
+        "mode": "0644",
+        "selabel": "u:object_r:system_file:s0"
+      }
+    },
+    {
+      "id": "perm_privapp_permissions_com_samsung_android_smartsuggestions",
+      "category": "Permissions",
+      "description": "Restore permission XML permissions/privapp-permissions-com.samsung.android.smartsuggestions.xml",
+      "credit": "Rezoss Patches & Upstream S26U Stuffs by Rezoss-Reza (@Rezoss-Reza), adapted and maintained by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "fs.copy",
+      "source": "${FW_DIR}/system/system/etc/permissions/privapp-permissions-com.samsung.android.smartsuggestions.xml",
+      "destination": "${WORK_DIR}/system/system/etc/permissions/privapp-permissions-com.samsung.android.smartsuggestions.xml",
+      "metadata": {
+        "uid": 0,
+        "gid": 0,
+        "mode": "0644",
+        "selabel": "u:object_r:system_file:s0"
+      }
+    },
+    {
+      "id": "s26u_lib_libphotohdr_so",
+      "category": "Camera & Multimedia (S26U)",
+      "description": "S26U PhotoHDR core media processing library",
+      "credit": "Rezoss Patches & Upstream S26U Stuffs by Rezoss-Reza (@Rezoss-Reza), adapted and maintained by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "fs.copy",
+      "source": "prebuilts/samsung/m3qxxx/system/lib64/libphotohdr.so",
+      "destination": "${WORK_DIR}/system/system/lib64/libphotohdr.so",
+      "metadata": {
+        "uid": 0,
+        "gid": 0,
+        "mode": "0644",
+        "selabel": "u:object_r:system_lib_file:s0"
+      }
+    },
+    {
+      "id": "s26u_lib_libaideflicker_camera_samsung_so",
+      "category": "Camera & Multimedia (S26U)",
+      "description": "S26U AI Deflicker camera processing node",
+      "credit": "Rezoss Patches & Upstream S26U Stuffs by Rezoss-Reza (@Rezoss-Reza), adapted and maintained by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "fs.copy",
+      "source": "prebuilts/samsung/m3qxxx/system/lib64/libAIDeflicker.camera.samsung.so",
+      "destination": "${WORK_DIR}/system/system/lib64/libAIDeflicker.camera.samsung.so",
+      "metadata": {
+        "uid": 0,
+        "gid": 0,
+        "mode": "0644",
+        "selabel": "u:object_r:system_lib_file:s0"
+      }
+    },
+    {
+      "id": "s26u_lib_libdeflickerhdr_camera_samsung_so",
+      "category": "Camera & Multimedia (S26U)",
+      "description": "S26U Deflicker HDR camera node",
+      "credit": "Rezoss Patches & Upstream S26U Stuffs by Rezoss-Reza (@Rezoss-Reza), adapted and maintained by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "fs.copy",
+      "source": "prebuilts/samsung/m3qxxx/system/lib64/libDeflickerHDR.camera.samsung.so",
+      "destination": "${WORK_DIR}/system/system/lib64/libDeflickerHDR.camera.samsung.so",
+      "metadata": {
+        "uid": 0,
+        "gid": 0,
+        "mode": "0644",
+        "selabel": "u:object_r:system_lib_file:s0"
+      }
+    },
+    {
+      "id": "s26u_lib_libsnapshotdebanding_arcsoft_so",
+      "category": "Camera & Multimedia (S26U)",
+      "description": "S26U ArcSoft snapshot debanding library",
+      "credit": "Rezoss Patches & Upstream S26U Stuffs by Rezoss-Reza (@Rezoss-Reza), adapted and maintained by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "fs.copy",
+      "source": "prebuilts/samsung/m3qxxx/system/lib64/libsnapshotdebanding.arcsoft.so",
+      "destination": "${WORK_DIR}/system/system/lib64/libsnapshotdebanding.arcsoft.so",
+      "metadata": {
+        "uid": 0,
+        "gid": 0,
+        "mode": "0644",
+        "selabel": "u:object_r:system_lib_file:s0"
+      }
+    },
+    {
+      "id": "s26u_lib_libstereosolution_camera_samsung_so",
+      "category": "Camera & Multimedia (S26U)",
+      "description": "S26U Stereo Solution camera processing node",
+      "credit": "Rezoss Patches & Upstream S26U Stuffs by Rezoss-Reza (@Rezoss-Reza), adapted and maintained by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "fs.copy",
+      "source": "prebuilts/samsung/m3qxxx/system/lib64/libStereoSolution.camera.samsung.so",
+      "destination": "${WORK_DIR}/system/system/lib64/libStereoSolution.camera.samsung.so",
+      "metadata": {
+        "uid": 0,
+        "gid": 0,
+        "mode": "0644",
+        "selabel": "u:object_r:system_lib_file:s0"
+      }
+    },
+    {
+      "id": "s26u_lib_libsr_stereocapture_camera_samsung_so",
+      "category": "Camera & Multimedia (S26U)",
+      "description": "S26U Super Resolution Stereo Capture node",
+      "credit": "Rezoss Patches & Upstream S26U Stuffs by Rezoss-Reza (@Rezoss-Reza), adapted and maintained by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "fs.copy",
+      "source": "prebuilts/samsung/m3qxxx/system/lib64/libSR_StereoCapture.camera.samsung.so",
+      "destination": "${WORK_DIR}/system/system/lib64/libSR_StereoCapture.camera.samsung.so",
+      "metadata": {
+        "uid": 0,
+        "gid": 0,
+        "mode": "0644",
+        "selabel": "u:object_r:system_lib_file:s0"
+      }
+    },
+    {
+      "id": "s26u_lib_libfoundational_segmentation_camera_samsung_so",
+      "category": "Camera & Multimedia (S26U)",
+      "description": "S26U Foundational Segmentation AI camera model",
+      "credit": "Rezoss Patches & Upstream S26U Stuffs by Rezoss-Reza (@Rezoss-Reza), adapted and maintained by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "fs.copy",
+      "source": "prebuilts/samsung/m3qxxx/system/lib64/libfoundational_segmentation.camera.samsung.so",
+      "destination": "${WORK_DIR}/system/system/lib64/libfoundational_segmentation.camera.samsung.so",
+      "metadata": {
+        "uid": 0,
+        "gid": 0,
+        "mode": "0644",
+        "selabel": "u:object_r:system_lib_file:s0"
+      }
+    },
+    {
+      "id": "s26u_lib_libdvs_camera_samsung_so",
+      "category": "Camera & Multimedia (S26U)",
+      "description": "S26U Dynamic Video Stabilization node",
+      "credit": "Rezoss Patches & Upstream S26U Stuffs by Rezoss-Reza (@Rezoss-Reza), adapted and maintained by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "fs.copy",
+      "source": "prebuilts/samsung/m3qxxx/system/lib64/libdvs.camera.samsung.so",
+      "destination": "${WORK_DIR}/system/system/lib64/libdvs.camera.samsung.so",
+      "metadata": {
+        "uid": 0,
+        "gid": 0,
+        "mode": "0644",
+        "selabel": "u:object_r:system_lib_file:s0"
+      }
+    },
+    {
+      "id": "s26u_lib_dualoutfocusviewer_b_so",
+      "category": "Camera & Multimedia (S26U)",
+      "description": "S26U Dual Out-Focus Live Viewer library",
+      "credit": "Rezoss Patches & Upstream S26U Stuffs by Rezoss-Reza (@Rezoss-Reza), adapted and maintained by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "fs.copy",
+      "source": "prebuilts/samsung/m3qxxx/system/lib64/DualOutFocusViewer_B.so",
+      "destination": "${WORK_DIR}/system/system/lib64/DualOutFocusViewer_B.so",
+      "metadata": {
+        "uid": 0,
+        "gid": 0,
+        "mode": "0644",
+        "selabel": "u:object_r:system_lib_file:s0"
+      }
+    },
+    {
+      "id": "s26u_lib_libartifactdetector_v1_camera_samsung_so",
+      "category": "Camera & Multimedia (S26U)",
+      "description": "S26U Artifact Detector v1 library",
+      "credit": "Rezoss Patches & Upstream S26U Stuffs by Rezoss-Reza (@Rezoss-Reza), adapted and maintained by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "fs.copy",
+      "source": "prebuilts/samsung/m3qxxx/system/lib64/libArtifactDetector_v1.camera.samsung.so",
+      "destination": "${WORK_DIR}/system/system/lib64/libArtifactDetector_v1.camera.samsung.so",
+      "metadata": {
+        "uid": 0,
+        "gid": 0,
+        "mode": "0644",
+        "selabel": "u:object_r:system_lib_file:s0"
+      }
+    },
+    {
+      "id": "s26u_lib_libc2padps_camera_samsung_so",
+      "category": "Camera & Multimedia (S26U)",
+      "description": "S26U C2PA Content Credentials photo verification",
+      "credit": "Rezoss Patches & Upstream S26U Stuffs by Rezoss-Reza (@Rezoss-Reza), adapted and maintained by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "fs.copy",
+      "source": "prebuilts/samsung/m3qxxx/system/lib64/libC2paDps.camera.samsung.so",
+      "destination": "${WORK_DIR}/system/system/lib64/libC2paDps.camera.samsung.so",
+      "metadata": {
+        "uid": 0,
+        "gid": 0,
+        "mode": "0644",
+        "selabel": "u:object_r:system_lib_file:s0"
+      }
+    },
+    {
+      "id": "s26u_lib_libgensr_saicc_core_camera_samsung_so",
+      "category": "Camera & Multimedia (S26U)",
+      "description": "S26U Generative Super Resolution SAICC core",
+      "credit": "Rezoss Patches & Upstream S26U Stuffs by Rezoss-Reza (@Rezoss-Reza), adapted and maintained by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "fs.copy",
+      "source": "prebuilts/samsung/m3qxxx/system/lib64/libGenSR_saicc_core.camera.samsung.so",
+      "destination": "${WORK_DIR}/system/system/lib64/libGenSR_saicc_core.camera.samsung.so",
+      "metadata": {
+        "uid": 0,
+        "gid": 0,
+        "mode": "0644",
+        "selabel": "u:object_r:system_lib_file:s0"
+      }
+    },
+    {
+      "id": "s26u_lib_libsr_dynamicrectifier_camera_samsung_so",
+      "category": "Camera & Multimedia (S26U)",
+      "description": "S26U Super Resolution Dynamic Rectifier",
+      "credit": "Rezoss Patches & Upstream S26U Stuffs by Rezoss-Reza (@Rezoss-Reza), adapted and maintained by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "fs.copy",
+      "source": "prebuilts/samsung/m3qxxx/system/lib64/libSR_DynamicRectifier.camera.samsung.so",
+      "destination": "${WORK_DIR}/system/system/lib64/libSR_DynamicRectifier.camera.samsung.so",
+      "metadata": {
+        "uid": 0,
+        "gid": 0,
+        "mode": "0644",
+        "selabel": "u:object_r:system_lib_file:s0"
+      }
+    },
+    {
+      "id": "s26u_lib_libsr_neardetector_camera_samsung_so",
+      "category": "Camera & Multimedia (S26U)",
+      "description": "S26U Super Resolution Near Detector",
+      "credit": "Rezoss Patches & Upstream S26U Stuffs by Rezoss-Reza (@Rezoss-Reza), adapted and maintained by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "fs.copy",
+      "source": "prebuilts/samsung/m3qxxx/system/lib64/libSR_NearDetector.camera.samsung.so",
+      "destination": "${WORK_DIR}/system/system/lib64/libSR_NearDetector.camera.samsung.so",
+      "metadata": {
+        "uid": 0,
+        "gid": 0,
+        "mode": "0644",
+        "selabel": "u:object_r:system_lib_file:s0"
+      }
+    },
+    {
+      "id": "s26u_lib_libstereowarp_camera_samsung_so",
+      "category": "Camera & Multimedia (S26U)",
+      "description": "S26U Stereo Warp processing library",
+      "credit": "Rezoss Patches & Upstream S26U Stuffs by Rezoss-Reza (@Rezoss-Reza), adapted and maintained by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "fs.copy",
+      "source": "prebuilts/samsung/m3qxxx/system/lib64/libStereoWarp.camera.samsung.so",
+      "destination": "${WORK_DIR}/system/system/lib64/libStereoWarp.camera.samsung.so",
+      "metadata": {
+        "uid": 0,
+        "gid": 0,
+        "mode": "0644",
+        "selabel": "u:object_r:system_lib_file:s0"
+      }
+    },
+    {
+      "id": "s26u_lib_libtextenhancementv2_camera_samsung_so",
+      "category": "Camera & Multimedia (S26U)",
+      "description": "S26U Text Enhancement v2 document processing",
+      "credit": "Rezoss Patches & Upstream S26U Stuffs by Rezoss-Reza (@Rezoss-Reza), adapted and maintained by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "fs.copy",
+      "source": "prebuilts/samsung/m3qxxx/system/lib64/libTextEnhancementV2.camera.samsung.so",
+      "destination": "${WORK_DIR}/system/system/lib64/libTextEnhancementV2.camera.samsung.so",
+      "metadata": {
+        "uid": 0,
+        "gid": 0,
+        "mode": "0644",
+        "selabel": "u:object_r:system_lib_file:s0"
+      }
+    },
+    {
+      "id": "s26u_lib_libvirtualaperturecapture_camera_samsung_so",
+      "category": "Camera & Multimedia (S26U)",
+      "description": "S26U Virtual Aperture Capture library",
+      "credit": "Rezoss Patches & Upstream S26U Stuffs by Rezoss-Reza (@Rezoss-Reza), adapted and maintained by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "fs.copy",
+      "source": "prebuilts/samsung/m3qxxx/system/lib64/libVirtualApertureCapture.camera.samsung.so",
+      "destination": "${WORK_DIR}/system/system/lib64/libVirtualApertureCapture.camera.samsung.so",
+      "metadata": {
+        "uid": 0,
+        "gid": 0,
+        "mode": "0644",
+        "selabel": "u:object_r:system_lib_file:s0"
+      }
+    },
+    {
+      "id": "s26u_lib_libframebooster_so",
+      "category": "Camera & Multimedia (S26U)",
+      "description": "S26U Frame Booster media processor",
+      "credit": "Rezoss Patches & Upstream S26U Stuffs by Rezoss-Reza (@Rezoss-Reza), adapted and maintained by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "fs.copy",
+      "source": "prebuilts/samsung/m3qxxx/system/lib64/libframebooster.so",
+      "destination": "${WORK_DIR}/system/system/lib64/libframebooster.so",
+      "metadata": {
+        "uid": 0,
+        "gid": 0,
+        "mode": "0644",
+        "selabel": "u:object_r:system_lib_file:s0"
+      }
+    },
+    {
+      "id": "s26u_lib_libdoccolorenhance_camera_samsung_so",
+      "category": "Camera & Multimedia (S26U)",
+      "description": "S26U Document Color Enhancement node",
+      "credit": "Rezoss Patches & Upstream S26U Stuffs by Rezoss-Reza (@Rezoss-Reza), adapted and maintained by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "fs.copy",
+      "source": "prebuilts/samsung/m3qxxx/system/lib64/libDocColorEnhance.camera.samsung.so",
+      "destination": "${WORK_DIR}/system/system/lib64/libDocColorEnhance.camera.samsung.so",
+      "metadata": {
+        "uid": 0,
+        "gid": 0,
+        "mode": "0644",
+        "selabel": "u:object_r:system_lib_file:s0"
+      }
+    },
+    {
+      "id": "s26u_lib_libdoccolorenhance_auto_camera_samsung_so",
+      "category": "Camera & Multimedia (S26U)",
+      "description": "S26U Document Auto Color Enhancement node",
+      "credit": "Rezoss Patches & Upstream S26U Stuffs by Rezoss-Reza (@Rezoss-Reza), adapted and maintained by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "fs.copy",
+      "source": "prebuilts/samsung/m3qxxx/system/lib64/libDocColorEnhance_Auto.camera.samsung.so",
+      "destination": "${WORK_DIR}/system/system/lib64/libDocColorEnhance_Auto.camera.samsung.so",
+      "metadata": {
+        "uid": 0,
+        "gid": 0,
+        "mode": "0644",
+        "selabel": "u:object_r:system_lib_file:s0"
+      }
+    },
+    {
+      "id": "s26u_lib_libdocmagnetengine_camera_samsung_so",
+      "category": "Camera & Multimedia (S26U)",
+      "description": "S26U Document Magnet Engine node",
+      "credit": "Rezoss Patches & Upstream S26U Stuffs by Rezoss-Reza (@Rezoss-Reza), adapted and maintained by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "fs.copy",
+      "source": "prebuilts/samsung/m3qxxx/system/lib64/libDocMagnetEngine.camera.samsung.so",
+      "destination": "${WORK_DIR}/system/system/lib64/libDocMagnetEngine.camera.samsung.so",
+      "metadata": {
+        "uid": 0,
+        "gid": 0,
+        "mode": "0644",
+        "selabel": "u:object_r:system_lib_file:s0"
+      }
+    },
+    {
+      "id": "s26u_lib_libdocscannerfilterv2_camera_samsung_so",
+      "category": "Camera & Multimedia (S26U)",
+      "description": "S26U Document Scanner Filter v2 node",
+      "credit": "Rezoss Patches & Upstream S26U Stuffs by Rezoss-Reza (@Rezoss-Reza), adapted and maintained by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "fs.copy",
+      "source": "prebuilts/samsung/m3qxxx/system/lib64/libDocScannerFilterV2.camera.samsung.so",
+      "destination": "${WORK_DIR}/system/system/lib64/libDocScannerFilterV2.camera.samsung.so",
+      "metadata": {
+        "uid": 0,
+        "gid": 0,
+        "mode": "0644",
+        "selabel": "u:object_r:system_lib_file:s0"
+      }
+    },
+    {
+      "id": "s26u_lib_libdocshadowremoval_camera_samsung_so",
+      "category": "Camera & Multimedia (S26U)",
+      "description": "S26U Document Shadow Removal node",
+      "credit": "Rezoss Patches & Upstream S26U Stuffs by Rezoss-Reza (@Rezoss-Reza), adapted and maintained by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "fs.copy",
+      "source": "prebuilts/samsung/m3qxxx/system/lib64/libDocShadowRemoval.camera.samsung.so",
+      "destination": "${WORK_DIR}/system/system/lib64/libDocShadowRemoval.camera.samsung.so",
+      "metadata": {
+        "uid": 0,
+        "gid": 0,
+        "mode": "0644",
+        "selabel": "u:object_r:system_lib_file:s0"
+      }
+    },
+    {
+      "id": "s26u_lib_libmoirefilterv2_camera_samsung_so",
+      "category": "Camera & Multimedia (S26U)",
+      "description": "S26U Document Moire Filter v2 node",
+      "credit": "Rezoss Patches & Upstream S26U Stuffs by Rezoss-Reza (@Rezoss-Reza), adapted and maintained by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "fs.copy",
+      "source": "prebuilts/samsung/m3qxxx/system/lib64/libMoireFilterV2.camera.samsung.so",
+      "destination": "${WORK_DIR}/system/system/lib64/libMoireFilterV2.camera.samsung.so",
+      "metadata": {
+        "uid": 0,
+        "gid": 0,
+        "mode": "0644",
+        "selabel": "u:object_r:system_lib_file:s0"
+      }
+    },
+    {
+      "id": "s26u_lib_libmediacontextanalyzer_so",
+      "category": "Camera & Multimedia (S26U)",
+      "description": "S26U Media Context Analyzer library",
+      "credit": "Rezoss Patches & Upstream S26U Stuffs by Rezoss-Reza (@Rezoss-Reza), adapted and maintained by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "fs.copy",
+      "source": "prebuilts/samsung/m3qxxx/system/lib64/libmediacontextanalyzer.so",
+      "destination": "${WORK_DIR}/system/system/lib64/libmediacontextanalyzer.so",
+      "metadata": {
+        "uid": 0,
+        "gid": 0,
+        "mode": "0644",
+        "selabel": "u:object_r:system_lib_file:s0"
+      }
+    },
+    {
+      "id": "s26u_lib_libcontextanalyzer_jni_media_samsung_so",
+      "category": "Camera & Multimedia (S26U)",
+      "description": "S26U Context Analyzer JNI wrapper",
+      "credit": "Rezoss Patches & Upstream S26U Stuffs by Rezoss-Reza (@Rezoss-Reza), adapted and maintained by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "fs.copy",
+      "source": "prebuilts/samsung/m3qxxx/system/lib64/libcontextanalyzer_jni.media.samsung.so",
+      "destination": "${WORK_DIR}/system/system/lib64/libcontextanalyzer_jni.media.samsung.so",
+      "metadata": {
+        "uid": 0,
+        "gid": 0,
+        "mode": "0644",
+        "selabel": "u:object_r:system_lib_file:s0"
+      }
+    },
+    {
+      "id": "s26u_lib_libmpp_so",
+      "category": "Camera & Multimedia (S26U)",
+      "description": "S26U Media Post Processing core",
+      "credit": "Rezoss Patches & Upstream S26U Stuffs by Rezoss-Reza (@Rezoss-Reza), adapted and maintained by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "fs.copy",
+      "source": "prebuilts/samsung/m3qxxx/system/lib64/libmpp.so",
+      "destination": "${WORK_DIR}/system/system/lib64/libmpp.so",
+      "metadata": {
+        "uid": 0,
+        "gid": 0,
+        "mode": "0644",
+        "selabel": "u:object_r:system_lib_file:s0"
+      }
+    },
+    {
+      "id": "s26u_lib_libmpp_common_so",
+      "category": "Camera & Multimedia (S26U)",
+      "description": "S26U Media Post Processing common library",
+      "credit": "Rezoss Patches & Upstream S26U Stuffs by Rezoss-Reza (@Rezoss-Reza), adapted and maintained by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "fs.copy",
+      "source": "prebuilts/samsung/m3qxxx/system/lib64/libmpp_common.so",
+      "destination": "${WORK_DIR}/system/system/lib64/libmpp_common.so",
+      "metadata": {
+        "uid": 0,
+        "gid": 0,
+        "mode": "0644",
+        "selabel": "u:object_r:system_lib_file:s0"
+      }
+    },
+    {
+      "id": "s26u_lib_libmppclient_so",
+      "category": "Camera & Multimedia (S26U)",
+      "description": "S26U Media Post Processing client",
+      "credit": "Rezoss Patches & Upstream S26U Stuffs by Rezoss-Reza (@Rezoss-Reza), adapted and maintained by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "fs.copy",
+      "source": "prebuilts/samsung/m3qxxx/system/lib64/libmppclient.so",
+      "destination": "${WORK_DIR}/system/system/lib64/libmppclient.so",
+      "metadata": {
+        "uid": 0,
+        "gid": 0,
+        "mode": "0644",
+        "selabel": "u:object_r:system_lib_file:s0"
+      }
+    },
+    {
+      "id": "s26u_lib_libmppfilter_so",
+      "category": "Camera & Multimedia (S26U)",
+      "description": "S26U Media Post Processing filter library",
+      "credit": "Rezoss Patches & Upstream S26U Stuffs by Rezoss-Reza (@Rezoss-Reza), adapted and maintained by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "fs.copy",
+      "source": "prebuilts/samsung/m3qxxx/system/lib64/libmppfilter.so",
+      "destination": "${WORK_DIR}/system/system/lib64/libmppfilter.so",
+      "metadata": {
+        "uid": 0,
+        "gid": 0,
+        "mode": "0644",
+        "selabel": "u:object_r:system_lib_file:s0"
+      }
+    },
+    {
+      "id": "s26u_lib_libppvdis_core_so",
+      "category": "Camera & Multimedia (S26U)",
+      "description": "S26U Post Processing VDIS core engine",
+      "credit": "Rezoss Patches & Upstream S26U Stuffs by Rezoss-Reza (@Rezoss-Reza), adapted and maintained by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "fs.copy",
+      "source": "prebuilts/samsung/m3qxxx/system/lib64/libppvdis_core.so",
+      "destination": "${WORK_DIR}/system/system/lib64/libppvdis_core.so",
+      "metadata": {
+        "uid": 0,
+        "gid": 0,
+        "mode": "0644",
+        "selabel": "u:object_r:system_lib_file:s0"
+      }
+    },
+    {
+      "id": "s26u_lib_libppvdis_interface_so",
+      "category": "Camera & Multimedia (S26U)",
+      "description": "S26U Post Processing VDIS interface",
+      "credit": "Rezoss Patches & Upstream S26U Stuffs by Rezoss-Reza (@Rezoss-Reza), adapted and maintained by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "fs.copy",
+      "source": "prebuilts/samsung/m3qxxx/system/lib64/libppvdis_interface.so",
+      "destination": "${WORK_DIR}/system/system/lib64/libppvdis_interface.so",
+      "metadata": {
+        "uid": 0,
+        "gid": 0,
+        "mode": "0644",
+        "selabel": "u:object_r:system_lib_file:s0"
+      }
+    },
+    {
+      "id": "s26u_lib_libppvdis_wrapper_so",
+      "category": "Camera & Multimedia (S26U)",
+      "description": "S26U Post Processing VDIS wrapper",
+      "credit": "Rezoss Patches & Upstream S26U Stuffs by Rezoss-Reza (@Rezoss-Reza), adapted and maintained by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "fs.copy",
+      "source": "prebuilts/samsung/m3qxxx/system/lib64/libppvdis_wrapper.so",
+      "destination": "${WORK_DIR}/system/system/lib64/libppvdis_wrapper.so",
+      "metadata": {
+        "uid": 0,
+        "gid": 0,
+        "mode": "0644",
+        "selabel": "u:object_r:system_lib_file:s0"
+      }
+    },
+    {
+      "id": "s26u_lib_libveframework_videoeditor_samsung_so",
+      "category": "Camera & Multimedia (S26U)",
+      "description": "S26U Video Editor framework",
+      "credit": "Rezoss Patches & Upstream S26U Stuffs by Rezoss-Reza (@Rezoss-Reza), adapted and maintained by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "fs.copy",
+      "source": "prebuilts/samsung/m3qxxx/system/lib64/libveframework.videoeditor.samsung.so",
+      "destination": "${WORK_DIR}/system/system/lib64/libveframework.videoeditor.samsung.so",
+      "metadata": {
+        "uid": 0,
+        "gid": 0,
+        "mode": "0644",
+        "selabel": "u:object_r:system_lib_file:s0"
+      }
+    },
+    {
+      "id": "s26u_lib_libvideo_highlight_arm64_v8a_so",
+      "category": "Camera & Multimedia (S26U)",
+      "description": "S26U Video Highlight generator library",
+      "credit": "Rezoss Patches & Upstream S26U Stuffs by Rezoss-Reza (@Rezoss-Reza), adapted and maintained by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "fs.copy",
+      "source": "prebuilts/samsung/m3qxxx/system/lib64/libvideo-highlight-arm64-v8a.so",
+      "destination": "${WORK_DIR}/system/system/lib64/libvideo-highlight-arm64-v8a.so",
+      "metadata": {
+        "uid": 0,
+        "gid": 0,
+        "mode": "0644",
+        "selabel": "u:object_r:system_lib_file:s0"
+      }
+    },
+    {
+      "id": "s26u_lib_vendor_samsung_hardware_media_mpp_v5_ndk_so",
+      "category": "Camera & Multimedia (S26U)",
+      "description": "S26U MPP NDK HAL library",
+      "credit": "Rezoss Patches & Upstream S26U Stuffs by Rezoss-Reza (@Rezoss-Reza), adapted and maintained by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "fs.copy",
+      "source": "prebuilts/samsung/m3qxxx/system/lib64/vendor.samsung.hardware.media.mpp-V5-ndk.so",
+      "destination": "${WORK_DIR}/system/system/lib64/vendor.samsung.hardware.media.mpp-V5-ndk.so",
+      "metadata": {
+        "uid": 0,
+        "gid": 0,
+        "mode": "0644",
+        "selabel": "u:object_r:system_lib_file:s0"
+      }
+    },
+    {
+      "id": "s26u_lib_libmultisourceseparator_so",
+      "category": "Camera & Multimedia (S26U)",
+      "description": "S26U Multi-source Audio Separator library",
+      "credit": "Rezoss Patches & Upstream S26U Stuffs by Rezoss-Reza (@Rezoss-Reza), adapted and maintained by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "fs.copy",
+      "source": "prebuilts/samsung/m3qxxx/system/lib64/libmultisourceseparator.so",
+      "destination": "${WORK_DIR}/system/system/lib64/libmultisourceseparator.so",
+      "metadata": {
+        "uid": 0,
+        "gid": 0,
+        "mode": "0644",
+        "selabel": "u:object_r:system_lib_file:s0"
+      }
+    },
+    {
+      "id": "s26u_lib_libsbs_so",
+      "category": "Camera & Multimedia (S26U)",
+      "description": "S26U Side-by-Side audio spatial processor",
+      "credit": "Rezoss Patches & Upstream S26U Stuffs by Rezoss-Reza (@Rezoss-Reza), adapted and maintained by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "fs.copy",
+      "source": "prebuilts/samsung/m3qxxx/system/lib64/libsbs.so",
+      "destination": "${WORK_DIR}/system/system/lib64/libsbs.so",
+      "metadata": {
+        "uid": 0,
+        "gid": 0,
+        "mode": "0644",
+        "selabel": "u:object_r:system_lib_file:s0"
+      }
+    },
+    {
+      "id": "s26u_lib_libtensorflowlite_gpu_delegate_so",
+      "category": "Camera & Multimedia (S26U)",
+      "description": "S26U TensorFlow Lite GPU acceleration delegate",
+      "credit": "Rezoss Patches & Upstream S26U Stuffs by Rezoss-Reza (@Rezoss-Reza), adapted and maintained by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "fs.copy",
+      "source": "prebuilts/samsung/m3qxxx/system/lib64/libtensorflowlite_gpu_delegate.so",
+      "destination": "${WORK_DIR}/system/system/lib64/libtensorflowlite_gpu_delegate.so",
+      "metadata": {
+        "uid": 0,
+        "gid": 0,
+        "mode": "0644",
+        "selabel": "u:object_r:system_lib_file:s0"
+      }
+    },
+    {
+      "id": "s26u_vendor_photohdr_encoder",
+      "category": "Camera & Multimedia (S26U)",
+      "description": "Install S26U PhotoHDR vendor encoder plugin",
+      "credit": "Rezoss Patches & Upstream S26U Stuffs by Rezoss-Reza (@Rezoss-Reza), adapted and maintained by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "fs.copy",
+      "source": "prebuilts/samsung/m3qxxx/vendor/lib64/libSecPhotoHdrEncoder.uniplugin@1.0.so",
+      "destination": "${WORK_DIR}/vendor/lib64/libSecPhotoHdrEncoder.uniplugin@1.0.so",
+      "metadata": {
+        "uid": 0,
+        "gid": 0,
+        "mode": "0644",
+        "selabel": "u:object_r:vendor_file:s0"
+      }
+    },
+    {
+      "id": "s26u_ai_sketchbook",
+      "category": "Galaxy AI (S26U)",
+      "description": "Install S26U SketchBook drawing application",
+      "credit": "Rezoss Patches & Upstream S26U Stuffs by Rezoss-Reza (@Rezoss-Reza), adapted and maintained by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "fs.copy",
+      "source": "prebuilts/samsung/m3qxxx/system/app/SketchBook/SketchBook.apk",
+      "destination": "${WORK_DIR}/system/system/app/SketchBook/SketchBook.apk",
+      "metadata": {
+        "uid": 0,
+        "gid": 0,
+        "mode": "0644",
+        "selabel": "u:object_r:system_file:s0"
+      }
+    },
+    {
+      "id": "s26u_ai_intellivoiceservices",
+      "category": "Galaxy AI (S26U)",
+      "description": "Install S26U Samsung Intelligence Voice Service APK",
+      "credit": "Rezoss Patches & Upstream S26U Stuffs by Rezoss-Reza (@Rezoss-Reza), adapted and maintained by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "fs.copy",
+      "source": "prebuilts/samsung/m3qxxx/system/priv-app/SamsungIntelliVoiceServices/SamsungIntelliVoiceServices.apk",
+      "destination": "${WORK_DIR}/system/system/priv-app/SamsungIntelliVoiceServices/SamsungIntelliVoiceServices.apk",
+      "metadata": {
+        "uid": 0,
+        "gid": 0,
+        "mode": "0644",
+        "selabel": "u:object_r:system_file:s0"
+      }
+    },
+    {
+      "id": "s26u_ai_aicore_apk",
+      "category": "Galaxy AI (S26U)",
+      "description": "Install S26U SamsungAiCore main service APK",
+      "credit": "Rezoss Patches & Upstream S26U Stuffs by Rezoss-Reza (@Rezoss-Reza), adapted and maintained by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "fs.copy",
+      "source": "prebuilts/samsung/m3qxxx/system/priv-app/SamsungAiCore/SamsungAiCore.apk",
+      "destination": "${WORK_DIR}/system/system/priv-app/SamsungAiCore/SamsungAiCore.apk",
+      "metadata": {
+        "uid": 0,
+        "gid": 0,
+        "mode": "0644",
+        "selabel": "u:object_r:system_file:s0"
+      }
+    },
+    {
+      "id": "s26u_ai_aicore_permissions",
+      "category": "Galaxy AI (S26U)",
+      "description": "Install S26U SamsungAiCore privileged permissions XML",
+      "credit": "Rezoss Patches & Upstream S26U Stuffs by Rezoss-Reza (@Rezoss-Reza), adapted and maintained by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "fs.copy",
+      "source": "prebuilts/samsung/m3qxxx/system/etc/permissions/privapp-permissions-com.samsung.android.aicore.xml",
+      "destination": "${WORK_DIR}/system/system/etc/permissions/privapp-permissions-com.samsung.android.aicore.xml",
+      "metadata": {
+        "uid": 0,
+        "gid": 0,
+        "mode": "0644",
+        "selabel": "u:object_r:system_file:s0"
+      }
+    },
+    {
+      "id": "s26u_ai_aioskernel_apk",
+      "category": "Galaxy AI (S26U)",
+      "description": "Install S26U AIOSKernelService neural background daemon",
+      "credit": "Rezoss Patches & Upstream S26U Stuffs by Rezoss-Reza (@Rezoss-Reza), adapted and maintained by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "fs.copy",
+      "source": "prebuilts/samsung/m3qxxx/system/priv-app/AIOSKernelService/AIOSKernelService.apk",
+      "destination": "${WORK_DIR}/system/system/priv-app/AIOSKernelService/AIOSKernelService.apk",
+      "metadata": {
+        "uid": 0,
+        "gid": 0,
+        "mode": "0644",
+        "selabel": "u:object_r:system_file:s0"
+      }
+    },
+    {
+      "id": "s26u_ai_offline_lm_stub",
+      "category": "Galaxy AI (S26U)",
+      "description": "Install S26U Offline Language Model stub package",
+      "credit": "Rezoss Patches & Upstream S26U Stuffs by Rezoss-Reza (@Rezoss-Reza), adapted and maintained by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "fs.copy",
+      "source": "prebuilts/samsung/m3qxxx/system/priv-app/OfflineLanguageModel_stub/OfflineLanguageModel_stub.apk",
+      "destination": "${WORK_DIR}/system/system/priv-app/OfflineLanguageModel_stub/OfflineLanguageModel_stub.apk",
+      "metadata": {
+        "uid": 0,
+        "gid": 0,
+        "mode": "0644",
+        "selabel": "u:object_r:system_file:s0"
+      }
+    },
+    {
+      "id": "s26u_mosey_app",
+      "category": "Connectivity & Sharing",
+      "description": "Install S26U Mosey Quick Share Apple Devices App",
+      "credit": "Rezoss Patches & Upstream S26U Stuffs by Rezoss-Reza (@Rezoss-Reza), adapted and maintained by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "fs.copy",
+      "source": "prebuilts/samsung/m3qxxx/system_ext/priv-app/MoseyApp",
+      "destination": "${WORK_DIR}/system_ext/priv-app/MoseyApp",
+      "metadata": {
+        "uid": 0,
+        "gid": 0,
+        "mode": "0755",
+        "selabel": "u:object_r:system_file:s0"
+      }
+    },
+    {
+      "id": "s26u_mosey_server_bin",
+      "category": "Connectivity & Sharing",
+      "description": "Install S26U mosey_server daemon binary",
+      "credit": "Rezoss Patches & Upstream S26U Stuffs by Rezoss-Reza (@Rezoss-Reza), adapted and maintained by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "fs.copy",
+      "source": "vendors_rezoss/mods_rezoss/vendor/bin/mosey_server",
+      "destination": "${WORK_DIR}/vendor/bin/mosey_server",
+      "metadata": {
+        "uid": 0,
+        "gid": 1000,
+        "mode": "0755",
+        "selabel": "u:object_r:mosey_server_exec:s0"
+      }
+    },
+    {
+      "id": "s26u_mosey_daemon_ffi_lib",
+      "category": "Connectivity & Sharing",
+      "description": "Install S26U libmosey_daemon_ffi.so library",
+      "credit": "Rezoss Patches & Upstream S26U Stuffs by Rezoss-Reza (@Rezoss-Reza), adapted and maintained by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "fs.copy",
+      "source": "vendors_rezoss/mods_rezoss/vendor/lib64/libmosey_daemon_ffi.so",
+      "destination": "${WORK_DIR}/vendor/lib64/libmosey_daemon_ffi.so",
+      "metadata": {
+        "uid": 0,
+        "gid": 0,
+        "mode": "0644",
+        "selabel": "u:object_r:vendor_file:s0"
+      }
+    },
+    {
+      "id": "s26u_nmt_enar",
+      "category": "Galaxy AI (S26U)",
+      "description": "Install S26U NMT language pack metadata for enar",
+      "credit": "Rezoss Patches & Upstream S26U Stuffs by Rezoss-Reza (@Rezoss-Reza), adapted and maintained by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "fs.copy",
+      "source": "vendors_rezoss/mods_rezoss/nmt-preload/enar.txt",
+      "destination": "${WORK_DIR}/system/system/etc/nmt_preload_enar.txt",
+      "metadata": {
+        "uid": 0,
+        "gid": 0,
+        "mode": "0644",
+        "selabel": "u:object_r:system_file:s0"
+      }
+    },
+    {
+      "id": "s26u_nmt_enesus",
+      "category": "Galaxy AI (S26U)",
+      "description": "Install S26U NMT language pack metadata for enesus",
+      "credit": "Rezoss Patches & Upstream S26U Stuffs by Rezoss-Reza (@Rezoss-Reza), adapted and maintained by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "fs.copy",
+      "source": "vendors_rezoss/mods_rezoss/nmt-preload/enesus.txt",
+      "destination": "${WORK_DIR}/system/system/etc/nmt_preload_enesus.txt",
+      "metadata": {
+        "uid": 0,
+        "gid": 0,
+        "mode": "0644",
+        "selabel": "u:object_r:system_file:s0"
+      }
+    },
+    {
+      "id": "s26u_nmt_enfil",
+      "category": "Galaxy AI (S26U)",
+      "description": "Install S26U NMT language pack metadata for enfil",
+      "credit": "Rezoss Patches & Upstream S26U Stuffs by Rezoss-Reza (@Rezoss-Reza), adapted and maintained by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "fs.copy",
+      "source": "vendors_rezoss/mods_rezoss/nmt-preload/enfil.txt",
+      "destination": "${WORK_DIR}/system/system/etc/nmt_preload_enfil.txt",
+      "metadata": {
+        "uid": 0,
+        "gid": 0,
+        "mode": "0644",
+        "selabel": "u:object_r:system_file:s0"
+      }
+    },
+    {
+      "id": "s26u_nmt_enid",
+      "category": "Galaxy AI (S26U)",
+      "description": "Install S26U NMT language pack metadata for enid",
+      "credit": "Rezoss Patches & Upstream S26U Stuffs by Rezoss-Reza (@Rezoss-Reza), adapted and maintained by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "fs.copy",
+      "source": "vendors_rezoss/mods_rezoss/nmt-preload/enid.txt",
+      "destination": "${WORK_DIR}/system/system/etc/nmt_preload_enid.txt",
+      "metadata": {
+        "uid": 0,
+        "gid": 0,
+        "mode": "0644",
+        "selabel": "u:object_r:system_file:s0"
+      }
+    },
+    {
+      "id": "s26u_nmt_enko",
+      "category": "Galaxy AI (S26U)",
+      "description": "Install S26U NMT language pack metadata for enko",
+      "credit": "Rezoss Patches & Upstream S26U Stuffs by Rezoss-Reza (@Rezoss-Reza), adapted and maintained by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "fs.copy",
+      "source": "vendors_rezoss/mods_rezoss/nmt-preload/enko.txt",
+      "destination": "${WORK_DIR}/system/system/etc/nmt_preload_enko.txt",
+      "metadata": {
+        "uid": 0,
+        "gid": 0,
+        "mode": "0644",
+        "selabel": "u:object_r:system_file:s0"
+      }
+    },
+    {
+      "id": "s26u_nmt_ennl",
+      "category": "Galaxy AI (S26U)",
+      "description": "Install S26U NMT language pack metadata for ennl",
+      "credit": "Rezoss Patches & Upstream S26U Stuffs by Rezoss-Reza (@Rezoss-Reza), adapted and maintained by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "fs.copy",
+      "source": "vendors_rezoss/mods_rezoss/nmt-preload/ennl.txt",
+      "destination": "${WORK_DIR}/system/system/etc/nmt_preload_ennl.txt",
+      "metadata": {
+        "uid": 0,
+        "gid": 0,
+        "mode": "0644",
+        "selabel": "u:object_r:system_file:s0"
+      }
+    },
+    {
+      "id": "s26u_nmt_enpt",
+      "category": "Galaxy AI (S26U)",
+      "description": "Install S26U NMT language pack metadata for enpt",
+      "credit": "Rezoss Patches & Upstream S26U Stuffs by Rezoss-Reza (@Rezoss-Reza), adapted and maintained by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "fs.copy",
+      "source": "vendors_rezoss/mods_rezoss/nmt-preload/enpt.txt",
+      "destination": "${WORK_DIR}/system/system/etc/nmt_preload_enpt.txt",
+      "metadata": {
+        "uid": 0,
+        "gid": 0,
+        "mode": "0644",
+        "selabel": "u:object_r:system_file:s0"
+      }
+    },
+    {
+      "id": "s26u_nmt_enro",
+      "category": "Galaxy AI (S26U)",
+      "description": "Install S26U NMT language pack metadata for enro",
+      "credit": "Rezoss Patches & Upstream S26U Stuffs by Rezoss-Reza (@Rezoss-Reza), adapted and maintained by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "fs.copy",
+      "source": "vendors_rezoss/mods_rezoss/nmt-preload/enro.txt",
+      "destination": "${WORK_DIR}/system/system/etc/nmt_preload_enro.txt",
+      "metadata": {
+        "uid": 0,
+        "gid": 0,
+        "mode": "0644",
+        "selabel": "u:object_r:system_file:s0"
+      }
+    },
+    {
+      "id": "s26u_nmt_enru",
+      "category": "Galaxy AI (S26U)",
+      "description": "Install S26U NMT language pack metadata for enru",
+      "credit": "Rezoss Patches & Upstream S26U Stuffs by Rezoss-Reza (@Rezoss-Reza), adapted and maintained by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "fs.copy",
+      "source": "vendors_rezoss/mods_rezoss/nmt-preload/enru.txt",
+      "destination": "${WORK_DIR}/system/system/etc/nmt_preload_enru.txt",
+      "metadata": {
+        "uid": 0,
+        "gid": 0,
+        "mode": "0644",
+        "selabel": "u:object_r:system_file:s0"
+      }
+    },
+    {
+      "id": "s26u_nmt_ensv",
+      "category": "Galaxy AI (S26U)",
+      "description": "Install S26U NMT language pack metadata for ensv",
+      "credit": "Rezoss Patches & Upstream S26U Stuffs by Rezoss-Reza (@Rezoss-Reza), adapted and maintained by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "fs.copy",
+      "source": "vendors_rezoss/mods_rezoss/nmt-preload/ensv.txt",
+      "destination": "${WORK_DIR}/system/system/etc/nmt_preload_ensv.txt",
+      "metadata": {
+        "uid": 0,
+        "gid": 0,
+        "mode": "0644",
+        "selabel": "u:object_r:system_file:s0"
+      }
+    },
+    {
+      "id": "s26u_nmt_entr",
+      "category": "Galaxy AI (S26U)",
+      "description": "Install S26U NMT language pack metadata for entr",
+      "credit": "Rezoss Patches & Upstream S26U Stuffs by Rezoss-Reza (@Rezoss-Reza), adapted and maintained by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "fs.copy",
+      "source": "vendors_rezoss/mods_rezoss/nmt-preload/entr.txt",
+      "destination": "${WORK_DIR}/system/system/etc/nmt_preload_entr.txt",
+      "metadata": {
+        "uid": 0,
+        "gid": 0,
+        "mode": "0644",
+        "selabel": "u:object_r:system_file:s0"
+      }
+    },
+    {
+      "id": "s26u_nmt_enzh",
+      "category": "Galaxy AI (S26U)",
+      "description": "Install S26U NMT language pack metadata for enzh",
+      "credit": "Rezoss Patches & Upstream S26U Stuffs by Rezoss-Reza (@Rezoss-Reza), adapted and maintained by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "fs.copy",
+      "source": "vendors_rezoss/mods_rezoss/nmt-preload/enzh.txt",
+      "destination": "${WORK_DIR}/system/system/etc/nmt_preload_enzh.txt",
+      "metadata": {
+        "uid": 0,
+        "gid": 0,
+        "mode": "0644",
+        "selabel": "u:object_r:system_file:s0"
+      }
+    },
+    {
+      "id": "ff_common_config_ai_version",
+      "category": "Floating Features",
+      "description": "Set floating feature SEC_FLOATING_FEATURE_COMMON_CONFIG_AI_VERSION=20263",
+      "credit": "Rezoss Patches & Upstream S26U Stuffs by Rezoss-Reza (@Rezoss-Reza), adapted and maintained by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "floating_feature.set",
+      "file": "${WORK_DIR}/system/system/etc/floating_feature.xml",
+      "key": "SEC_FLOATING_FEATURE_COMMON_CONFIG_AI_VERSION",
+      "value": "20263"
+    },
+    {
+      "id": "ff_framework_config_now_nudge_version",
+      "category": "Floating Features",
+      "description": "Set floating feature SEC_FLOATING_FEATURE_FRAMEWORK_CONFIG_NOW_NUDGE_VERSION=2",
+      "credit": "Rezoss Patches & Upstream S26U Stuffs by Rezoss-Reza (@Rezoss-Reza), adapted and maintained by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "floating_feature.set",
+      "file": "${WORK_DIR}/system/system/etc/floating_feature.xml",
+      "key": "SEC_FLOATING_FEATURE_FRAMEWORK_CONFIG_NOW_NUDGE_VERSION",
+      "value": "2"
+    },
+    {
+      "id": "ff_genai_config_llm_version",
+      "category": "Floating Features",
+      "description": "Set floating feature SEC_FLOATING_FEATURE_GENAI_CONFIG_LLM_VERSION=0.81",
+      "credit": "Rezoss Patches & Upstream S26U Stuffs by Rezoss-Reza (@Rezoss-Reza), adapted and maintained by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "floating_feature.set",
+      "file": "${WORK_DIR}/system/system/etc/floating_feature.xml",
+      "key": "SEC_FLOATING_FEATURE_GENAI_CONFIG_LLM_VERSION",
+      "value": "0.81"
+    },
+    {
+      "id": "ff_genai_support_offline_languagemodel",
+      "category": "Floating Features",
+      "description": "Set floating feature SEC_FLOATING_FEATURE_GENAI_SUPPORT_OFFLINE_LANGUAGEMODEL=TRUE",
+      "credit": "Rezoss Patches & Upstream S26U Stuffs by Rezoss-Reza (@Rezoss-Reza), adapted and maintained by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "floating_feature.set",
+      "file": "${WORK_DIR}/system/system/etc/floating_feature.xml",
+      "key": "SEC_FLOATING_FEATURE_GENAI_SUPPORT_OFFLINE_LANGUAGEMODEL",
+      "value": "TRUE"
+    },
+    {
+      "id": "ff_lcd_config_privacy_display",
+      "category": "Floating Features",
+      "description": "Set floating feature SEC_FLOATING_FEATURE_LCD_CONFIG_PRIVACY_DISPLAY=1",
+      "credit": "Rezoss Patches & Upstream S26U Stuffs by Rezoss-Reza (@Rezoss-Reza), adapted and maintained by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "floating_feature.set",
+      "file": "${WORK_DIR}/system/system/etc/floating_feature.xml",
+      "key": "SEC_FLOATING_FEATURE_LCD_CONFIG_PRIVACY_DISPLAY",
+      "value": "1"
+    },
+    {
+      "id": "ff_gallery_support_log_correct_color",
+      "category": "Floating Features",
+      "description": "Set floating feature SEC_FLOATING_FEATURE_GALLERY_SUPPORT_LOG_CORRECT_COLOR=TRUE",
+      "credit": "Rezoss Patches & Upstream S26U Stuffs by Rezoss-Reza (@Rezoss-Reza), adapted and maintained by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "floating_feature.set",
+      "file": "${WORK_DIR}/system/system/etc/floating_feature.xml",
+      "key": "SEC_FLOATING_FEATURE_GALLERY_SUPPORT_LOG_CORRECT_COLOR",
+      "value": "TRUE"
+    },
+    {
+      "id": "ff_camera_config_log_video",
+      "category": "Floating Features",
+      "description": "Set floating feature SEC_FLOATING_FEATURE_CAMERA_CONFIG_LOG_VIDEO=V1.0",
+      "credit": "Rezoss Patches & Upstream S26U Stuffs by Rezoss-Reza (@Rezoss-Reza), adapted and maintained by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "floating_feature.set",
+      "file": "${WORK_DIR}/system/system/etc/floating_feature.xml",
+      "key": "SEC_FLOATING_FEATURE_CAMERA_CONFIG_LOG_VIDEO",
+      "value": "V1.0"
+    },
+    {
+      "id": "ff_camera_support_afsensitivity",
+      "category": "Floating Features",
+      "description": "Set floating feature SEC_FLOATING_FEATURE_CAMERA_SUPPORT_AFSENSITIVITY=FALSE",
+      "credit": "Rezoss Patches & Upstream S26U Stuffs by Rezoss-Reza (@Rezoss-Reza), adapted and maintained by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "floating_feature.set",
+      "file": "${WORK_DIR}/system/system/etc/floating_feature.xml",
+      "key": "SEC_FLOATING_FEATURE_CAMERA_SUPPORT_AFSENSITIVITY",
+      "value": "FALSE"
+    },
+    {
+      "id": "ff_camera_support_afsmarttracking",
+      "category": "Floating Features",
+      "description": "Set floating feature SEC_FLOATING_FEATURE_CAMERA_SUPPORT_AFSMARTTRACKING=FALSE",
+      "credit": "Rezoss Patches & Upstream S26U Stuffs by Rezoss-Reza (@Rezoss-Reza), adapted and maintained by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "floating_feature.set",
+      "file": "${WORK_DIR}/system/system/etc/floating_feature.xml",
+      "key": "SEC_FLOATING_FEATURE_CAMERA_SUPPORT_AFSMARTTRACKING",
+      "value": "FALSE"
+    },
+    {
+      "id": "ff_camera_support_afspeed",
+      "category": "Floating Features",
+      "description": "Set floating feature SEC_FLOATING_FEATURE_CAMERA_SUPPORT_AFSPEED=FALSE",
+      "credit": "Rezoss Patches & Upstream S26U Stuffs by Rezoss-Reza (@Rezoss-Reza), adapted and maintained by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "floating_feature.set",
+      "file": "${WORK_DIR}/system/system/etc/floating_feature.xml",
+      "key": "SEC_FLOATING_FEATURE_CAMERA_SUPPORT_AFSPEED",
+      "value": "FALSE"
+    },
+    {
+      "id": "ff_camera_support_cinematic_portraitvideo",
+      "category": "Floating Features",
+      "description": "Set floating feature SEC_FLOATING_FEATURE_CAMERA_SUPPORT_CINEMATIC_PORTRAITVIDEO=FALSE",
+      "credit": "Rezoss Patches & Upstream S26U Stuffs by Rezoss-Reza (@Rezoss-Reza), adapted and maintained by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "floating_feature.set",
+      "file": "${WORK_DIR}/system/system/etc/floating_feature.xml",
+      "key": "SEC_FLOATING_FEATURE_CAMERA_SUPPORT_CINEMATIC_PORTRAITVIDEO",
+      "value": "FALSE"
+    },
+    {
+      "id": "ff_camera_support_fusion_high_resolution",
+      "category": "Floating Features",
+      "description": "Set floating feature SEC_FLOATING_FEATURE_CAMERA_SUPPORT_FUSION_HIGH_RESOLUTION=FALSE",
+      "credit": "Rezoss Patches & Upstream S26U Stuffs by Rezoss-Reza (@Rezoss-Reza), adapted and maintained by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "floating_feature.set",
+      "file": "${WORK_DIR}/system/system/etc/floating_feature.xml",
+      "key": "SEC_FLOATING_FEATURE_CAMERA_SUPPORT_FUSION_HIGH_RESOLUTION",
+      "value": "FALSE"
+    },
+    {
+      "id": "ff_security_config_devicemonitor_package_name",
+      "category": "Floating Features",
+      "description": "Set floating feature SEC_FLOATING_FEATURE_SECURITY_CONFIG_DEVICEMONITOR_PACKAGE_NAME=com.samsung.android.sm.devicesecurity.tcm",
+      "credit": "Rezoss Patches & Upstream S26U Stuffs by Rezoss-Reza (@Rezoss-Reza), adapted and maintained by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "floating_feature.set",
+      "file": "${WORK_DIR}/system/system/etc/floating_feature.xml",
+      "key": "SEC_FLOATING_FEATURE_SECURITY_CONFIG_DEVICEMONITOR_PACKAGE_NAME",
+      "value": "com.samsung.android.sm.devicesecurity.tcm"
+    },
+    {
+      "id": "ff_smartmanager_config_package_name",
+      "category": "Floating Features",
+      "description": "Set floating feature SEC_FLOATING_FEATURE_SMARTMANAGER_CONFIG_PACKAGE_NAME=com.samsung.android.sm_cn",
+      "credit": "Rezoss Patches & Upstream S26U Stuffs by Rezoss-Reza (@Rezoss-Reza), adapted and maintained by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "floating_feature.set",
+      "file": "${WORK_DIR}/system/system/etc/floating_feature.xml",
+      "key": "SEC_FLOATING_FEATURE_SMARTMANAGER_CONFIG_PACKAGE_NAME",
+      "value": "com.samsung.android.sm_cn"
+    },
+    {
+      "id": "ff_common_support_nal_preloadapp_regulation",
+      "category": "Floating Features",
+      "description": "Set floating feature SEC_FLOATING_FEATURE_COMMON_SUPPORT_NAL_PRELOADAPP_REGULATION=TRUE",
+      "credit": "Rezoss Patches & Upstream S26U Stuffs by Rezoss-Reza (@Rezoss-Reza), adapted and maintained by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "floating_feature.set",
+      "file": "${WORK_DIR}/system/system/etc/floating_feature.xml",
+      "key": "SEC_FLOATING_FEATURE_COMMON_SUPPORT_NAL_PRELOADAPP_REGULATION",
+      "value": "TRUE"
+    },
+    {
+      "id": "ff_settings_enable_eu_battery_regulatory",
+      "category": "Floating Features",
+      "description": "Set floating feature SEC_FLOATING_FEATURE_SETTINGS_ENABLE_EU_BATTERY_REGULATORY=TRUE",
+      "credit": "Rezoss Patches & Upstream S26U Stuffs by Rezoss-Reza (@Rezoss-Reza), adapted and maintained by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "floating_feature.set",
+      "file": "${WORK_DIR}/system/system/etc/floating_feature.xml",
+      "key": "SEC_FLOATING_FEATURE_SETTINGS_ENABLE_EU_BATTERY_REGULATORY",
+      "value": "TRUE"
+    },
+    {
+      "id": "prop_build_display_id",
+      "category": "System Identity & Branding",
+      "description": "Set clean UN1CA Carbon build number display",
+      "credit": "UN1CA Carbon Original Engineering by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "prop.set",
+      "file": "${WORK_DIR}/system/system/build.prop",
+      "key": "ro.build.display.id",
+      "value": "UN1CA Carbon IX v1.0 (ZZI8)"
+    },
+    {
+      "id": "prop_rom_version",
+      "category": "System Identity & Branding",
+      "description": "Set UN1CA Carbon release version string",
+      "credit": "UN1CA Carbon Original Engineering by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "prop.set",
+      "file": "${WORK_DIR}/system/system/build.prop",
+      "key": "ro.unica.version",
+      "value": "UN1CA Carbon IX 1.0"
+    },
+    {
+      "id": "prop_vulkan_default",
+      "category": "Graphics & Display",
+      "description": "Set Vulkan renderer default state",
+      "credit": "UN1CA Carbon Original Engineering by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "prop.set",
+      "file": "${WORK_DIR}/system/system/build.prop",
+      "key": "persist.sys.unica.vulkan",
+      "value": "false"
+    },
+    {
+      "id": "bootanim_media_carbon",
+      "category": "Boot & Media",
+      "description": "Install UN1CA Carbon 24fps intro boot animation package",
+      "credit": "UN1CA Carbon Original Engineering by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "fs.copy",
+      "source": "carbon_ours/bootanimation/system/media/bootanimation_carbon.zip",
+      "destination": "${WORK_DIR}/system/system/media/bootanimation_carbon.zip",
+      "condition": "env.BOOTANIMATION_STYLE == carbon",
+      "metadata": {
+        "uid": 0,
+        "gid": 0,
+        "mode": "0644",
+        "selabel": "u:object_r:system_file:s0"
+      }
+    },
+    {
+      "id": "bootanim_media_default",
+      "category": "Boot & Media",
+      "description": "Set UN1CA Carbon as primary system bootanimation.zip",
+      "credit": "UN1CA Carbon Original Engineering by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "fs.copy",
+      "source": "carbon_ours/bootanimation/system/media/bootanimation_carbon.zip",
+      "destination": "${WORK_DIR}/system/system/media/bootanimation.zip",
+      "condition": "env.BOOTANIMATION_STYLE == carbon",
+      "metadata": {
+        "uid": 0,
+        "gid": 0,
+        "mode": "0644",
+        "selabel": "u:object_r:system_file:s0"
+      }
+    },
+    {
+      "id": "bootanim_runner_bin",
+      "category": "Boot & Media",
+      "description": "Install primary Frame-0 AOSP bootanimation runner binary",
+      "credit": "Rezoss Patches & Upstream S26U Stuffs by Rezoss-Reza (@Rezoss-Reza), adapted and maintained by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "fs.copy",
+      "source": "carbon_ours/bootanimation/system/bin/bootanimation_zip",
+      "destination": "${WORK_DIR}/system/system/bin/bootanimation",
+      "metadata": {
+        "uid": 0,
+        "gid": 2000,
+        "mode": "0755",
+        "selabel": "u:object_r:bootanim_exec:s0"
+      }
+    },
+    {
+      "id": "bootanim_runner_bin_zip",
+      "category": "Boot & Media",
+      "description": "Install secondary AOSP bootanimation runner binary",
+      "credit": "Rezoss Patches & Upstream S26U Stuffs by Rezoss-Reza (@Rezoss-Reza), adapted and maintained by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "fs.copy",
+      "source": "carbon_ours/bootanimation/system/bin/bootanimation_zip",
+      "destination": "${WORK_DIR}/system/system/bin/bootanimation_zip",
+      "metadata": {
+        "uid": 0,
+        "gid": 2000,
+        "mode": "0755",
+        "selabel": "u:object_r:bootanim_exec:s0"
+      }
+    },
+    {
+      "id": "bootanim_runner_lib",
+      "category": "Boot & Media",
+      "description": "Install AOSP libbootanimation.so native renderer",
+      "credit": "Rezoss Patches & Upstream S26U Stuffs by Rezoss-Reza (@Rezoss-Reza), adapted and maintained by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "fs.copy",
+      "source": "carbon_ours/bootanimation/system/lib64/libbootanimation.so",
+      "destination": "${WORK_DIR}/system/system/lib64/libbootanimation.so",
+      "metadata": {
+        "uid": 0,
+        "gid": 0,
+        "mode": "0644",
+        "selabel": "u:object_r:system_lib_file:s0"
+      }
+    },
+    {
+      "id": "bootanim_runtime_script",
+      "category": "Boot & Media",
+      "description": "Install dynamic bootanimation switcher runtime script",
+      "credit": "Rezoss Patches & Upstream S26U Stuffs by Rezoss-Reza (@Rezoss-Reza), adapted and maintained by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "fs.copy",
+      "source": "vendors_rezoss/mods_rezoss/system/etc/unica/rezoss_bootanimation.sh",
+      "destination": "${WORK_DIR}/system/system/etc/unica/rezoss_bootanimation.sh",
+      "metadata": {
+        "uid": 0,
+        "gid": 2000,
+        "mode": "0755",
+        "selabel": "u:object_r:system_file:s0"
+      }
+    },
+    {
+      "id": "wallpaper_carbon_3088_default",
+      "category": "Wallpapers & Visuals",
+      "description": "Install 1:1 portrait calibrated 3088x3088 Carbon factory wallpaper",
+      "credit": "Sagarmatha Suite by Cosine / NPL Team; Carbon 1:1 Canvas & Animated Lockscreen Video by ALRI Development",
+      "action": "fs.copy",
+      "source": "vendors_npl/mods_cosine/npl_wallpapers/assets/carbon_default_3088.webp",
+      "destination": "${WORK_DIR}/system/system/priv-app/wallpaper-res/res/drawable-nodpi-v4/Wallpaper_001.webp",
+      "metadata": {
+        "uid": 0,
+        "gid": 0,
+        "mode": "0644",
+        "selabel": "u:object_r:system_file:s0"
+      }
+    },
+    {
+      "id": "wallpaper_carbon_thumb",
+      "category": "Wallpapers & Visuals",
+      "description": "Install Carbon factory wallpaper thumbnail",
+      "credit": "Sagarmatha Suite by Cosine / NPL Team; Carbon 1:1 Canvas & Animated Lockscreen Video by ALRI Development",
+      "action": "fs.copy",
+      "source": "vendors_npl/mods_cosine/npl_wallpapers/assets/carbon_default_thumb.webp",
+      "destination": "${WORK_DIR}/system/system/priv-app/wallpaper-res/res/drawable-nodpi-v4/default_thumb.webp",
+      "metadata": {
+        "uid": 0,
+        "gid": 0,
+        "mode": "0644",
+        "selabel": "u:object_r:system_file:s0"
+      }
+    },
+    {
+      "id": "wallpaper_carbon_animated_video",
+      "category": "Wallpapers & Visuals",
+      "description": "Install Carbon official animated lockscreen video",
+      "credit": "Sagarmatha Suite by Cosine / NPL Team; Carbon 1:1 Canvas & Animated Lockscreen Video by ALRI Development",
+      "action": "fs.copy",
+      "source": "carbon_ours/wallpapers/carbon_animated_lockscreen.mp4",
+      "destination": "${WORK_DIR}/system/system/media/video/carbon_animated_lockscreen.mp4",
+      "metadata": {
+        "uid": 0,
+        "gid": 0,
+        "mode": "0644",
+        "selabel": "u:object_r:system_file:s0"
+      }
+    },
+    {
+      "id": "preinstall_kernelsu_next_app",
+      "category": "Root & Privileges",
+      "description": "Pre-install KernelSU Next manager v3.4.2 into /system/app",
+      "credit": "Kernel by GoRhanHee; Root Engine by KernelSU-Next (rifsxd & tiann); TWRP Recovery by TeamWin; Integrated by ALRI Development",
+      "action": "fs.copy",
+      "source": "carbon_ours/prebuilt_apps/KernelSU_Next.apk",
+      "destination": "${WORK_DIR}/system/system/app/KernelSU_Next/KernelSU_Next.apk",
+      "metadata": {
+        "uid": 0,
+        "gid": 0,
+        "mode": "0644",
+        "selabel": "u:object_r:system_file:s0"
+      }
+    },
+    {
+      "id": "preinstall_kernelsu_next_privapp",
+      "category": "Root & Privileges",
+      "description": "Pre-install KernelSU Next manager v3.4.2 into /system/priv-app",
+      "credit": "Kernel by GoRhanHee; Root Engine by KernelSU-Next (rifsxd & tiann); TWRP Recovery by TeamWin; Integrated by ALRI Development",
+      "action": "fs.copy",
+      "source": "carbon_ours/prebuilt_apps/KernelSU_Next.apk",
+      "destination": "${WORK_DIR}/system/system/priv-app/KernelSU_Next/KernelSU_Next.apk",
+      "metadata": {
+        "uid": 0,
+        "gid": 0,
+        "mode": "0644",
+        "selabel": "u:object_r:system_file:s0"
+      }
+    },
+    {
+      "id": "debloat_system_system_app_hiyaservice",
+      "category": "Privacy & Telemetry Debloat",
+      "description": "Purge Hiya Caller Spam Lookup",
+      "credit": "UN1CA Carbon Original Engineering by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "fs.delete",
+      "file": "${WORK_DIR}/system/system/app/HiyaService",
+      "condition": "env.DEBLOAT_TELEMETRY == true"
+    },
+    {
+      "id": "debloat_system_system_app_silentlog",
+      "category": "Privacy & Telemetry Debloat",
+      "description": "Purge Modem Silent Logging Daemon",
+      "credit": "UN1CA Carbon Original Engineering by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "fs.delete",
+      "file": "${WORK_DIR}/system/system/app/SilentLog",
+      "condition": "env.DEBLOAT_TELEMETRY == true"
+    },
+    {
+      "id": "debloat_system_system_app_smartmanager_v6_devicesecurity_cn",
+      "category": "Privacy & Telemetry Debloat",
+      "description": "Purge TCM Anti-Virus Engine (CN)",
+      "credit": "UN1CA Carbon Original Engineering by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "fs.delete",
+      "file": "${WORK_DIR}/system/system/app/SmartManager_v6_DeviceSecurity_CN",
+      "condition": "env.DEBLOAT_TELEMETRY == true"
+    },
+    {
+      "id": "debloat_system_system_priv-app_devicequalityagent38",
+      "category": "Privacy & Telemetry Debloat",
+      "description": "Purge Device Quality Agent (DQA)",
+      "credit": "UN1CA Carbon Original Engineering by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "fs.delete",
+      "file": "${WORK_DIR}/system/system/priv-app/DeviceQualityAgent38",
+      "condition": "env.DEBLOAT_TELEMETRY == true"
+    },
+    {
+      "id": "debloat_system_system_priv-app_diagmonagent97",
+      "category": "Privacy & Telemetry Debloat",
+      "description": "Purge Diagnostic Monitor Agent",
+      "credit": "UN1CA Carbon Original Engineering by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "fs.delete",
+      "file": "${WORK_DIR}/system/system/priv-app/DiagMonAgent97",
+      "condition": "env.DEBLOAT_TELEMETRY == true"
+    },
+    {
+      "id": "debloat_system_system_priv-app_rubinversion38",
+      "category": "Privacy & Telemetry Debloat",
+      "description": "Purge Samsung Customization Service (Rubin)",
+      "credit": "UN1CA Carbon Original Engineering by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "fs.delete",
+      "file": "${WORK_DIR}/system/system/priv-app/RubinVersion38",
+      "condition": "env.DEBLOAT_TELEMETRY == true"
+    },
+    {
+      "id": "debloat_system_system_priv-app_warrantycare",
+      "category": "Privacy & Telemetry Debloat",
+      "description": "Purge Warranty Care & Care+ Nag",
+      "credit": "UN1CA Carbon Original Engineering by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "fs.delete",
+      "file": "${WORK_DIR}/system/system/priv-app/WarrantyCare",
+      "condition": "env.DEBLOAT_TELEMETRY == true"
+    },
+    {
+      "id": "debloat_system_system_priv-app_knoxanalyticsagent",
+      "category": "Privacy & Telemetry Debloat",
+      "description": "Purge Knox Analytics Agent",
+      "credit": "UN1CA Carbon Original Engineering by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "fs.delete",
+      "file": "${WORK_DIR}/system/system/priv-app/knoxanalyticsagent",
+      "condition": "env.DEBLOAT_TELEMETRY == true"
+    },
+    {
+      "id": "debloat_product_priv-app_carrierwifi",
+      "category": "Privacy & Telemetry Debloat",
+      "description": "Purge Google Wi-Fi Carrier Auto-Provisioner",
+      "credit": "UN1CA Carbon Original Engineering by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "fs.delete",
+      "file": "${WORK_DIR}/product/priv-app/CarrierWifi",
+      "condition": "env.DEBLOAT_TELEMETRY == true"
+    },
+    {
+      "id": "debloat_system_ext_priv-app_qaiorscreenunderstandingservice",
+      "category": "Privacy & Telemetry Debloat",
+      "description": "Purge Qualcomm AI Screen Understanding Service",
+      "credit": "UN1CA Carbon Original Engineering by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "fs.delete",
+      "file": "${WORK_DIR}/system_ext/priv-app/QaiorScreenUnderstandingService",
+      "condition": "env.DEBLOAT_TELEMETRY == true"
+    },
+    {
+      "id": "debloat_system_ext_priv-app_screenunderstanding",
+      "category": "Privacy & Telemetry Debloat",
+      "description": "Purge Qualcomm Screen Understanding Sample App",
+      "credit": "UN1CA Carbon Original Engineering by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "fs.delete",
+      "file": "${WORK_DIR}/system_ext/priv-app/screenunderstanding",
+      "condition": "env.DEBLOAT_TELEMETRY == true"
+    },
+    {
+      "id": "patch_dressroom_ambient_weather",
+      "category": "APK Patches",
+      "description": "Bypass DressRoom AICore weather feature gate",
+      "credit": "Rezoss Patches & Upstream S26U Stuffs by Rezoss-Reza (@Rezoss-Reza), adapted and maintained by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "apk.patch",
+      "apk": "system/priv-app/DressRoom/DressRoom.apk",
+      "patch": "vendors_rezoss/mods_rezoss/dressroom/DressRoom.apk/0001-Bypass-AICore-weather-feature-check.patch"
+    },
+    {
+      "id": "patch_dressroom_font_picker",
+      "category": "APK Patches",
+      "description": "Expose UN1CA selected fonts to DressRoom lockscreen picker",
+      "credit": "Rezoss Patches & Upstream S26U Stuffs by Rezoss-Reza (@Rezoss-Reza), adapted and maintained by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "apk.patch",
+      "apk": "system/priv-app/DressRoom/DressRoom.apk",
+      "patch": "vendors_rezoss/mods_rezoss/dressroom/DressRoom.apk/0002-Expose-UN1CA-selected-fonts-to-lockscreen-picker.patch"
+    },
+    {
+      "id": "patch_aod_expose_un1ca_font_selector_fonts_to_clock_picker",
+      "category": "APK Patches",
+      "description": "AODService v80: Expose UN1CA clock font list integration",
+      "credit": "Rezoss Patches & Upstream S26U Stuffs by Rezoss-Reza (@Rezoss-Reza), adapted and maintained by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "apk.patch",
+      "apk": "system/priv-app/AODService_v80/AODService_v80.apk",
+      "patch": "vendors_rezoss/mods_rezoss/aodservice/AODService_v80.apk/0001-Expose-UN1CA-Font-Selector-fonts-to-clock-picker.patch"
+    },
+    {
+      "id": "patch_aod_mirror_stretch_clock_font_type_to_aod",
+      "category": "APK Patches",
+      "description": "AODService v80: Mirror stretch clock font type to AOD",
+      "credit": "Rezoss Patches & Upstream S26U Stuffs by Rezoss-Reza (@Rezoss-Reza), adapted and maintained by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "apk.patch",
+      "apk": "system/priv-app/AODService_v80/AODService_v80.apk",
+      "patch": "vendors_rezoss/mods_rezoss/aodservice/AODService_v80.apk/0002-Mirror-stretch-clock-font-type-to-AOD.patch"
+    },
+    {
+      "id": "patch_aod_backfill_aod_stretch_font_type_on_startup",
+      "category": "APK Patches",
+      "description": "AODService v80: Backfill AOD stretch font type on startup",
+      "credit": "Rezoss Patches & Upstream S26U Stuffs by Rezoss-Reza (@Rezoss-Reza), adapted and maintained by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "apk.patch",
+      "apk": "system/priv-app/AODService_v80/AODService_v80.apk",
+      "patch": "vendors_rezoss/mods_rezoss/aodservice/AODService_v80.apk/0003-Backfill-AOD-stretch-font-type-on-startup.patch"
+    },
+    {
+      "id": "patch_aod_normalize_stretch_font_data_before_aod_render",
+      "category": "APK Patches",
+      "description": "AODService v80: Normalize stretch font data before AOD render",
+      "credit": "Rezoss Patches & Upstream S26U Stuffs by Rezoss-Reza (@Rezoss-Reza), adapted and maintained by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "apk.patch",
+      "apk": "system/priv-app/AODService_v80/AODService_v80.apk",
+      "patch": "vendors_rezoss/mods_rezoss/aodservice/AODService_v80.apk/0004-Normalize-stretch-font-data-before-AOD-render.patch"
+    },
+    {
+      "id": "patch_aod_preserve_aod_stretch_font_heights",
+      "category": "APK Patches",
+      "description": "AODService v80: Preserve AOD stretch font heights",
+      "credit": "Rezoss Patches & Upstream S26U Stuffs by Rezoss-Reza (@Rezoss-Reza), adapted and maintained by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "apk.patch",
+      "apk": "system/priv-app/AODService_v80/AODService_v80.apk",
+      "patch": "vendors_rezoss/mods_rezoss/aodservice/AODService_v80.apk/0005-Preserve-AOD-stretch-font-heights.patch"
+    },
+    {
+      "id": "patch_aod_allow_aod_stretch_render_when_font_heights_exist",
+      "category": "APK Patches",
+      "description": "AODService v80: Allow AOD stretch render when font heights exist",
+      "credit": "Rezoss Patches & Upstream S26U Stuffs by Rezoss-Reza (@Rezoss-Reza), adapted and maintained by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "apk.patch",
+      "apk": "system/priv-app/AODService_v80/AODService_v80.apk",
+      "patch": "vendors_rezoss/mods_rezoss/aodservice/AODService_v80.apk/0006-Allow-AOD-stretch-render-when-font-heights-exist.patch"
+    },
+    {
+      "id": "patch_visualcloudcore_model_check",
+      "category": "APK Patches",
+      "description": "Use S25 Ultra model for VisualCloudCore Galaxy Store stub update check",
+      "credit": "Rezoss Patches & Upstream S26U Stuffs by Rezoss-Reza (@Rezoss-Reza), adapted and maintained by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "apk.patch",
+      "apk": "system/app/VisualCloudCore/VisualCloudCore.apk",
+      "patch": "vendors_rezoss/mods_rezoss/visualcloudcore/VisualCloudCore.apk/0001-Use-S25-Ultra-model-for-stub-update-check.patch"
+    },
+    {
+      "id": "patch_product_overlay_doze_brightness",
+      "category": "APK Patches",
+      "description": "Add doze auto-brightness arrays to framework-res auto generated RRO product",
+      "credit": "Rezoss Patches & Upstream S26U Stuffs by Rezoss-Reza (@Rezoss-Reza), adapted and maintained by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "apk.patch",
+      "apk": "product/overlay/framework-res__${TARGET}xxx__auto_generated_rro_product.apk",
+      "patch": "vendors_rezoss/mods_rezoss/rro/framework-res__${TARGET}xxx__auto_generated_rro_product.apk/0001-Add-doze-auto-brightness-arrays.patch"
+    },
+    {
+      "id": "patch_sivs_scs_device_model",
+      "category": "Galaxy AI Patches",
+      "description": "Patch SamsungIntelliVoiceServices SCS device-model header to SM-S948B",
+      "credit": "Rezoss Patches & Upstream S26U Stuffs by Rezoss-Reza (@Rezoss-Reza), adapted and maintained by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "apk.patch",
+      "apk": "system/priv-app/SamsungIntelliVoiceServices/SamsungIntelliVoiceServices.apk",
+      "patch": "vendors_rezoss/mods_rezoss/sivs/SamsungIntelliVoiceServices.apk/0001-Use-S26U-device-model-for-SCS-requests.patch"
+    },
+    {
+      "id": "patch_aicore_vision_model_mapping",
+      "category": "Galaxy AI Patches",
+      "description": "Map dm series to m3q for SamsungAiCore vision model",
+      "credit": "Rezoss Patches & Upstream S26U Stuffs by Rezoss-Reza (@Rezoss-Reza), adapted and maintained by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "apk.patch",
+      "apk": "system/priv-app/SamsungAiCore/SamsungAiCore.apk",
+      "patch": "vendors_rezoss/mods_rezoss/aicore/SamsungAiCore.apk/0001-Map-dm-series-to-m3q-for-vision-model.patch"
+    },
+    {
+      "id": "patch_aicore_sm8550_v73_profile",
+      "category": "Galaxy AI Patches",
+      "description": "Enable SM8550 V73 QNN profile in SamsungAiCore",
+      "credit": "Rezoss Patches & Upstream S26U Stuffs by Rezoss-Reza (@Rezoss-Reza), adapted and maintained by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "apk.patch",
+      "apk": "system/priv-app/SamsungAiCore/SamsungAiCore.apk",
+      "patch": "vendors_rezoss/mods_rezoss/aicore/SamsungAiCore.apk/0002-Experiment-enable-SM8550-V73-QNN-profile.patch"
+    },
+    {
+      "id": "patch_aios_allow_sm8550_service_config",
+      "category": "Galaxy AI Patches",
+      "description": "Allow SM8550 service config in AIOSKernelService",
+      "credit": "Rezoss Patches & Upstream S26U Stuffs by Rezoss-Reza (@Rezoss-Reza), adapted and maintained by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "apk.patch",
+      "apk": "system/priv-app/AIOSKernelService/AIOSKernelService.apk",
+      "patch": "vendors_rezoss/mods_rezoss/aioskernel/AIOSKernelService.apk/0001-Allow-SM8550-service-config.patch"
+    },
+    {
+      "id": "patch_aios_use_hexagon_v73_qnn_skel",
+      "category": "Galaxy AI Patches",
+      "description": "Use Hexagon V73 QNN skel in AIOSKernelService",
+      "credit": "Rezoss Patches & Upstream S26U Stuffs by Rezoss-Reza (@Rezoss-Reza), adapted and maintained by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "apk.patch",
+      "apk": "system/priv-app/AIOSKernelService/AIOSKernelService.apk",
+      "patch": "vendors_rezoss/mods_rezoss/aioskernel/AIOSKernelService.apk/0002-Use-Hexagon-V73-QNN-skel.patch"
+    },
+    {
+      "id": "patch_aios_spoof_sm8550_build_flavor",
+      "category": "Galaxy AI Patches",
+      "description": "Spoof SM8550 build flavor in AIOSKernelService",
+      "credit": "Rezoss Patches & Upstream S26U Stuffs by Rezoss-Reza (@Rezoss-Reza), adapted and maintained by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "apk.patch",
+      "apk": "system/priv-app/AIOSKernelService/AIOSKernelService.apk",
+      "patch": "vendors_rezoss/mods_rezoss/aioskernel/AIOSKernelService.apk/0003-Spoof-SM8550-build-flavor.patch"
+    },
+    {
+      "id": "patch_aios_refuse_llm_llmv_before_qnn_execution",
+      "category": "Galaxy AI Patches",
+      "description": "Refuse LLM/LLMV before QNN execution on SM8550 in AIOSKernelService",
+      "credit": "Rezoss Patches & Upstream S26U Stuffs by Rezoss-Reza (@Rezoss-Reza), adapted and maintained by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "apk.patch",
+      "apk": "system/priv-app/AIOSKernelService/AIOSKernelService.apk",
+      "patch": "vendors_rezoss/mods_rezoss/aioskernel/AIOSKernelService.apk/0004-Refuse-LLM-LLMV-before-QNN-execution.patch"
+    },
+    {
+      "id": "patch_secsettings_notification_highlights",
+      "category": "Notification Highlights",
+      "description": "Match S26U notification highlights gate in SecSettings",
+      "credit": "Rezoss Patches & Upstream S26U Stuffs by Rezoss-Reza (@Rezoss-Reza), adapted and maintained by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "apk.patch",
+      "apk": "system/priv-app/SecSettings/SecSettings.apk",
+      "patch": "vendors_rezoss/mods_rezoss/notification-priority/SecSettings.apk/0001-Match-S26U-notification-highlights-gate.patch"
+    },
+    {
+      "id": "patch_services_notification_priority",
+      "category": "Notification Highlights",
+      "description": "Allow dm1q AI notification priority in services.jar",
+      "credit": "Rezoss Patches & Upstream S26U Stuffs by Rezoss-Reza (@Rezoss-Reza), adapted and maintained by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "apk.patch",
+      "apk": "system/framework/services.jar",
+      "patch": "vendors_rezoss/mods_rezoss/notification-priority/services.jar/0001-Allow-dm1q-dm2q-dm3q-AI-notification-priority.patch"
+    },
+    {
+      "id": "patch_settingsprovider_notification_priority",
+      "category": "Notification Highlights",
+      "description": "Enable notification priority default in SettingsProvider",
+      "credit": "Rezoss Patches & Upstream S26U Stuffs by Rezoss-Reza (@Rezoss-Reza), adapted and maintained by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "apk.patch",
+      "apk": "system/priv-app/SettingsProvider/SettingsProvider.apk",
+      "patch": "vendors_rezoss/mods_rezoss/notification-priority/SettingsProvider.apk/0001-Enable-notification-priority-default.patch"
+    },
+    {
+      "id": "dex_smartsuggestions_all_patches",
+      "category": "SmartSuggestions DEX",
+      "description": "Extract, patch classes11/13/14/15 DEX for SmartSuggestions and re-sign",
+      "credit": "Rezoss Patches & Upstream S26U Stuffs by Rezoss-Reza (@Rezoss-Reza), adapted and maintained by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "script.run",
+      "script": "vendors_rezoss/mods_rezoss/smartsuggestions/run_dex_patches.sh",
+      "args": []
+    },
+    {
+      "id": "script_firewall_region_strings",
+      "category": "Privacy & Security",
+      "description": "Sanitize Firewall province and country strings using region_names.tsv",
+      "credit": "Rezoss Patches & Upstream S26U Stuffs by Rezoss-Reza (@Rezoss-Reza), adapted and maintained by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "script.run",
+      "script": "vendors_rezoss/mods_rezoss/firewall/run_firewall_sanitize.sh",
+      "args": []
+    },
+    {
+      "id": "patch_framework_allow_unlimited_storage_for_google_photos",
+      "category": "Carbon Framework Core",
+      "description": "Allow unlimited storage for Google Photos",
+      "credit": "UN1CA Carbon Original Engineering by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "apk.patch",
+      "apk": "system/framework/framework.jar",
+      "patch": "carbon_ours/branding_settings/smali/system/framework/framework.jar/0001-Allow-unlimited-storage-for-Google-Photos.patch"
+    },
+    {
+      "id": "patch_framework_introduce_samsungpropshooks",
+      "category": "Carbon Framework Core",
+      "description": "Introduce SamsungPropsHooks",
+      "credit": "UN1CA Carbon Original Engineering by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "apk.patch",
+      "apk": "system/framework/framework.jar",
+      "patch": "carbon_ours/branding_settings/smali/system/framework/framework.jar/0002-Introduce-SamsungPropsHooks.patch"
+    },
+    {
+      "id": "patch_framework_introduce_floatingfeaturehooks",
+      "category": "Carbon Framework Core",
+      "description": "Introduce FloatingFeatureHooks",
+      "credit": "UN1CA Carbon Original Engineering by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "apk.patch",
+      "apk": "system/framework/framework.jar",
+      "patch": "carbon_ours/branding_settings/smali/system/framework/framework.jar/0003-Introduce-FloatingFeatureHooks.patch"
+    },
+    {
+      "id": "patch_framework_introduce_hidedeveloperstatusutils",
+      "category": "Carbon Framework Core",
+      "description": "Introduce HideDeveloperStatusUtils",
+      "credit": "UN1CA Carbon Original Engineering by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "apk.patch",
+      "apk": "system/framework/framework.jar",
+      "patch": "carbon_ours/branding_settings/smali/system/framework/framework.jar/0004-Introduce-HideDeveloperStatusUtils.patch"
+    },
+    {
+      "id": "patch_framework_add_galaxy_store_device_spoof_hook",
+      "category": "Carbon Framework Core",
+      "description": "Add Galaxy Store device spoof hook",
+      "credit": "UN1CA Carbon Original Engineering by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "apk.patch",
+      "apk": "system/framework/framework.jar",
+      "patch": "carbon_ours/branding_settings/smali/system/framework/framework.jar/0005-Add-Galaxy-Store-device-spoof-hook.patch"
+    },
+    {
+      "id": "patch_services_allow_disabling_secure_windows",
+      "category": "Carbon Services Core",
+      "description": "Allow disabling secure windows (unrestricted screenshots)",
+      "credit": "UN1CA Carbon Original Engineering by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "apk.patch",
+      "apk": "system/framework/services.jar",
+      "patch": "carbon_ours/branding_settings/smali/system/framework/services.jar/0001-Allow-disabling-secure-windows.patch"
+    },
+    {
+      "id": "patch_services_allow_app_downgrade",
+      "category": "Carbon Services Core",
+      "description": "Allow application downgrade",
+      "credit": "UN1CA Carbon Original Engineering by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "apk.patch",
+      "apk": "system/framework/services.jar",
+      "patch": "carbon_ours/branding_settings/smali/system/framework/services.jar/0002-Allow-app-downgrade.patch"
+    },
+    {
+      "id": "patch_services_allow_app_target_sdk_bypass",
+      "category": "Carbon Services Core",
+      "description": "Allow application target SDK bypass",
+      "credit": "UN1CA Carbon Original Engineering by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "apk.patch",
+      "apk": "system/framework/services.jar",
+      "patch": "carbon_ours/branding_settings/smali/system/framework/services.jar/0003-Allow-app-target-SDK-bypass.patch"
+    },
+    {
+      "id": "patch_services_allow_disable_screen_capture_detection",
+      "category": "Carbon Services Core",
+      "description": "Allow disable screen capture detection",
+      "credit": "UN1CA Carbon Original Engineering by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "apk.patch",
+      "apk": "system/framework/services.jar",
+      "patch": "carbon_ours/branding_settings/smali/system/framework/services.jar/0004-Allow-disable-screen-capture-detection.patch"
+    },
+    {
+      "id": "patch_services_allow_disable_asks",
+      "category": "Carbon Services Core",
+      "description": "Allow disable Samsung ASKS security nag",
+      "credit": "UN1CA Carbon Original Engineering by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "apk.patch",
+      "apk": "system/framework/services.jar",
+      "patch": "carbon_ours/branding_settings/smali/system/framework/services.jar/0005-Allow-disable-ASKS.patch"
+    },
+    {
+      "id": "patch_services_deny_gnss_location_updates_with_un1ca_toggle",
+      "category": "Carbon Services Core",
+      "description": "Deny GNSS location updates with UN1CA toggle",
+      "credit": "UN1CA Carbon Original Engineering by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "apk.patch",
+      "apk": "system/framework/services.jar",
+      "patch": "carbon_ours/branding_settings/smali/system/framework/services.jar/0006-Deny-GNSS-location-updates-with-UN1CA-toggle.patch"
+    },
+    {
+      "id": "patch_services_make_mock_location_authentic_with_un1ca_toggle",
+      "category": "Carbon Services Core",
+      "description": "Make mock location authentic with UN1CA toggle",
+      "credit": "UN1CA Carbon Original Engineering by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "apk.patch",
+      "apk": "system/framework/services.jar",
+      "patch": "carbon_ours/branding_settings/smali/system/framework/services.jar/0007-Make-mock-location-authentic-with-UN1CA-toggle.patch"
+    },
+    {
+      "id": "patch_services_permit_mock_provider_with_un1ca_toggle",
+      "category": "Carbon Services Core",
+      "description": "Permit mock provider with UN1CA toggle",
+      "credit": "UN1CA Carbon Original Engineering by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "apk.patch",
+      "apk": "system/framework/services.jar",
+      "patch": "carbon_ours/branding_settings/smali/system/framework/services.jar/0008-Permit-mock-provider-with-UN1CA-toggle.patch"
+    },
+    {
+      "id": "patch_services_allow_preloaded_system_app_downgrade",
+      "category": "Carbon Services Core",
+      "description": "Allow preloaded system app downgrade",
+      "credit": "UN1CA Carbon Original Engineering by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "apk.patch",
+      "apk": "system/framework/services.jar",
+      "patch": "carbon_ours/branding_settings/smali/system/framework/services.jar/0009-Allow-preloaded-system-app-downgrade.patch"
+    },
+    {
+      "id": "patch_multisound_allow_more_apps",
+      "category": "Audio & Sound",
+      "description": "Allow more than five apps in MultiSoundSetting",
+      "credit": "UN1CA Carbon Original Engineering by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "apk.patch",
+      "apk": "system/priv-app/MultiSoundSetting/MultiSoundSetting.apk",
+      "patch": "carbon_ours/branding_settings/smali/system/priv-app/MultiSoundSetting/MultiSoundSetting.apk/0001-Allow-more-than-five-apps.patch"
+    },
+    {
+      "id": "patch_camera_runtime_feature_override",
+      "category": "Camera Feature Override",
+      "description": "Allow runtime camera feature override in SamsungCamera",
+      "credit": "UN1CA Carbon Original Engineering by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "apk.patch",
+      "apk": "system/priv-app/SamsungCamera/SamsungCamera.apk",
+      "patch": "carbon_ours/branding_settings/smali/system/priv-app/SamsungCamera/SamsungCamera.apk/0001-Allow-runtime-camera-feature-override.patch"
+    },
+    {
+      "id": "inject_secsettings_unica_logo_layout",
+      "category": "Carbon Settings UI",
+      "description": "Inject UN1CA Carbon logo layout with contrast scrim",
+      "credit": "UN1CA Carbon Original Engineering by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "fs.copy",
+      "source": "carbon_ours/branding_settings/SecSettings.apk/res/layout/unica_settings_logo_layout.xml",
+      "destination": "${APKTOOL_DIR}/system/priv-app/SecSettings/SecSettings.apk/res/layout/unica_settings_logo_layout.xml"
+    },
+    {
+      "id": "inject_secsettings_unica_ui_xml",
+      "category": "Carbon Settings UI",
+      "description": "Inject UN1CA UI Settings PreferenceScreen with Bootanim DropDown",
+      "credit": "UN1CA Carbon Original Engineering by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "fs.copy",
+      "source": "carbon_ours/branding_settings/SecSettings.apk/res/xml/unica_ui_settings.xml",
+      "destination": "${APKTOOL_DIR}/system/priv-app/SecSettings/SecSettings.apk/res/xml/unica_ui_settings.xml"
+    },
+    {
+      "id": "inject_secsettings_bootanim_controller",
+      "category": "Carbon Settings Smali",
+      "description": "Inject BootAnimationPreferenceController for dynamic bootanim switcher",
+      "credit": "UN1CA Carbon Original Engineering by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "fs.copy",
+      "source": "carbon_ours/branding_settings/SecSettings.apk/smali_classes4/io/mesalabs/unica/settings/ui/BootAnimationPreferenceController.smali",
+      "destination": "${APKTOOL_DIR}/system/priv-app/SecSettings/SecSettings.apk/smali_classes4/io/mesalabs/unica/settings/ui/BootAnimationPreferenceController.smali"
+    },
+    {
+      "id": "npl_themecenter_trial_gate",
+      "category": "Theme Store Trial Bypass",
+      "description": "Inject persistent Samsung Theme Store trial period gate into ThemeCenter",
+      "credit": "Theme Store Trial Bypass & NPL Catalog by Cosine / NPL ROM Team, integrated by ALRI Development",
+      "action": "script.run",
+      "script": "python3",
+      "args": [
+        "vendors_npl/mods_cosine/theme_trial/inject_trial_gate.py",
+        "${APKTOOL_DIR}/system/priv-app/ThemeCenter/ThemeCenter.apk"
+      ]
+    },
+    {
+      "id": "npl_wallpaper_apply_all",
+      "category": "Wallpapers & Visuals",
+      "description": "Inject all NPL Sagarmatha wallpapers and featured JSON catalog",
+      "credit": "Theme Store Trial Bypass & NPL Catalog by Cosine / NPL ROM Team, integrated by ALRI Development",
+      "action": "script.run",
+      "script": "bash",
+      "args": [
+        "vendors_npl/mods_cosine/npl_wallpapers/apply_to_decoded.sh",
+        "${APKTOOL_DIR}/system/priv-app/wallpaper-res/wallpaper-res.apk"
+      ]
+    },
+    {
+      "id": "prebuilt_samsungsans_font_bank",
+      "category": "Fonts & Typography",
+      "description": "Install SamsungSans asset bank for UN1CA Font Selector (auto-concatenating .00 and .01)",
+      "credit": "Rezoss Patches & Upstream S26U Stuffs by Rezoss-Reza (@Rezoss-Reza), adapted and maintained by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "fs.copy",
+      "source": "prebuilts/samsung/dm3qxxx/system/app/SamsungSans/SamsungSans.apk",
+      "destination": "${WORK_DIR}/system/system/etc/unica/font_selector/SamsungSans.apk",
+      "metadata": {
+        "uid": 0,
+        "gid": 0,
+        "mode": "0644",
+        "selabel": "u:object_r:system_file:s0"
+      }
+    },
+    {
+      "id": "prebuilt_visionmodel_stub",
+      "category": "Galaxy AI (S26U)",
+      "description": "Install VisionModel-Stub APK from dm3qxxx prebuilts",
+      "credit": "Rezoss Patches & Upstream S26U Stuffs by Rezoss-Reza (@Rezoss-Reza), adapted and maintained by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "fs.copy",
+      "source": "prebuilts/samsung/dm3qxxx/system/app/VisionModel-Stub/VisionModel-Stub.apk",
+      "destination": "${WORK_DIR}/system/system/app/VisionModel-Stub/VisionModel-Stub.apk",
+      "metadata": {
+        "uid": 0,
+        "gid": 0,
+        "mode": "0644",
+        "selabel": "u:object_r:system_file:s0"
+      }
+    },
+    {
+      "id": "prebuilt_pa2qxxx_aioskernelservice_xml",
+      "category": "Galaxy AI (S26U)",
+      "description": "Install aioskernelservice sysconfig XML from pa2qxxx prebuilts",
+      "credit": "Rezoss Patches & Upstream S26U Stuffs by Rezoss-Reza (@Rezoss-Reza), adapted and maintained by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "fs.copy",
+      "source": "prebuilts/samsung/pa2qxxx/system/etc/sysconfig/aioskernelservice.xml",
+      "destination": "${WORK_DIR}/system/system/etc/sysconfig/aioskernelservice.xml",
+      "metadata": {
+        "uid": 0,
+        "gid": 0,
+        "mode": "0644",
+        "selabel": "u:object_r:system_file:s0"
+      }
+    },
+    {
+      "id": "dvfs_siop_default_xml",
+      "category": "Thermal & Performance",
+      "description": "Install customized SIOP default policy XML",
+      "credit": "UN1CA Core Framework by Salvo Giangri, configured by ALRI Development",
+      "action": "fs.copy",
+      "source": "core_unica/patches/dvfs/assets/siop_default.xml",
+      "destination": "${WORK_DIR}/system/system/priv-app/SamsungDeviceHealthManagerService/assets/siop_default.xml",
+      "metadata": {
+        "uid": 0,
+        "gid": 0,
+        "mode": "0644",
+        "selabel": "u:object_r:system_file:s0"
+      }
+    },
+    {
+      "id": "dvfs_ssrm_default_xml",
+      "category": "Thermal & Performance",
+      "description": "Install customized SSRM default policy XML",
+      "credit": "UN1CA Core Framework by Salvo Giangri, configured by ALRI Development",
+      "action": "fs.copy",
+      "source": "core_unica/patches/dvfs/assets/ssrm_default.xml",
+      "destination": "${WORK_DIR}/system/system/priv-app/SamsungDeviceHealthManagerService/assets/ssrm_default.xml",
+      "metadata": {
+        "uid": 0,
+        "gid": 0,
+        "mode": "0644",
+        "selabel": "u:object_r:system_file:s0"
+      }
+    }
+  ]
+}
