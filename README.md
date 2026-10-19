@@ -54,6 +54,7 @@ While initial upstream One UI 9 experimental ports were built exclusively for th
 | **Release Tag** | `IX-v1.0` |
 | **Android Version** | Android 17 (One UI 9.0 • SDK 37) |
 | **Source Firmware** | `S911BXXUAZZI8` (Official Samsung Base) |
+| **Firmware Bit / Binary** | **FIRMWARE BIT A** (`SW REV: A` / Binary A) |
 | **Target Device** | Samsung Galaxy S23 (`SM-S911B` / `dm1q`) |
 | **Linux Kernel** | GoRhanHee 5.15.216 + KernelSU-Next v3.4.2 + SUSFS |
 | **Recovery** | Team Win Recovery Project (TWRP 3.7.1_12-0) integrated |

@@ -3,6 +3,7 @@
 **Target Device:** Samsung Galaxy S23 Base (`SM-S911B` / `dm1q`) **ONLY**  
 **OS Version:** One UI 9.0 (Android 17 • SDK 37)  
 **Base Firmware:** `S911BXXUAZZI8`  
+**Firmware Bootloader Bit:** **FIRMWARE BIT A** (Binary A / SW REV A)  
 **Kernel:** GoRhanHee Linux 5.15.216 + KernelSU-Next v3.4.2 + SUSFS  
 **Recovery:** Official TWRP 3.7.1_12-0 (`dm1q`) integrated  
 **Release Tag:** `IX-v1.0`  
