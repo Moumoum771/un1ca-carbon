@@ -2,7 +2,7 @@
   "ndk": "28.2.13676358",
   "source_sdk": 37,
   "sources": {
-    "native/build_native.py": "c4f95ae9cb89019b75a509266b577898b419f2112da9b76c0a3d10456703a19d",
+    "native/build_native.py": "c1316e1ca165c8045caadbfb8f73345433c57dbe19846e742470a575f1e31ea9",
     "framework.jar/0001-Introduce-PlayIntegrityHooks.patch": "eea6ac6496a0f58aa3bb6fa20dea75c8086e9ae33fdabfa79dba2754d2ec85c3",
     "framework.jar/0002-Spoof-PIF-system-properties.patch": "345442f0cf26ff1eb3eab4d7860c9e9964b93f452a5d6b5c1345560df421092b",
     "native/source/bridge.cpp": "326274f85b02665414915337cb2bdbc7c0459bf3f9874f131c1d5c49cdfe0609",

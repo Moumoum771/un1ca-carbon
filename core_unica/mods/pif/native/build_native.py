@@ -15,7 +15,7 @@ import subprocess
 import tempfile
 
 ROOT = Path(__file__).resolve().parent
-MOD = ROOT.parent
+MOD = ROOT.parent.resolve()
 REPO = MOD.parents[2]
 PATCH = MOD / 'framework.jar/0003-Initialize-native-PIF-in-app-child.patch'
 MANIFEST = ROOT / 'payload.json'
@@ -24,12 +24,12 @@ def run(*args):
     subprocess.run([str(a) for a in args], check=True)
 
 def digest(path):
-    return hashlib.sha256(path.read_bytes()).hexdigest()
+    return hashlib.sha256(path.resolve().read_bytes()).hexdigest()
 
 def inputs():
-    return [Path(__file__), MOD/'framework.jar/0001-Introduce-PlayIntegrityHooks.patch',
-            MOD/'framework.jar/0002-Spoof-PIF-system-properties.patch'] + sorted(
-            p for p in (ROOT / 'source').rglob('*') if p.is_file())
+    return [Path(__file__).resolve(), (MOD/'framework.jar/0001-Introduce-PlayIntegrityHooks.patch').resolve(),
+            (MOD/'framework.jar/0002-Spoof-PIF-system-properties.patch').resolve()] + sorted(
+            p.resolve() for p in (ROOT / 'source').rglob('*') if p.is_file())
 
 def defaults_header():
     patch = (MOD/'framework.jar/0001-Introduce-PlayIntegrityHooks.patch').read_text()
@@ -45,10 +45,10 @@ def defaults_header():
 def verify():
     if not MANIFEST.is_file(): raise SystemExit('PIF native payload missing: run native/build_native.py')
     data = json.loads(MANIFEST.read_text())
-    actual = {str(p.relative_to(MOD)): digest(p) for p in inputs()}
+    actual = {str(p.resolve().relative_to(MOD.resolve())): digest(p) for p in inputs()}
     if actual != data['sources']: raise SystemExit('PIF native sources changed: run native/build_native.py')
     for name, sha in data['outputs'].items():
-        p = MOD / name
+        p = (MOD / name).resolve()
         if not p.is_file() or digest(p) != sha: raise SystemExit('PIF payload mismatch: ' + name)
     print('PIF native source/payload hashes verified')
 
