@@ -68,7 +68,7 @@ private:
     fs::path fw_dir_;
     fs::path tools_dir_;
     fs::path final_zip_path_;
-    std::string pda_version_{"S911BXXUAZZI8"};
+    std::string pda_version_{"S911BXXUAGZIF"};
     std::string composite_fingerprint_;
 
     std::vector<StageMetrics> metrics_;

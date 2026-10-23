@@ -13,7 +13,7 @@ namespace fs = std::filesystem;
 int main() {
     fs::path project_root = "/home/alexsanderalri/Documentos/CARBON_BUILDER";
     fs::path out_dir = project_root / "out";
-    fs::path zip_path = out_dir / "UN1CA_Carbon_IX_1.1_dm1q_ZZI8.zip";
+    fs::path zip_path = out_dir / "UN1CA_Carbon_IX_1.1_dm1q_GZIF.zip";
 
     carbon::security::KeyManager km(project_root);
     auto key_res = km.DiscoverActiveKeys();
@@ -39,7 +39,7 @@ int main() {
     manifest["title"] = "CarbonEngineBuildManifest";
     manifest["engine_version"] = "1.1.0-PROD";
     manifest["target_device"] = "dm1q";
-    manifest["pda_version"] = "S911BXXUAZZI8";
+    manifest["pda_version"] = "S911BXXUAGZIF";
     manifest["key_profile"] = "OFFICIAL_CARBON_KEYS";
     manifest["composite_build_fingerprint"] = composite_fingerprint;
 

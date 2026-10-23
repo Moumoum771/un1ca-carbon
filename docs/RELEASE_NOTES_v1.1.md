@@ -2,7 +2,7 @@
 
 **Target Device:** Samsung Galaxy S23 Base Universal (`SM-S911B` & `SM-S9110` / `dm1q`)  
 **OS Version:** One UI 9.0 Stable (Android 17 • SDK 37)  
-**Base Firmware:** `S911BXXUAZZI8`  
+**Base Firmware:** `S911BXXUAGZIF`  
 **Firmware Bootloader Bit:** **FIRMWARE BIT A** (Binary A / SW REV A)  
 **Kernel:** GoRhanHee Linux 5.15.216 + KernelSU-Next v3.4.2 + SUSFS  
 **Recovery:** Official TWRP 3.7.1_12-0 (`dm1q`) integrated  
@@ -14,7 +14,7 @@
 
 ## 📥 Official Download Links & Checksums
 
-* **Package Filename:** `UN1CA_Carbon_IX_1.1_dm1q_ZZI8.zip`
+* **Package Filename:** `UN1CA_Carbon_IX_1.1_dm1q_GZIF.zip`
 * **Release Branch:** `carbon-ix-V1.0` (Production Tag `IX-v1.1`)
 
 ---
@@ -46,8 +46,8 @@
 2. **Format Userdata (Crucial):** Navigate to **Wipe > Format Data**, type `yes`, and confirm.  
    *(Required on clean installations to create authentic FBE metadata structures).*
 3. **Transfer the ROM Package:**
-   - Connect your phone to your PC via USB and copy `UN1CA_Carbon_IX_1.1_dm1q_ZZI8.zip` to `/sdcard/`, or
+   - Connect your phone to your PC via USB and copy `UN1CA_Carbon_IX_1.1_dm1q_GZIF.zip` to `/sdcard/`, or
    - Use USB-OTG flash drive, or
-   - Use `adb sideload UN1CA_Carbon_IX_1.1_dm1q_ZZI8.zip`.
-4. **Flash the ROM:** Go to **Install**, select `UN1CA_Carbon_IX_1.1_dm1q_ZZI8.zip`, and swipe to confirm flash.
+   - Use `adb sideload UN1CA_Carbon_IX_1.1_dm1q_GZIF.zip`.
+4. **Flash the ROM:** Go to **Install**, select `UN1CA_Carbon_IX_1.1_dm1q_GZIF.zip`, and swipe to confirm flash.
 5. **Reboot to System:** Tap **Reboot System**. Enjoy **UN1CA Carbon IX v1.1**!

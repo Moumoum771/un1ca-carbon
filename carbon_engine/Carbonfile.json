@@ -1225,7 +1225,7 @@
       "action": "prop.set",
       "file": "${WORK_DIR}/system/system/build.prop",
       "key": "ro.build.display.id",
-      "value": "UN1CA Carbon IX v1.1 (ZZI8)"
+      "value": "UN1CA Carbon IX v1.1 (GZIF)"
     },
     {
       "id": "prop_rom_version",

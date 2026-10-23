@@ -53,13 +53,13 @@ While initial upstream One UI 9 experimental ports were built exclusively for th
 | :--- | :--- |
 | **Release Tag** | `IX-v1.1` |
 | **Android Version** | Android 17 (One UI 9.0 Stable • SDK 37) |
-| **Source Firmware** | `S911BXXUAZZI8` (Official Samsung Base) |
+| **Source Firmware** | `S911BXXUAGZIF` (Official Samsung Base) |
 | **Firmware Bit / Binary** | **FIRMWARE BIT A** (`SW REV: A` / Binary A) |
 | **Target Device** | Samsung Galaxy S23 Universal (`SM-S911B` & `SM-S9110` / `dm1q`) |
 | **Linux Kernel** | GoRhanHee 5.15.216 + KernelSU-Next v3.4.2 + SUSFS |
 | **Recovery** | Team Win Recovery Project (TWRP 3.7.1_12-0) integrated |
 | **Encryption Type** | Authentic Samsung Hardware FBE v2 (No DFE hack) |
-| **Package Filename**| `UN1CA_Carbon_IX_1.1_dm1q_ZZI8.zip` |
+| **Package Filename**| `UN1CA_Carbon_IX_1.1_dm1q_GZIF.zip` |
 | **Package Size** | **8.05 GB** (8,644,680,502 bytes) |
 | **SHA-1 Checksum** | `2c639ccf447eebe479482408ccf05157c9db29a6` |
 | **SHA-256 Checksum**| `eccace0f815258597a7ff35c6f6a45961f11992e35e8142a19e83c626c367f9d` |
@@ -75,10 +75,10 @@ Follow this verified installation workflow to ensure flawless first boot:
 2. **Format Userdata (Crucial):** Navigate to **Wipe > Format Data**, type `yes`, and confirm.  
    *(Required on clean installations to create authentic FBE metadata structures).*
 3. **Transfer the ROM Package:**
-   - Connect your phone to your PC via USB and copy `UN1CA_Carbon_IX_1.1_dm1q_ZZI8.zip` to `/sdcard/`, or
+   - Connect your phone to your PC via USB and copy `UN1CA_Carbon_IX_1.1_dm1q_GZIF.zip` to `/sdcard/`, or
    - Use USB-OTG flash drive, or
-   - Use `adb sideload UN1CA_Carbon_IX_1.1_dm1q_ZZI8.zip`.
-4. **Flash the ROM:** Go to **Install**, select `UN1CA_Carbon_IX_1.1_dm1q_ZZI8.zip`, and swipe to confirm flash.  
+   - Use `adb sideload UN1CA_Carbon_IX_1.1_dm1q_GZIF.zip`.
+4. **Flash the ROM:** Go to **Install**, select `UN1CA_Carbon_IX_1.1_dm1q_GZIF.zip`, and swipe to confirm flash.  
    *(The installer will flash system partitions, GoRhanHee kernel, TWRP recovery, and extract `KernelSU_Next.apk`).*
 5. **Reboot:** Tap **Reboot System** and enjoy UN1CA Carbon IX!
 

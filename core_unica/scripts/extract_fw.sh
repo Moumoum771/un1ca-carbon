@@ -45,13 +45,17 @@ EXTRACT_KERNEL_BINARIES()
 
     mkdir -p "$FW_DIR/${MODEL}_${CSC}/kernel"
     for f in $FILES; do
-        [ -f "$FW_DIR/${MODEL}_${CSC}/${f}_metadata.txt" ] && rm -f "$FW_DIR/${MODEL}_${CSC}/${f}_metadata.txt"
+        if [ ! -f "$FW_DIR/${MODEL}_${CSC}/kernel/$f" ]; then
+            [ -f "$FW_DIR/${MODEL}_${CSC}/${f}_metadata.txt" ] && rm -f "$FW_DIR/${MODEL}_${CSC}/${f}_metadata.txt"
 
-        EXTRACT_FILE_FROM_TAR "$AP_TAR" "$f" || exit 1
-        [ -f "$FW_DIR/${MODEL}_${CSC}/$f" ] || continue
-        mv -f "$FW_DIR/${MODEL}_${CSC}/$f" "$FW_DIR/${MODEL}_${CSC}/kernel/$f"
+            EXTRACT_FILE_FROM_TAR "$AP_TAR" "$f" || exit 1
+            [ -f "$FW_DIR/${MODEL}_${CSC}/$f" ] || continue
+            mv -f "$FW_DIR/${MODEL}_${CSC}/$f" "$FW_DIR/${MODEL}_${CSC}/kernel/$f"
 
-        STORE_KERNEL_IMAGE_METADATA "$FW_DIR/${MODEL}_${CSC}/kernel/$f"
+            STORE_KERNEL_IMAGE_METADATA "$FW_DIR/${MODEL}_${CSC}/kernel/$f"
+        elif [ ! -f "$FW_DIR/${MODEL}_${CSC}/${f}_metadata.txt" ]; then
+            STORE_KERNEL_IMAGE_METADATA "$FW_DIR/${MODEL}_${CSC}/kernel/$f"
+        fi
     done
 
     LOG_STEP_OUT
@@ -66,33 +70,37 @@ EXTRACT_OS_PARTITIONS()
 
     [ -f "$FW_DIR/${MODEL}_${CSC}/os_partitions_metadata.txt" ] && rm -f "$FW_DIR/${MODEL}_${CSC}/os_partitions_metadata.txt"
 
-    if FILE_EXISTS_IN_TAR "$AP_TAR" "super.img" || FILE_EXISTS_IN_TAR "$AP_TAR" "super.img.lz4"; then
-        EXTRACT_FILE_FROM_TAR "$AP_TAR" "super.img" || exit 1
-        UNSPARSE_IMAGE "$FW_DIR/${MODEL}_${CSC}/super.img" || exit 1
+    if [ ! -f "$FW_DIR/${MODEL}_${CSC}/system.img" ]; then
+        if FILE_EXISTS_IN_TAR "$AP_TAR" "super.img" || FILE_EXISTS_IN_TAR "$AP_TAR" "super.img.lz4"; then
+            EXTRACT_FILE_FROM_TAR "$AP_TAR" "super.img" || exit 1
+            UNSPARSE_IMAGE "$FW_DIR/${MODEL}_${CSC}/super.img" || exit 1
 
-        LOG "- Unpacking super.img..."
+            LOG "- Unpacking super.img..."
 
-        STORE_OS_PARTITION_METADATA "$FW_DIR/${MODEL}_${CSC}/super.img"
+            STORE_OS_PARTITION_METADATA "$FW_DIR/${MODEL}_${CSC}/super.img"
 
-        # shellcheck disable=SC2013
-        for p in $(grep "partition_list" "$FW_DIR/${MODEL}_${CSC}/os_partitions_metadata.txt" | cut -d "=" -f 2 -s); do
-            # if grep -q "virtual_ab" "$FW_DIR/${MODEL}_${CSC}/os_partitions_metadata.txt"; then
-                # In Virtual A/B devices only the A slot is filled
-                # EVAL "lpunpack -p \"${p}_a\" \"$FW_DIR/${MODEL}_${CSC}/super.img\" \"$FW_DIR/${MODEL}_${CSC}\"" || exit 1
-                # mv -f "$FW_DIR/${MODEL}_${CSC}/${p}_a.img" "$FW_DIR/${MODEL}_${CSC}/${p}.img"
-            # else
-                EVAL "lpunpack -p \"${p}\" \"$FW_DIR/${MODEL}_${CSC}/super.img\" \"$FW_DIR/${MODEL}_${CSC}\"" || exit 1
-            # fi
-        done
+            # shellcheck disable=SC2013
+            for p in $(grep "partition_list" "$FW_DIR/${MODEL}_${CSC}/os_partitions_metadata.txt" | cut -d "=" -f 2 -s); do
+                # if grep -q "virtual_ab" "$FW_DIR/${MODEL}_${CSC}/os_partitions_metadata.txt"; then
+                    # In Virtual A/B devices only the A slot is filled
+                    # EVAL "lpunpack -p \"${p}_a\" \"$FW_DIR/${MODEL}_${CSC}/super.img\" \"$FW_DIR/${MODEL}_${CSC}\"" || exit 1
+                    # mv -f "$FW_DIR/${MODEL}_${CSC}/${p}_a.img" "$FW_DIR/${MODEL}_${CSC}/${p}.img"
+                # else
+                    EVAL "lpunpack -p \"${p}\" \"$FW_DIR/${MODEL}_${CSC}/super.img\" \"$FW_DIR/${MODEL}_${CSC}\"" || exit 1
+                # fi
+            done
 
-        rm -f "$FW_DIR/${MODEL}_${CSC}/super.img"
+            rm -f "$FW_DIR/${MODEL}_${CSC}/super.img"
+        else
+            for f in $FILES; do
+                EXTRACT_FILE_FROM_TAR "$AP_TAR" "$f" || exit 1
+                [ -f "$FW_DIR/${MODEL}_${CSC}/$f" ] || continue
+                UNSPARSE_IMAGE "$FW_DIR/${MODEL}_${CSC}/$f" || exit 1
+                STORE_OS_PARTITION_METADATA "$FW_DIR/${MODEL}_${CSC}/$f"
+            done
+        fi
     else
-        for f in $FILES; do
-            EXTRACT_FILE_FROM_TAR "$AP_TAR" "$f" || exit 1
-            [ -f "$FW_DIR/${MODEL}_${CSC}/$f" ] || continue
-            UNSPARSE_IMAGE "$FW_DIR/${MODEL}_${CSC}/$f" || exit 1
-            STORE_OS_PARTITION_METADATA "$FW_DIR/${MODEL}_${CSC}/$f"
-        done
+        LOG "- OS partition images already unpacked from super.img, proceeding to mount & extract..."
     fi
 
     local PARTITION
@@ -351,8 +359,12 @@ for i in "${FIRMWARES[@]}"; do
 
     LATEST_FIRMWARE="$(GET_LATEST_FIRMWARE "$MODEL" "$CSC")"
     if [ ! "$LATEST_FIRMWARE" ]; then
-        LOGE "Latest available firmware could not be fetched"
-        exit 1
+        if [ -f "$ODIN_DIR/${MODEL}_${CSC}/.downloaded" ]; then
+            LATEST_FIRMWARE="$(cat "$ODIN_DIR/${MODEL}_${CSC}/.downloaded")"
+        else
+            LOGE "Latest available firmware could not be fetched"
+            exit 1
+        fi
     fi
 
     LOG_STEP_IN "- Processing $MODEL firmware with $CSC CSC"
@@ -392,8 +404,8 @@ for i in "${FIRMWARES[@]}"; do
 
     DOWNLOADED_FIRMWARE="$(cat "$ODIN_DIR/${MODEL}_${CSC}/.downloaded")"
 
-    BL_TAR="$(find "$ODIN_DIR/${MODEL}_${CSC}" -name "BL_$(cut -d "/" -f 1 -s <<< "$DOWNLOADED_FIRMWARE")*.md5" | sort -r | head -n 1)"
-    AP_TAR="$(find "$ODIN_DIR/${MODEL}_${CSC}" -name "AP_$(cut -d "/" -f 1 -s <<< "$DOWNLOADED_FIRMWARE")*.md5" | sort -r | head -n 1)"
+    BL_TAR="$(find "$ODIN_DIR/${MODEL}_${CSC}" -name "BL_*.md5" | sort -r | head -n 1)"
+    AP_TAR="$(find "$ODIN_DIR/${MODEL}_${CSC}" -name "AP_*.md5" | sort -r | head -n 1)"
 
     if [ ! "$BL_TAR" ]; then
         LOG "\033[0;31m! No BL tar found\033[0m"
