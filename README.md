@@ -12,7 +12,7 @@
 
 **Next-Generation One UI 9 Custom ROM for Samsung Galaxy S23 Series**  
 *Release Version: **IX** (One UI 9.0 • Android 17 • SDK 37)*  
-*Engineered, Ported & Stabilized for Galaxy S23 Base (`SM-S911B` / `dm1q`)*
+*Engineered, Ported & Stabilized for Galaxy S23 Base (`SM-S911B` / `SM-S9110` / `dm1q`)*
 
 ---
 
@@ -29,7 +29,7 @@
 
 ## 📖 About the Project
 
-**UN1CA Carbon** is a customized and stabilized distribution of **Samsung One UI 9.0 (Android 17 / SDK 37)** designed specifically to bring Samsung's latest software generation to the **Galaxy S23 Base (`SM-S911B` / `dm1q`)**.
+**UN1CA Carbon** is a customized and stabilized distribution of **Samsung One UI 9.0 (Android 17 / SDK 37)** designed specifically to bring Samsung's latest software generation to the **Galaxy S23 Base (`SM-S911B` / `SM-S9110` / `dm1q`)**.
 
 While initial upstream One UI 9 experimental ports were built exclusively for the Galaxy S23 Ultra (`dm3q`), **UN1CA Carbon** bridges the architectural divide for the base S23 model:
 - Resolves Qualcomm display compositor (SurfaceFlinger) crashes caused by upstream toolchain symbol mismatches;
@@ -45,9 +45,9 @@ While initial upstream One UI 9 experimental ports were built exclusively for th
 
 ## 📥 Official Download & Release Package
 
-### UN1CA Carbon IX (v1.0) — Galaxy S23 Base (`SM-S911B` / `dm1q`) ONLY
+### UN1CA Carbon IX (v1.0) — Galaxy S23 Base (`SM-S911B` / `SM-S9110` / `dm1q`) Universal
 
-> **⚠️ DEVICE NOTICE:** This release package is strictly engineered and calibrated for the **Samsung Galaxy S23 Base (`SM-S911B` / `dm1q`)**. Do not flash on other Galaxy models or Ultra variants (`dm3q`).
+> **⚠️ DEVICE NOTICE:** This release package is strictly engineered and calibrated for the **Samsung Galaxy S23 Base (`SM-S911B` / `SM-S9110` / `dm1q`)**. Do not flash on other Galaxy models or Ultra variants (`dm3q`).
 
 | Release Parameter | Specification / Value |
 | :--- | :--- |
@@ -55,7 +55,7 @@ While initial upstream One UI 9 experimental ports were built exclusively for th
 | **Android Version** | Android 17 (One UI 9.0 • SDK 37) |
 | **Source Firmware** | `S911BXXUAZZI8` (Official Samsung Base) |
 | **Firmware Bit / Binary** | **FIRMWARE BIT A** (`SW REV: A` / Binary A) |
-| **Target Device** | Samsung Galaxy S23 (`SM-S911B` / `dm1q`) |
+| **Target Device** | Samsung Galaxy S23 Universal (`SM-S911B` & `SM-S9110` / `dm1q`) |
 | **Linux Kernel** | GoRhanHee 5.15.216 + KernelSU-Next v3.4.2 + SUSFS |
 | **Recovery** | Team Win Recovery Project (TWRP 3.7.1_12-0) integrated |
 | **Encryption Type** | Authentic Samsung Hardware FBE v2 (No DFE hack) |

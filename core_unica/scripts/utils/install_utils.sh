@@ -94,10 +94,9 @@ PRINT_ASSERTIONS()
         TARGET_ASSERT_MODEL="$(grep "^model" <<< "$BUILD_INFO" | cut -d "=" -f 2 -s)"
         IFS=';' read -r -a TARGET_ASSERT_MODEL <<< "$TARGET_ASSERT_MODEL"
 
+        echo -n 'getprop("ro.product.device") == "'"$DEVICE"'" || getprop("ro.build.product") == "'"$DEVICE"'" || '
         for i in "${TARGET_ASSERT_MODEL[@]}"; do
-            echo -n 'getprop("ro.boot.em.model") == "'
-            echo -n "$i"
-            echo -n '" || '
+            echo -n 'getprop("ro.boot.em.model") == "'"$i"'" || getprop("ro.product.model") == "'"$i"'" || '
         done
         echo -n 'abort("E3004: This package is for \"'
         echo -n "$DEVICE"
