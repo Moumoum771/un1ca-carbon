@@ -60,7 +60,6 @@ if [ "${DEBLOAT_TELEMETRY:-true}" = "true" ]; then
 SYSTEM_DEBLOAT+="
 system/app/HiyaService
 system/app/SilentLog
-system/app/SmartManager_v6_DeviceSecurity_CN
 system/priv-app/DeviceQualityAgent38
 system/priv-app/DiagMonAgent97
 system/priv-app/RubinVersion38

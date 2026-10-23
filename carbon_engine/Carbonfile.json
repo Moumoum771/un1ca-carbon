@@ -1433,15 +1433,6 @@
       "condition": "env.DEBLOAT_TELEMETRY == true"
     },
     {
-      "id": "debloat_system_system_app_smartmanager_v6_devicesecurity_cn",
-      "category": "Privacy & Telemetry Debloat",
-      "description": "Purge TCM Anti-Virus Engine (CN)",
-      "credit": "UN1CA Carbon Original Engineering by ALRI Development (AlexsAR & AlexsanderALRI)",
-      "action": "fs.delete",
-      "file": "${WORK_DIR}/system/system/app/SmartManager_v6_DeviceSecurity_CN",
-      "condition": "env.DEBLOAT_TELEMETRY == true"
-    },
-    {
       "id": "debloat_system_system_priv-app_devicequalityagent38",
       "category": "Privacy & Telemetry Debloat",
       "description": "Purge Device Quality Agent (DQA)",

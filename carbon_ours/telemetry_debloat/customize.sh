@@ -78,7 +78,7 @@ _debloat_target() {
 # --- System Partition Bloat (Telemetry, Analytics & Partner Services) ---
 _debloat_target "system" "system/app/HiyaService" "Hiya Caller Spam Lookup"
 _debloat_target "system" "system/app/SilentLog" "Modem Silent Logging Daemon"
-_debloat_target "system" "system/app/SmartManager_v6_DeviceSecurity_CN" "TCM Anti-Virus Engine (CN)"
+# Note: SmartManager_v6_DeviceSecurity_CN is kept to provide com.samsung.android.sm.security.devicesecurityprovider for SmartManagerCN
 _debloat_target "system" "system/priv-app/DeviceQualityAgent38" "Device Quality Agent (DQA)"
 _debloat_target "system" "system/priv-app/DiagMonAgent97" "Diagnostic Monitor Agent"
 _debloat_target "system" "system/priv-app/RubinVersion38" "Samsung Customization Service"
