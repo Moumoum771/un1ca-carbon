@@ -84,6 +84,14 @@ _debloat_target "system" "system/priv-app/DiagMonAgent97" "Diagnostic Monitor Ag
 _debloat_target "system" "system/priv-app/RubinVersion38" "Samsung Customization Service"
 _debloat_target "system" "system/priv-app/WarrantyCare" "Warranty Care & Care+ Nag"
 _debloat_target "system" "system/priv-app/knoxanalyticsagent" "Knox Analytics Agent"
+_debloat_target "system" "system/priv-app/KmxService" "Knox Matrix Credential Sync"
+_debloat_target "system" "system/bin/fabric_crypto" "Knox Matrix Fabric Crypto Daemon"
+_debloat_target "system" "system/etc/init/fabric_crypto.rc" "Knox Matrix Daemon Init Trigger"
+_debloat_target "system" "system/etc/permissions/FabricCryptoLib.xml" "Fabric Crypto Library Permission"
+_debloat_target "system" "system/etc/permissions/privapp-permissions-com.samsung.android.kmxservice.xml" "Knox Matrix Privapp Permissions"
+_debloat_target "system" "system/etc/sysconfig/preinstalled-packages-com.samsung.android.kmxservice.xml" "Knox Matrix Sysconfig"
+_debloat_target "system" "system/etc/vintf/manifest/fabric_crypto_manifest.xml" "Fabric Crypto VINTF Manifest"
+_debloat_target "system" "system/framework/FabricCryptoLib.jar" "Fabric Crypto Framework Library"
 
 # --- Product Partition Bloat ---
 _debloat_target "product" "priv-app/CarrierWifi" "Google Wi-Fi Carrier Auto-Provisioner"

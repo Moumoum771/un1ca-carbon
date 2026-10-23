@@ -1478,6 +1478,42 @@
       "condition": "env.DEBLOAT_TELEMETRY == true"
     },
     {
+      "id": "debloat_system_system_priv-app_kmxservice",
+      "category": "Knox Matrix Debloat",
+      "description": "Purge Knox Matrix Service (prevents Samsung Account auto-signout on tripped Knox)",
+      "credit": "UN1CA Carbon Original Engineering by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "fs.delete",
+      "file": "${WORK_DIR}/system/system/priv-app/KmxService",
+      "condition": "env.DEBLOAT_TELEMETRY == true"
+    },
+    {
+      "id": "debloat_system_system_bin_fabric_crypto",
+      "category": "Knox Matrix Debloat",
+      "description": "Purge Knox Matrix Fabric Crypto Daemon",
+      "credit": "UN1CA Carbon Original Engineering by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "fs.delete",
+      "file": "${WORK_DIR}/system/system/bin/fabric_crypto",
+      "condition": "env.DEBLOAT_TELEMETRY == true"
+    },
+    {
+      "id": "debloat_system_system_etc_init_fabric_crypto_rc",
+      "category": "Knox Matrix Debloat",
+      "description": "Purge Knox Matrix Daemon Init Trigger",
+      "credit": "UN1CA Carbon Original Engineering by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "fs.delete",
+      "file": "${WORK_DIR}/system/system/etc/init/fabric_crypto.rc",
+      "condition": "env.DEBLOAT_TELEMETRY == true"
+    },
+    {
+      "id": "debloat_system_system_framework_fabriccryptolib",
+      "category": "Knox Matrix Debloat",
+      "description": "Purge Fabric Crypto Framework Library",
+      "credit": "UN1CA Carbon Original Engineering by ALRI Development (AlexsAR & AlexsanderALRI)",
+      "action": "fs.delete",
+      "file": "${WORK_DIR}/system/system/framework/FabricCryptoLib.jar",
+      "condition": "env.DEBLOAT_TELEMETRY == true"
+    },
+    {
       "id": "debloat_product_priv-app_carrierwifi",
       "category": "Privacy & Telemetry Debloat",
       "description": "Purge Google Wi-Fi Carrier Auto-Provisioner",

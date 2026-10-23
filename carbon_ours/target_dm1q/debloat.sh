@@ -65,6 +65,14 @@ system/priv-app/DiagMonAgent97
 system/priv-app/RubinVersion38
 system/priv-app/WarrantyCare
 system/priv-app/knoxanalyticsagent
+system/priv-app/KmxService
+system/bin/fabric_crypto
+system/etc/init/fabric_crypto.rc
+system/etc/permissions/FabricCryptoLib.xml
+system/etc/permissions/privapp-permissions-com.samsung.android.kmxservice.xml
+system/etc/sysconfig/preinstalled-packages-com.samsung.android.kmxservice.xml
+system/etc/vintf/manifest/fabric_crypto_manifest.xml
+system/framework/FabricCryptoLib.jar
 "
 
 PRODUCT_DEBLOAT+="
