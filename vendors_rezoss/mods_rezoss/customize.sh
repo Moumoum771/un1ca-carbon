@@ -776,12 +776,13 @@ APPLY_PATCH "system" "system/app/VisualCloudCore/VisualCloudCore.apk" \
     "$MODPATH/visualcloudcore/VisualCloudCore.apk/0001-Use-S25-Ultra-model-for-stub-update-check.patch"
 
 LOG "- Patch product framework overlay doze auto-brightness"
-if [ -f "$WORK_DIR/product/overlay/framework-res__${TARGET_CODENAME}xxx__auto_generated_rro_product.apk" ] && [ -d "$MODPATH/rro/framework-res__${TARGET_CODENAME}xxx__auto_generated_rro_product.apk" ]; then
-    APPLY_PATCH "product" "overlay/framework-res__${TARGET_CODENAME}xxx__auto_generated_rro_product.apk" \
-        "$MODPATH/rro/framework-res__${TARGET_CODENAME}xxx__auto_generated_rro_product.apk/0001-Add-doze-auto-brightness-arrays.patch"
-elif [ -f "$WORK_DIR/product/overlay/framework-res__dm3qxxx__auto_generated_rro_product.apk" ]; then
-    APPLY_PATCH "product" "overlay/framework-res__dm3qxxx__auto_generated_rro_product.apk" \
-        "$MODPATH/rro/framework-res__dm3qxxx__auto_generated_rro_product.apk/0001-Add-doze-auto-brightness-arrays.patch"
+if [[ "$TARGET_CODENAME" == "dm3q" ]]; then
+    if [ -f "$WORK_DIR/product/overlay/framework-res__dm3qxxx__auto_generated_rro_product.apk" ] && [ -d "$MODPATH/rro/framework-res__dm3qxxx__auto_generated_rro_product.apk" ]; then
+        APPLY_PATCH "product" "overlay/framework-res__dm3qxxx__auto_generated_rro_product.apk" \
+            "$MODPATH/rro/framework-res__dm3qxxx__auto_generated_rro_product.apk/0001-Add-doze-auto-brightness-arrays.patch"
+    fi
+else
+    LOG "- Skipping doze auto-brightness patch for $TARGET_CODENAME (protects non-dm3q AMOLED display from hardware damage)"
 fi
 
 # =============================================================================

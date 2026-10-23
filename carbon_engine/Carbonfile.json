@@ -1592,7 +1592,8 @@
       "credit": "Rezoss Patches & Upstream S26U Stuffs by Rezoss-Reza (@Rezoss-Reza), adapted and maintained by ALRI Development (AlexsAR & AlexsanderALRI)",
       "action": "apk.patch",
       "apk": "product/overlay/framework-res__${TARGET}xxx__auto_generated_rro_product.apk",
-      "patch": "vendors_rezoss/mods_rezoss/rro/framework-res__${TARGET}xxx__auto_generated_rro_product.apk/0001-Add-doze-auto-brightness-arrays.patch"
+      "patch": "vendors_rezoss/mods_rezoss/rro/framework-res__${TARGET}xxx__auto_generated_rro_product.apk/0001-Add-doze-auto-brightness-arrays.patch",
+      "condition": "env.TARGET_CODENAME == 'dm3q'"
     },
     {
       "id": "patch_sivs_scs_device_model",
