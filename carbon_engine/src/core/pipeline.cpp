@@ -417,7 +417,7 @@ CarbonResult<void> PipelineOrchestrator::Stage8_AssemblePackage() {
     }
 
     if (final_zip_path_.empty()) {
-        final_zip_path_ = out_dir_ / ("UN1CA_Carbon_IX_1.0_" + config_.target_device + "_ZZI8.zip");
+        final_zip_path_ = out_dir_ / ("UN1CA_Carbon_IX_1.1_" + config_.target_device + "_ZZI8.zip");
     }
 
     // Compute SHA-256 of the flashable package
@@ -432,7 +432,7 @@ CarbonResult<void> PipelineOrchestrator::Stage8_AssemblePackage() {
     // Compute Composite Build Fingerprint for Carbon Engine
     fingerprint::InputHasher fp_hasher(project_root_);
     fp_hasher.AppendEnvironmentFlag("target", config_.target_device);
-    fp_hasher.AppendEnvironmentFlag("engine_version", "1.0.0-PROD");
+    fp_hasher.AppendEnvironmentFlag("engine_version", "1.1.0-PROD");
     fp_hasher.AppendEnvironmentFlag("bootanim_style", config_.bootanim_style);
     fp_hasher.AppendEnvironmentFlag("debloat_telemetry", config_.debloat_telemetry ? "true" : "false");
     fp_hasher.AppendEnvironmentFlag("key_profile", active_keys_.platform_der_hex);
@@ -443,7 +443,7 @@ CarbonResult<void> PipelineOrchestrator::Stage8_AssemblePackage() {
     json manifest;
     manifest["$schema"] = "https://json-schema.org/draft/2020-12/schema";
     manifest["title"] = "CarbonEngineBuildManifest";
-    manifest["engine_version"] = "1.0.0-PROD";
+    manifest["engine_version"] = "1.1.0-PROD";
     manifest["target_device"] = config_.target_device;
     manifest["pda_version"] = pda_version_;
     manifest["key_profile"] = (active_keys_.profile == security::KeyProfile::OFFICIAL_CARBON_KEYS ? "OFFICIAL_CARBON_KEYS" :

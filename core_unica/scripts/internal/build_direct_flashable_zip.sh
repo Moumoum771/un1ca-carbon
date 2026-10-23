@@ -183,7 +183,7 @@ GENERATE_OUTPUT_FILE()
     SUFFIX="$(GET_PROP "system" "ro.build.PDA")"
     SUFFIX="${SUFFIX: -4}"
 
-    FILE="$OUT_DIR/UN1CA_Carbon_IX_1.0_${DEVICE}_${SUFFIX}.zip"
+    FILE="$OUT_DIR/UN1CA_Carbon_IX_1.1_${DEVICE}_${SUFFIX}.zip"
 
     echo "$FILE"
 }

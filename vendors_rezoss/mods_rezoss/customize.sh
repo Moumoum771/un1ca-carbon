@@ -691,7 +691,7 @@ unset -f _REZOSS_ENSURE_LOG_VIDEO_FILTER_SELINUX _REZOSS_ENSURE_BOOTANIMATION_SE
 # =============================================================================
 PDA_SUFFIX="$(GET_PROP "system" "ro.build.PDA")"
 PDA_SUFFIX="${PDA_SUFFIX: -4}"
-NOW_BUILD="UN1CA Carbon IX v1.0 (${PDA_SUFFIX})"
+NOW_BUILD="UN1CA Carbon IX v1.1 (${PDA_SUFFIX})"
 SET_PROP "system" "ro.build.display.id" "${NOW_BUILD}"
 SET_PROP "product" "ro.build.display.id" "${NOW_BUILD}"
 

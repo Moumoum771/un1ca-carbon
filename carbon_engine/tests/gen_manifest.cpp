@@ -13,7 +13,7 @@ namespace fs = std::filesystem;
 int main() {
     fs::path project_root = "/home/alexsanderalri/Documentos/CARBON_BUILDER";
     fs::path out_dir = project_root / "out";
-    fs::path zip_path = out_dir / "UN1CA_Carbon_IX_1.0_dm1q_ZZI8.zip";
+    fs::path zip_path = out_dir / "UN1CA_Carbon_IX_1.1_dm1q_ZZI8.zip";
 
     carbon::security::KeyManager km(project_root);
     auto key_res = km.DiscoverActiveKeys();
@@ -27,7 +27,7 @@ int main() {
 
     carbon::fingerprint::InputHasher fp_hasher(project_root);
     fp_hasher.AppendEnvironmentFlag("target", "dm1q");
-    fp_hasher.AppendEnvironmentFlag("engine_version", "1.0.0-PROD");
+    fp_hasher.AppendEnvironmentFlag("engine_version", "1.1.0-PROD");
     fp_hasher.AppendEnvironmentFlag("bootanim_style", "carbon");
     fp_hasher.AppendEnvironmentFlag("debloat_telemetry", "true");
     fp_hasher.AppendEnvironmentFlag("key_profile", key_hex);
@@ -37,7 +37,7 @@ int main() {
     json manifest;
     manifest["$schema"] = "https://json-schema.org/draft/2020-12/schema";
     manifest["title"] = "CarbonEngineBuildManifest";
-    manifest["engine_version"] = "1.0.0-PROD";
+    manifest["engine_version"] = "1.1.0-PROD";
     manifest["target_device"] = "dm1q";
     manifest["pda_version"] = "S911BXXUAZZI8";
     manifest["key_profile"] = "OFFICIAL_CARBON_KEYS";

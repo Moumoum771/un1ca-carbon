@@ -11,13 +11,13 @@
 <br><br>
 
 **Next-Generation One UI 9 Custom ROM for Samsung Galaxy S23 Series**  
-*Release Version: **IX** (One UI 9.0 • Android 17 • SDK 37)*  
+*Release Version: **IX v1.1** (One UI 9.0 Stable • Android 17 • SDK 37)*  
 *Engineered, Ported & Stabilized for Galaxy S23 Base (`SM-S911B` / `SM-S9110` / `dm1q`)*
 
 ---
 
 [![Android](https://img.shields.io/badge/Android-17-green.svg)](https://developer.android.com)
-[![OneUI](https://img.shields.io/badge/OneUI-9.0--Beta2-blue.svg)](https://www.samsung.com)
+[![OneUI](https://img.shields.io/badge/OneUI-9.0--Stable-blue.svg)](https://www.samsung.com)
 [![Device](https://img.shields.io/badge/Target-Galaxy%20S23%20(dm1q)-orange.svg)](https://github.com/alrigroup/un1ca-carbon)
 [![Kernel](https://img.shields.io/badge/Kernel-GoRhanHee%205.15.216-red.svg)](https://github.com/alrigroup/un1ca-carbon)
 [![Root](https://img.shields.io/badge/Root-KernelSU--Next-blueviolet.svg)](https://github.com/alrigroup/un1ca-carbon)
@@ -29,7 +29,7 @@
 
 ## 📖 About the Project
 
-**UN1CA Carbon** is a customized and stabilized distribution of **Samsung One UI 9.0 (Android 17 / SDK 37)** designed specifically to bring Samsung's latest software generation to the **Galaxy S23 Base (`SM-S911B` / `SM-S9110` / `dm1q`)**.
+**UN1CA Carbon** is a customized and stabilized distribution of **Samsung One UI 9.0 Stable (Android 17 / SDK 37)** designed specifically to bring Samsung's latest software generation to the **Galaxy S23 Base (`SM-S911B` / `SM-S9110` / `dm1q`)**.
 
 While initial upstream One UI 9 experimental ports were built exclusively for the Galaxy S23 Ultra (`dm3q`), **UN1CA Carbon** bridges the architectural divide for the base S23 model:
 - Resolves Qualcomm display compositor (SurfaceFlinger) crashes caused by upstream toolchain symbol mismatches;
@@ -45,21 +45,21 @@ While initial upstream One UI 9 experimental ports were built exclusively for th
 
 ## 📥 Official Download & Release Package
 
-### UN1CA Carbon IX (v1.0) — Galaxy S23 Base (`SM-S911B` / `SM-S9110` / `dm1q`) Universal
+### UN1CA Carbon IX (v1.1) — Galaxy S23 Base (`SM-S911B` / `SM-S9110` / `dm1q`) Universal
 
 > **⚠️ DEVICE NOTICE:** This release package is strictly engineered and calibrated for the **Samsung Galaxy S23 Base (`SM-S911B` / `SM-S9110` / `dm1q`)**. Do not flash on other Galaxy models or Ultra variants (`dm3q`).
 
 | Release Parameter | Specification / Value |
 | :--- | :--- |
-| **Release Tag** | `IX-v1.0` |
-| **Android Version** | Android 17 (One UI 9.0 • SDK 37) |
+| **Release Tag** | `IX-v1.1` |
+| **Android Version** | Android 17 (One UI 9.0 Stable • SDK 37) |
 | **Source Firmware** | `S911BXXUAZZI8` (Official Samsung Base) |
 | **Firmware Bit / Binary** | **FIRMWARE BIT A** (`SW REV: A` / Binary A) |
 | **Target Device** | Samsung Galaxy S23 Universal (`SM-S911B` & `SM-S9110` / `dm1q`) |
 | **Linux Kernel** | GoRhanHee 5.15.216 + KernelSU-Next v3.4.2 + SUSFS |
 | **Recovery** | Team Win Recovery Project (TWRP 3.7.1_12-0) integrated |
 | **Encryption Type** | Authentic Samsung Hardware FBE v2 (No DFE hack) |
-| **Package Filename**| `UN1CA_Carbon_IX_1.0_dm1q_ZZI8.zip` |
+| **Package Filename**| `UN1CA_Carbon_IX_1.1_dm1q_ZZI8.zip` |
 | **Package Size** | **8.05 GB** (8,644,680,502 bytes) |
 | **SHA-1 Checksum** | `2c639ccf447eebe479482408ccf05157c9db29a6` |
 | **SHA-256 Checksum**| `eccace0f815258597a7ff35c6f6a45961f11992e35e8142a19e83c626c367f9d` |
@@ -75,10 +75,10 @@ Follow this verified installation workflow to ensure flawless first boot:
 2. **Format Userdata (Crucial):** Navigate to **Wipe > Format Data**, type `yes`, and confirm.  
    *(Required on clean installations to create authentic FBE metadata structures).*
 3. **Transfer the ROM Package:**
-   - Connect your phone to your PC via USB and copy `UN1CA_Carbon_IX_1.0_dm1q_ZZI8.zip` to `/sdcard/`, or
+   - Connect your phone to your PC via USB and copy `UN1CA_Carbon_IX_1.1_dm1q_ZZI8.zip` to `/sdcard/`, or
    - Use USB-OTG flash drive, or
-   - Use `adb sideload UN1CA_Carbon_IX_1.0_dm1q_ZZI8.zip`.
-4. **Flash the ROM:** Go to **Install**, select `UN1CA_Carbon_IX_1.0_dm1q_ZZI8.zip`, and swipe to confirm flash.  
+   - Use `adb sideload UN1CA_Carbon_IX_1.1_dm1q_ZZI8.zip`.
+4. **Flash the ROM:** Go to **Install**, select `UN1CA_Carbon_IX_1.1_dm1q_ZZI8.zip`, and swipe to confirm flash.  
    *(The installer will flash system partitions, GoRhanHee kernel, TWRP recovery, and extract `KernelSU_Next.apk`).*
 5. **Reboot:** Tap **Reboot System** and enjoy UN1CA Carbon IX!
 

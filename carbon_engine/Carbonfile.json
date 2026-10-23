@@ -1225,7 +1225,7 @@
       "action": "prop.set",
       "file": "${WORK_DIR}/system/system/build.prop",
       "key": "ro.build.display.id",
-      "value": "UN1CA Carbon IX v1.0 (ZZI8)"
+      "value": "UN1CA Carbon IX v1.1 (ZZI8)"
     },
     {
       "id": "prop_rom_version",
@@ -1235,7 +1235,7 @@
       "action": "prop.set",
       "file": "${WORK_DIR}/system/system/build.prop",
       "key": "ro.unica.version",
-      "value": "UN1CA Carbon IX 1.0"
+      "value": "UN1CA Carbon IX 1.1"
     },
     {
       "id": "prop_vulkan_default",
