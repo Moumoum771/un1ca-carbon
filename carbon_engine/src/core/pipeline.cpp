@@ -132,15 +132,31 @@ CarbonResult<void> PipelineOrchestrator::Stage3_InitWorkDir() {
     auto t0 = std::chrono::steady_clock::now();
     std::cout << "\033[1;34m[STAGE 3] Initializing and Verifying Work Directory...\033[0m\n";
 
+    fs::path base_fw = fw_dir_ / "SM-S911B_OXM";
+    fs::path target_cfg = project_root_ / "carbon_ours" / ("target_" + config_.target_device) / "config.sh";
+
+    fingerprint::InputHasher hasher(base_fw);
+    hasher.AppendEnvironmentFlag("target", config_.target_device);
+    if (fs::exists(target_cfg)) {
+        hasher.AppendExternalFile(target_cfg);
+    }
+    auto h_res = hasher.ComputeStatHash();
+    std::string fw_hash = h_res.is_ok() ? hasher.FinalizeCompositeFingerprint() : "UNKNOWN";
+    std::string node_id = "stage:init_workdir:" + config_.target_device;
+
     std::error_code ec;
     // If work_dir and apktool_dir already exist and rebuild is not forced, leverage existing snapshot
     if (!config_.force_rebuild && fs::exists(work_dir_) && fs::exists(apktool_dir_)) {
-        std::cout << "  • Work directory and decoded APKs detected. Leveraging existing snapshot...\n";
-        std::cout << "  ✔ Work dir preserved for fast incremental build!\n\n";
-        auto t1 = std::chrono::steady_clock::now();
-        record_metric("Stage 3: WorkDir Init", 
-                      std::chrono::duration_cast<std::chrono::milliseconds>(t1 - t0).count(), true, "Preserved from prior snapshot");
-        return CarbonResult<void>::ok();
+        auto q_res = ledger_->QueryCache(node_id, fw_hash);
+        if (q_res && q_res.value().has_value()) {
+            std::cout << "  • [\033[1;32mCACHE_HIT\033[0m] Base firmware and config unchanged (Hash: " 
+                      << fw_hash.substr(0, 10) << "...). Preserving snapshot!\n\n";
+            auto t1 = std::chrono::steady_clock::now();
+            record_metric("Stage 3: WorkDir Init", 
+                          std::chrono::duration_cast<std::chrono::milliseconds>(t1 - t0).count(), true, "Preserved from prior snapshot (Cache Hit)");
+            return CarbonResult<void>::ok();
+        }
+        std::cout << "  • Work directory detected, updating cache entry...\n";
     }
 
     if (fs::exists(apktool_dir_)) {
@@ -156,9 +172,16 @@ CarbonResult<void> PipelineOrchestrator::Stage3_InitWorkDir() {
     if (!res || res.value().exit_code != 0) {
         return CarbonResult<void>::err(ErrorCode::ERR_SUBPROCESS_FAIL, "Failed to create work_dir: " + (res ? res.value().std_err : ""));
     }
-    std::cout << "  ✔ Work dir initialized cleanly!\n";
 
-    std::cout << "\n";
+    // Commit execution to ledger
+    ledger::CacheRecord rec;
+    rec.node_id = node_id;
+    rec.input_fingerprint = fw_hash;
+    rec.artifact_path = work_dir_.string();
+    rec.timestamp_epoch = std::chrono::duration_cast<std::chrono::seconds>(std::chrono::system_clock::now().time_since_epoch()).count();
+    ledger_->CommitExecution(rec);
+
+    std::cout << "  ✔ Work dir initialized cleanly!\n\n";
     auto t1 = std::chrono::steady_clock::now();
     record_metric("Stage 3: WorkDir Init", 
                   std::chrono::duration_cast<std::chrono::milliseconds>(t1 - t0).count(), false);
@@ -169,6 +192,27 @@ CarbonResult<void> PipelineOrchestrator::Stage4_ApplyPatches() {
     auto t0 = std::chrono::steady_clock::now();
     std::cout << "\033[1;34m[STAGE 4] Applying Core & ROM Patches...\033[0m\n";
 
+    fs::path patches_dir = project_root_ / "unica" / "patches";
+    fingerprint::InputHasher hasher(patches_dir);
+    hasher.AppendEnvironmentFlag("target", config_.target_device);
+    hasher.AppendEnvironmentFlag("rom_is_official", active_keys_.profile == security::KeyProfile::OFFICIAL_CARBON_KEYS ? "true" : "false");
+    auto h_res = hasher.ComputeStatHash();
+    std::string patch_hash = h_res.is_ok() ? hasher.FinalizeCompositeFingerprint() : "UNKNOWN";
+    std::string node_id = "stage:apply_patches:" + config_.target_device;
+
+    if (!config_.force_rebuild && patch_hash != "UNKNOWN") {
+        auto q_res = ledger_->QueryCache(node_id, patch_hash);
+        if (q_res && q_res.value().has_value() && fs::exists(work_dir_)) {
+            std::cout << "  • [\033[1;32mCACHE_HIT\033[0m] Patches unchanged (Fingerprint: " 
+                      << patch_hash.substr(0, 10) << "...). Skipping execution!\n\n";
+            auto t1 = std::chrono::steady_clock::now();
+            record_metric("Stage 4: Patches Application", 
+                          std::chrono::duration_cast<std::chrono::milliseconds>(t1 - t0).count(), true, "Patches unchanged (Cache Hit)");
+            return CarbonResult<void>::ok();
+        }
+    }
+
+    std::cout << "  • [\033[1;33mBUILD_REQ\033[0m] Executing patch synchronization...\n";
     supervisor::CommandSpec spec;
     spec.executable = "bash";
     spec.args = { "-c", "source core_unica/buildenv.sh " + config_.target_device + " && ./scripts/internal/apply_modules.sh ./unica/patches" };
@@ -180,7 +224,15 @@ CarbonResult<void> PipelineOrchestrator::Stage4_ApplyPatches() {
         return CarbonResult<void>::err(ErrorCode::ERR_SUBPROCESS_FAIL, "Failed to apply patches: " + (res ? res.value().std_err : ""));
     }
 
-    std::cout << "  ✔ Patches applied and synchronized with working tree!\n\n";
+    // Commit execution to ledger
+    ledger::CacheRecord rec;
+    rec.node_id = node_id;
+    rec.input_fingerprint = patch_hash;
+    rec.artifact_path = patches_dir.string();
+    rec.timestamp_epoch = std::chrono::duration_cast<std::chrono::seconds>(std::chrono::system_clock::now().time_since_epoch()).count();
+    ledger_->CommitExecution(rec);
+
+    std::cout << "  ✔ Patches applied and recorded in ledger!\n\n";
     auto t1 = std::chrono::steady_clock::now();
     record_metric("Stage 4: Patches Application", 
                   std::chrono::duration_cast<std::chrono::milliseconds>(t1 - t0).count(), false);
@@ -191,6 +243,29 @@ CarbonResult<void> PipelineOrchestrator::Stage5_ApplyModules() {
     auto t0 = std::chrono::steady_clock::now();
     std::cout << "\033[1;34m[STAGE 5] Orchestrating Modules (Rezoss, Cosine, Carbon)...\033[0m\n";
 
+    fs::path mods_dir = project_root_ / "unica" / "mods";
+    fingerprint::InputHasher hasher(mods_dir);
+    hasher.AppendEnvironmentFlag("target", config_.target_device);
+    hasher.AppendEnvironmentFlag("debloat_telemetry", config_.debloat_telemetry ? "true" : "false");
+    hasher.AppendEnvironmentFlag("bootanim_style", config_.bootanim_style);
+    hasher.AppendEnvironmentFlag("rom_is_official", active_keys_.profile == security::KeyProfile::OFFICIAL_CARBON_KEYS ? "true" : "false");
+    auto h_res = hasher.ComputeStatHash();
+    std::string mod_hash = h_res.is_ok() ? hasher.FinalizeCompositeFingerprint() : "UNKNOWN";
+    std::string node_id = "stage:apply_modules:" + config_.target_device;
+
+    if (!config_.force_rebuild && mod_hash != "UNKNOWN") {
+        auto q_res = ledger_->QueryCache(node_id, mod_hash);
+        if (q_res && q_res.value().has_value() && fs::exists(work_dir_)) {
+            std::cout << "  • [\033[1;32mCACHE_HIT\033[0m] Modules unchanged (Fingerprint: " 
+                      << mod_hash.substr(0, 10) << "...). Skipping execution!\n\n";
+            auto t1 = std::chrono::steady_clock::now();
+            record_metric("Stage 5: Modules Orchestration", 
+                          std::chrono::duration_cast<std::chrono::milliseconds>(t1 - t0).count(), true, "Modules unchanged (Cache Hit)");
+            return CarbonResult<void>::ok();
+        }
+    }
+
+    std::cout << "  • [\033[1;33mBUILD_REQ\033[0m] Executing modules orchestration...\n";
     supervisor::CommandSpec spec;
     spec.executable = "bash";
     spec.args = { "-c", "source core_unica/buildenv.sh " + config_.target_device + " && ./scripts/internal/apply_modules.sh ./unica/mods" };
@@ -204,7 +279,15 @@ CarbonResult<void> PipelineOrchestrator::Stage5_ApplyModules() {
         return CarbonResult<void>::err(ErrorCode::ERR_SUBPROCESS_FAIL, "Failed to execute modules: " + (res ? res.value().std_err : ""));
     }
 
-    std::cout << "  ✔ Modules executed successfully!\n\n";
+    // Commit execution to ledger
+    ledger::CacheRecord rec;
+    rec.node_id = node_id;
+    rec.input_fingerprint = mod_hash;
+    rec.artifact_path = mods_dir.string();
+    rec.timestamp_epoch = std::chrono::duration_cast<std::chrono::seconds>(std::chrono::system_clock::now().time_since_epoch()).count();
+    ledger_->CommitExecution(rec);
+
+    std::cout << "  ✔ Modules executed and recorded in ledger!\n\n";
     auto t1 = std::chrono::steady_clock::now();
     record_metric("Stage 5: Modules Orchestration", 
                   std::chrono::duration_cast<std::chrono::milliseconds>(t1 - t0).count(), false);

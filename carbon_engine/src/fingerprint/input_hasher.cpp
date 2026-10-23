@@ -72,7 +72,8 @@ CarbonResult<std::string> InputHasher::ComputeStatHash(const std::vector<std::st
     std::vector<std::string> rel_paths;
     std::error_code ec;
 
-    for (const auto& entry : fs::recursive_directory_iterator(root_dir_, fs::directory_options::skip_permission_denied, ec)) {
+    for (const auto& entry : fs::recursive_directory_iterator(root_dir_, 
+        fs::directory_options::skip_permission_denied | fs::directory_options::follow_directory_symlink, ec)) {
         std::string rel = fs::relative(entry.path(), root_dir_, ec).string();
         if (!is_excluded(rel, exclusions)) {
             rel_paths.push_back(rel);
@@ -121,7 +122,8 @@ CarbonResult<std::string> InputHasher::ComputeDeepContentHash(const std::vector<
     std::vector<std::string> rel_paths;
     std::error_code ec;
 
-    for (const auto& entry : fs::recursive_directory_iterator(root_dir_, fs::directory_options::skip_permission_denied, ec)) {
+    for (const auto& entry : fs::recursive_directory_iterator(root_dir_, 
+        fs::directory_options::skip_permission_denied | fs::directory_options::follow_directory_symlink, ec)) {
         if (entry.is_regular_file() || entry.is_symlink()) {
             std::string rel = fs::relative(entry.path(), root_dir_, ec).string();
             if (!is_excluded(rel, exclusions)) {
