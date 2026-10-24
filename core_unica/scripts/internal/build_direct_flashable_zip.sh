@@ -362,19 +362,16 @@ for p in $PARTITIONS_LIST; do
         continue
     fi
 
-    (
-        LOG "- Converting $p.img to $p.new.dat"
-        EVAL "img2sdat -o \"$TMP_DIR\" --tgt-block-map \"$TMP_DIR/$p.map\" \"$TMP_DIR/$p.img\"" || exit 1
-        rm -f "$TMP_DIR/$p.img" "$TMP_DIR/$p.map"
+    LOG "- Converting $p.img to $p.new.dat"
+    EVAL "img2sdat -o \"$TMP_DIR\" --tgt-block-map \"$TMP_DIR/$p.map\" \"$TMP_DIR/$p.img\"" || exit 1
+    rm -f "$TMP_DIR/$p.img" "$TMP_DIR/$p.map"
 
-        if ! $DEBUG; then
-            LOG "- Compressing $p.new.dat"
-            EVAL "brotli --quality=6 --output=\"$TMP_DIR/$p.new.dat.br\" \"$TMP_DIR/$p.new.dat\"" || exit 1
-            rm -f "$TMP_DIR/$p.new.dat"
-        fi
-    ) &
+    if ! $DEBUG; then
+        LOG "- Compressing $p.new.dat"
+        EVAL "brotli --quality=6 --output=\"$TMP_DIR/$p.new.dat.br\" \"$TMP_DIR/$p.new.dat\"" || exit 1
+        rm -f "$TMP_DIR/$p.new.dat"
+    fi
 done
-wait
 
 if [ -d "$WORK_DIR/kernel" ]; then
     KERNEL_IMAGES="boot.img dt.img dtbo.img init_boot.img vendor_boot.img"
