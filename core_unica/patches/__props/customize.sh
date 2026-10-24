@@ -1,5 +1,5 @@
 # Property identifying the UN1CA version
-SET_PROP "system" "ro.unica.version" "UN1CA Carbon IX 1.0"
+SET_PROP "system" "ro.unica.version" "UN1CA Carbon IX 1.1"
 SET_PROP "system" "ro.unica.codename" "Carbon IX"
 SET_PROP "system" "ro.unica.maintainer" "ALRI Development (Lead: AlexsAR)"
 SET_PROP "system" "ro.unica.porter" "ALRI Development (Lead: AlexsanderALRI)"
@@ -19,6 +19,10 @@ EVAL "echo \"ro.unica.timestamp u:object_r:build_prop:s0 exact string\" >> \"$WO
 # Property identifying the device codename UN1CA is being built for
 SET_PROP "system" "ro.unica.device" "$TARGET_CODENAME"
 EVAL "echo \"ro.unica.device u:object_r:build_prop:s0 exact string\" >> \"$WORK_DIR/system/system/etc/selinux/plat_property_contexts\""
+
+# Wi-Fi Display / Miracast / Wireless DeX HDCP bypass for Knox 0x1
+SET_PROP "system" "wlan.wfd.hdcp" "disable"
+SET_PROP "system" "persist.sys.wfd.hdcp" "disable"
 
 # Property identifying the UN1CA build as a whole
 # This bundles the properties which aren't already part of Android OS

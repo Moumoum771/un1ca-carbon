@@ -124,7 +124,7 @@ READ_AND_APPLY_PROPS()
                 return 1
             fi
         done < "$f"
-    done < <(find "$MODPATH" -maxdepth 1 -type f -name "*.prop")
+    done < <(find -L "$MODPATH" -maxdepth 1 -type f -name "*.prop")
 
     return 0
 }
