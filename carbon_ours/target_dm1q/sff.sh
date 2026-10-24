@@ -50,22 +50,11 @@
 # Rezoss dm1q-only overrides.
 # Exact S26U matches and Rezoss-owned entries live in unica/mods/rezoss/customize.sh.
 
-# Audio values intentionally differ from S26U.
-SEC_FLOATING_FEATURE_AUDIO_CONFIG_EFFECTS_VIDEOCALL=TRUE
-SEC_FLOATING_FEATURE_AUDIO_CONFIG_SOUNDALIVE_VERSION=eq_custom,uhq_onoff,karaoke,adapt,spk_stereo,dvfs_20_percent,dvfs_max_45_percent,voice_boost,dolby_game_spk_off
+# Audio values stock S23 dm1q
+SEC_FLOATING_FEATURE_AUDIO_CONFIG_EFFECTS_VIDEOCALL=None
+SEC_FLOATING_FEATURE_AUDIO_CONFIG_SOUNDALIVE_VERSION=eq_custom,uhq_onoff,karaoke,adapt,spk_stereo,dvfs_20_percent,dolby_game_spk_off
 
-# Camera values intentionally differ from S26U or need dm1q camera IDs.
-# physical_camera_tele2(10배줌) 파라미터 삭제
+# Camera values stock S23 dm1q
 SEC_FLOATING_FEATURE_CAMERA_CONFIG_SDK_FEATURE_INFO=version2,super_night,preview_dis,video_hdr,smooth_zoom,logical_rear_camera:camera_id=20,exposure_table_control,selfie_tone,physical_camera_tele:camera_id=52
-SEC_FLOATING_FEATURE_CAMERA_CONFIG_WINE_DETECTOR=V1_SNAP_CPU
-
-# Framework/UI values are S23-specific or intentionally different from S26U.
-SEC_FLOATING_FEATURE_COMMON_CONFIG_DEX_MODE=dual,wireless,dexforpc,newdex
-SEC_FLOATING_FEATURE_COMMON_CONFIG_EDGE=people,task,circle,panel,-edgefeeds,debug,search,phonecolor
-SEC_FLOATING_FEATURE_LCD_CONFIG_AOD_REFRESH_RATE=10
-SEC_FLOATING_FEATURE_LCD_CONFIG_REPLACE_COLOR_FOR_DARKMODE=#FF000000
-SEC_FLOATING_FEATURE_LOCKSCREEN_CONFIG_WALLPAPER_STYLE=VIDEO,COVER_MP4,GENWEATHER
-
-# SEC_FLOATING_FEATURE_CAMERA_CONFIG_VENDOR_LIB_INFO=de_flicker.arcsoft.v1,de_flicker_hdr.arcsoft.v1,food.samsung.v1,face_landmark.arcsoft.v2_1,beauty.samsung.v4,facial_restoration.arcsoft.v1,facial_attribute.samsung.v1,human_tracking_hand.arcsoft.v4,fr_tracking.arcsoft.v1,smart_scan.samsung.v2,aimode.samsung.v2,aimfisp.samsung.v1,ai_clear_zoom.arcsoft.v1,macro_raw_sr.arcsoft.v1,super_resolution_raw.arcsoft.v2,aebhdr.arcsoft.v1,hybridhdr.arcsoft.v1,single_bokeh.samsung.v2,super_night.mpi.v2,swuwdc.arcsoft.v1,event_detection.samsung.v2,selfie_correction.samsung.v1,dual_bokeh.samsung.v1_1,image_codec.samsung.v2,pro_single_rgb.mpi.v1,image_enhance.arcsoft.v1,localtm.samsung.v1_1,stereo_photo.samsung.v1,compressed_raw_decoder.samsung.v1
-
-SEC_FLOATING_FEATURE_CAMERA_CONFIG_VENDOR_LIB_INFO=de_flicker.arcsoft.v1,de_flicker_hdr.arcsoft.v1,food.samsung.v1,face_landmark.arcsoft.v2_1,beauty.samsung.v4,facial_restoration.arcsoft.v1,facial_attribute.samsung.v1,human_tracking_hand.arcsoft.v4,fr_tracking.arcsoft.v1,smart_scan.samsung.v2,aimode.samsung.v2,aimfisp.samsung.v1,ai_clear_zoom.arcsoft.v1,macro_raw_sr.arcsoft.v1,super_resolution_raw.arcsoft.v2,aebhdr.arcsoft.v1,hybridhdr.arcsoft.v1,single_bokeh.samsung.v2,super_night.mpi.v2,swuwdc.arcsoft.v1,event_detection.samsung.v2,selfie_correction.samsung.v1,dual_bokeh.samsung.v1_1,image_codec.samsung.v2,pro_single_rgb.mpi.v1,image_enhance.arcsoft.v1,localtm.samsung.v1_1
+SEC_FLOATING_FEATURE_CAMERA_CONFIG_WINE_DETECTOR=OFF
+SEC_FLOATING_FEATURE_CAMERA_CONFIG_VENDOR_LIB_INFO=food.samsung.v1,face_landmark.arcsoft.v2_1,beauty.samsung.v4,facial_restoration.arcsoft.v1,facial_attribute.samsung.v1,human_tracking_hand.arcsoft.v4,fr_tracking.arcsoft.v1,smart_scan.samsung.v2,aimode.samsung.v2,aimfisp.samsung.v1,ai_clear_zoom.arcsoft.v1,super_resolution_raw.arcsoft.v2,aebhdr.arcsoft.v1,hybridhdr.arcsoft.v1,single_bokeh.samsung.v2,super_night.mpi.v2,swuwdc.arcsoft.v1,event_detection.samsung.v2,selfie_correction.samsung.v1,dual_bokeh.samsung.v1_1,image_codec.samsung.v2,pro_single_rgb.mpi.v1,image_enhance.arcsoft.v1,localtm.samsung.v1_1
