@@ -1,0 +1,108 @@
+#!/system/bin/sh
+#
+# UN1CA Carbon IX - Performance & Power Mode Engine
+# Engineered by ALRI Development for Galaxy S23 (Snapdragon 8 Gen 2)
+#
+
+MODE="$1"
+[ -z "$MODE" ] && MODE=$(getprop persist.carbon.power_mode)
+[ -z "$MODE" ] && MODE="normal"
+
+apply_zram() {
+    # Initialize ZRAM with ZSTD algorithm at early boot
+    if [ $(cat /sys/block/zram0/comp_algorithm | grep -c "\[zstd\]") -eq 0 ]; then
+        swapoff /dev/block/zram0 2>/dev/null
+        echo 1 > /sys/block/zram0/reset 2>/dev/null
+        echo zstd > /sys/block/zram0/comp_algorithm 2>/dev/null
+        # 8589934592 = 8 GiB
+        echo 8589934592 > /sys/block/zram0/disksize 2>/dev/null
+        mkswap /dev/block/zram0 2>/dev/null
+        swapon /dev/block/zram0 -p 32758 2>/dev/null
+    fi
+    # Virtual Memory tuning for high responsiveness
+    sysctl -w vm.swappiness=100 >/dev/null 2>&1
+    sysctl -w vm.vfs_cache_pressure=50 >/dev/null 2>&1
+    sysctl -w vm.watermark_boost_factor=0 >/dev/null 2>&1
+    sysctl -w vm.watermark_scale_factor=150 >/dev/null 2>&1
+    sysctl -w vm.dirty_ratio=20 >/dev/null 2>&1
+    sysctl -w vm.dirty_background_ratio=5 >/dev/null 2>&1
+}
+
+case "$MODE" in
+    light|1)
+        # 🍃 MODO LIGHT (Economia & Frio)
+        echo 1459200 > /sys/devices/system/cpu/cpufreq/policy0/scaling_max_freq 2>/dev/null
+        echo 1785600 > /sys/devices/system/cpu/cpufreq/policy3/scaling_max_freq 2>/dev/null
+        echo 1977600 > /sys/devices/system/cpu/cpufreq/policy7/scaling_max_freq 2>/dev/null
+
+        # GPU Adreno 740 clamp to 348 MHz
+        echo 348000000 > /sys/class/kgsl/kgsl-3d0/max_gpuclk 2>/dev/null
+        echo 124800000 > /sys/class/kgsl/kgsl-3d0/devfreq/min_freq 2>/dev/null
+
+        # CPU Governor normal rate limits
+        for p in /sys/devices/system/cpu/cpufreq/policy*/walt; do
+            [ -d "$p" ] && echo 10000 > "$p/up_rate_limit_us" 2>/dev/null
+            [ -d "$p" ] && echo 0 > "$p/boost" 2>/dev/null
+        done
+
+        # UFS Storage: battery efficient
+        echo mq-deadline > /sys/block/sda/queue/scheduler 2>/dev/null
+        echo 128 > /sys/block/sda/queue/read_ahead_kb 2>/dev/null
+
+        setprop persist.carbon.power_mode "light"
+        ;;
+
+    normal|2)
+        # ⚖️ MODO NORMAL (Padrão de Fábrica Balanceado)
+        echo 2016000 > /sys/devices/system/cpu/cpufreq/policy0/scaling_max_freq 2>/dev/null
+        echo 2707200 > /sys/devices/system/cpu/cpufreq/policy3/scaling_max_freq 2>/dev/null
+        echo 2956800 > /sys/devices/system/cpu/cpufreq/policy7/scaling_max_freq 2>/dev/null
+
+        # GPU Adreno 740 full range
+        echo 719000000 > /sys/class/kgsl/kgsl-3d0/max_gpuclk 2>/dev/null
+        echo 220000000 > /sys/class/kgsl/kgsl-3d0/devfreq/min_freq 2>/dev/null
+
+        # CPU Governor standard
+        for p in /sys/devices/system/cpu/cpufreq/policy*/walt; do
+            [ -d "$p" ] && echo 2000 > "$p/up_rate_limit_us" 2>/dev/null
+            [ -d "$p" ] && echo 0 > "$p/boost" 2>/dev/null
+        done
+
+        # UFS Storage: standard Samsung SSG
+        echo ssg > /sys/block/sda/queue/scheduler 2>/dev/null
+        echo 256 > /sys/block/sda/queue/read_ahead_kb 2>/dev/null
+
+        setprop persist.carbon.power_mode "normal"
+        ;;
+
+    performance|3)
+        # 🔥 MODO PERFORMANCE EXTREMA (Velocidade Máxima & FPS)
+        echo 2016000 > /sys/devices/system/cpu/cpufreq/policy0/scaling_max_freq 2>/dev/null
+        echo 2707200 > /sys/devices/system/cpu/cpufreq/policy3/scaling_max_freq 2>/dev/null
+        echo 2956800 > /sys/devices/system/cpu/cpufreq/policy7/scaling_max_freq 2>/dev/null
+
+        # Resposta instantânea de clock (zero delay)
+        for p in /sys/devices/system/cpu/cpufreq/policy*/walt; do
+            [ -d "$p" ] && echo 0 > "$p/up_rate_limit_us" 2>/dev/null
+            [ -d "$p" ] && echo 500 > "$p/down_rate_limit_us" 2>/dev/null
+            [ -d "$p" ] && echo 1 > "$p/boost" 2>/dev/null
+        done
+
+        # GPU Adreno 740: Clock máximo liberado e piso de frequência agressivo
+        echo 719000000 > /sys/class/kgsl/kgsl-3d0/max_gpuclk 2>/dev/null
+        echo 348000000 > /sys/class/kgsl/kgsl-3d0/devfreq/min_freq 2>/dev/null
+
+        # UFS Storage: I/O turbo para carregar texturas e apps instantaneamente
+        echo ssg > /sys/block/sda/queue/scheduler 2>/dev/null
+        echo 512 > /sys/block/sda/queue/read_ahead_kb 2>/dev/null
+
+        setprop persist.carbon.power_mode "performance"
+        ;;
+
+    boot)
+        apply_zram
+        CURRENT=$(getprop persist.carbon.power_mode)
+        [ -z "$CURRENT" ] && CURRENT="normal"
+        /system/bin/carbon_power_engine "$CURRENT"
+        ;;
+esac
