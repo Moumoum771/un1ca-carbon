@@ -50,8 +50,13 @@ fi
 
 # 2. Run the native orchestrator from the project root
 cd "$ROOT_DIR"
+mkdir -p "$ROOT_DIR/out"
+LOG_FILE="$ROOT_DIR/out/build_engine.log"
+
 if [ "$SUBCOMMAND" = "build" ]; then
-    exec "$BIN_PATH" build -t "$TARGET_DEVICE" "${FORWARD_ARGS[@]}"
+    echo "• Logs will be streamed to console and saved in: $LOG_FILE"
+    echo ""
+    "$BIN_PATH" build -t "$TARGET_DEVICE" "${FORWARD_ARGS[@]}" 2>&1 | tee "$LOG_FILE"
 else
     exec "$BIN_PATH" "$SUBCOMMAND" "${FORWARD_ARGS[@]}"
 fi
