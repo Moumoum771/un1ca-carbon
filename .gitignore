@@ -39,6 +39,18 @@ CMakeCache.txt
 *.orig
 *.rej
 
+# Private Cryptographic Keys & Secrets (STRICT SECURITY - NEVER COMMIT)
+carbon_ours/security_keys/keys/
+carbon_ours/security_keys/unica_*
+security/keys/
+*.pk8
+*.key
+!carbon_ours/security_keys/aosp_platform.pk8
+!carbon_ours/security_keys/aosp_testkey.pk8
+!carbon_ours/security_keys/aosp_platform.x509.pem
+!carbon_ours/security_keys/aosp_testkey.x509.pem
+!carbon_ours/security_keys/avb/testkey_rsa4096.pem
+
 # IDE and OS files
 .idea/
 .vscode/
