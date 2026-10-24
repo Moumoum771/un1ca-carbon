@@ -10,6 +10,148 @@ if [ ! "$(GET_PROP "system" "ro.unica.codename")" ]; then
     unset ROM_CODENAME
 fi
 
+_PARADIGM_SET_VENDOR_FLOATING_FEATURE_CONFIG()
+{
+    local CONFIG="$1"
+    local VALUE="$2"
+    local FILE="$WORK_DIR/vendor/etc/floating_feature.xml"
+
+    if [ ! -f "$FILE" ]; then
+        LOGW "File not found: ${FILE//$WORK_DIR/}"
+        return 0
+    fi
+
+    if grep -q "$CONFIG" "$FILE"; then
+        LOG "- Replacing \"$CONFIG\" config with \"$VALUE\" in /vendor/etc/floating_feature.xml"
+        sed -i "$(sed -n "/<${CONFIG}>/=" "$FILE") c\ \ \ \ <${CONFIG}>${VALUE}</${CONFIG}>" "$FILE"
+    else
+        LOG "- Adding \"$CONFIG\" config with \"$VALUE\" in /vendor/etc/floating_feature.xml"
+        sed -i "/<\/SecFloatingFeatureSet>/d" "$FILE"
+        if ! grep -q "Added by unica/mods/paradigm" "$FILE"; then
+            echo "    <!-- Added by unica/mods/paradigm/customize.sh -->" >> "$FILE"
+        fi
+        echo "    <${CONFIG}>${VALUE}</${CONFIG}>" >> "$FILE"
+        echo "</SecFloatingFeatureSet>" >> "$FILE"
+    fi
+}
+
+_PARADIGM_PATCH_CALL_SCREENING_AUDIO_POLICY()
+{
+    local FILE="$1"
+    local CHANNEL_MASKS="$2"
+
+    if [ ! -f "$FILE" ]; then
+        LOGW "File not found: ${FILE//$WORK_DIR/}"
+        return 0
+    fi
+
+    if ! grep -q 'mixPort name="incall_music_uplink"' "$FILE"; then
+        LOGW "incall_music_uplink mixPort not found: /${FILE//$WORK_DIR\//}"
+        return 0
+    fi
+
+    if sed -n '/mixPort name="incall_music_uplink"/,/<\/mixPort>/p' "$FILE" | grep -q 'AUDIO_CHANNEL_OUT_MONO'; then
+        return 0
+    fi
+
+    LOG "- Allowing mono incall_music_uplink for call screening in /${FILE//$WORK_DIR\//}"
+    sed -i "/mixPort name=\"incall_music_uplink\"/,/<\\/mixPort>/s|channelMasks=\"AUDIO_CHANNEL_OUT_STEREO\"|channelMasks=\"$CHANNEL_MASKS\"|" "$FILE"
+}
+
+_PARADIGM_PATCH_CALL_SCREENING_VOICE_TX_RATE()
+{
+    local FILE="$1"
+
+    if [ ! -f "$FILE" ]; then
+        LOGW "File not found: ${FILE//$WORK_DIR/}"
+        return 0
+    fi
+
+    if ! grep -q 'mixPort name="voice_tx"' "$FILE"; then
+        LOGW "voice_tx mixPort not found: /${FILE//$WORK_DIR\//}"
+        return 0
+    fi
+
+    if sed -n '/mixPort name="voice_tx"/,/<\/mixPort>/p' "$FILE" | grep -q '32000'; then
+        return 0
+    fi
+
+    LOG "- Allowing 32 kHz voice_tx for call screening in /${FILE//$WORK_DIR\//}"
+    sed -i "/mixPort name=\"voice_tx\"/,/<\\/mixPort>/ {
+        s|samplingRates=\"8000,16000,48000\"|samplingRates=\"8000,16000,32000,48000\"|
+        s|samplingRates=\"8000 16000 48000\"|samplingRates=\"8000 16000 32000 48000\"|
+    }" "$FILE"
+}
+
+_PARADIGM_PATCH_CALL_SCREENING_ROUTE_SOURCE()
+{
+    local FILE="$1"
+    local SINK="$2"
+    local SOURCE="$3"
+
+    if [ ! -f "$FILE" ]; then
+        LOGW "File not found: ${FILE//$WORK_DIR/}"
+        return 0
+    fi
+
+    if ! grep -q "sink=\"$SINK\"" "$FILE"; then
+        LOGW "Route sink not found: ${SINK} in /${FILE//$WORK_DIR\//}"
+        return 0
+    fi
+
+    if ! grep -q "tagName=\"$SOURCE\"" "$FILE" && ! grep -q "mixPort name=\"$SOURCE\"" "$FILE"; then
+        LOGW "Route source not found: ${SOURCE} in /${FILE//$WORK_DIR\//}"
+        return 0
+    fi
+
+    if sed -n "/route type=\"mix\" sink=\"$SINK\"/,/\/>/p" "$FILE" | grep -q "$SOURCE"; then
+        return 0
+    fi
+
+    LOG "- Adding $SOURCE route source to $SINK in /${FILE//$WORK_DIR\//}"
+    sed -i "/route type=\"mix\" sink=\"$SINK\"/,/\/>/s|sources=\"\\([^\"]*\\)\"|sources=\"\\1,$SOURCE\"|" "$FILE"
+}
+
+_PARADIGM_PATCH_CALL_SCREENING_USECASE_KV()
+{
+    local FILE="$1"
+
+    if [ ! -f "$FILE" ]; then
+        LOGW "File not found: ${FILE//$WORK_DIR/}"
+        return 0
+    fi
+
+    if ! grep -q '<stream type="PAL_STREAM_VOICE_CALL_MUSIC">' "$FILE"; then
+        LOGW "PAL_STREAM_VOICE_CALL_MUSIC stream not found: /${FILE//$WORK_DIR\//}"
+        return 0
+    fi
+
+    if ! sed -n '/<stream type="PAL_STREAM_VOICE_CALL_MUSIC">/,/<\/stream>/p' "$FILE" | grep -q 'CustomConfig="icmd_plus"'; then
+        LOG "- Adding S26U Incall Music Plus graph key for call screening in /${FILE//$WORK_DIR\//}"
+        sed -i '/<stream type="PAL_STREAM_VOICE_CALL_MUSIC">/,/<\/stream>/ {
+            /<\/stream>/ i\
+            <keys_and_values CustomConfig="icmd_plus">\
+                <!-- STREAMRX - INCALL_MUSIC PLUS -->\
+                <graph_kv key="0xA1000000" value="0xA100001A"/>\
+                <graph_kv key="0xAC000000" value="0xAC000002"/>\
+            </keys_and_values>\
+        }' "$FILE"
+    fi
+
+    if ! grep -q '<devicepp id="PAL_DEVICE_IN_PROXY">' "$FILE"; then
+        LOG "- Adding call-screening proxy TX DevicePP shim in /${FILE//$WORK_DIR\//}"
+        sed -i '/<!-- OUT Device Proxy DevicePPs -->/i\
+        <!-- IN Proxy DevicePPs for call screening -->\
+        <devicepp id="PAL_DEVICE_IN_PROXY">\
+            <keys_and_values StreamType="PAL_STREAM_VOICE_CALL">\
+                <!-- DEVICETX - PROXY_TX -->\
+                <graph_kv key="0xA3000000" value="0xA3000008"/>\
+            </keys_and_values>\
+        </devicepp>\
+' "$FILE"
+    fi
+}
+
 # 2025 Audio Pack
 LOG_STEP_IN "- Adding 2025 Audio Pack"
 DELETE_FROM_WORK_DIR "system" "system/hidden/INTERNAL_SDCARD/Music/Samsung/Over_the_Horizon.mp3"
@@ -109,7 +251,63 @@ ADD_TO_WORK_DIR "pa2qxxx" "system" "system/lib64/libmultisourceseparator.so" 0 0
 ADD_TO_WORK_DIR "pa2qxxx" "system" "system/lib64/libsbs.so" 0 0 644 "u:object_r:system_lib_file:s0"
 ADD_TO_WORK_DIR "pa2qxxx" "system" "system/lib64/libtensorflowlite_gpu_delegate.so" 0 0 644 "u:object_r:system_lib_file:s0"
 ADD_TO_WORK_DIR "pa2qxxx" "system" "system/lib64/libveframework.videoeditor.samsung.so" 0 0 644 "u:object_r:system_lib_file:s0"
+# S26U allows mono incall music uplink. S23 dm1q/dm3q stereo-only policy can drop
+# the mono CALL_SCREENING/VOICE_TX AudioTrack before it reaches PAL.
+_PARADIGM_PATCH_CALL_SCREENING_AUDIO_POLICY \
+    "$WORK_DIR/vendor/etc/audio_policy_configuration_base.xml" \
+    "AUDIO_CHANNEL_OUT_MONO,AUDIO_CHANNEL_OUT_STEREO"
+_PARADIGM_PATCH_CALL_SCREENING_AUDIO_POLICY \
+    "$WORK_DIR/vendor/etc/audio/sku_kalama_qssi/audio_policy_configuration.xml" \
+    "AUDIO_CHANNEL_OUT_MONO AUDIO_CHANNEL_OUT_STEREO"
+_PARADIGM_PATCH_CALL_SCREENING_VOICE_TX_RATE \
+    "$WORK_DIR/vendor/etc/audio_policy_configuration_base.xml"
+_PARADIGM_PATCH_CALL_SCREENING_VOICE_TX_RATE \
+    "$WORK_DIR/vendor/etc/audio/sku_kalama_qssi/audio_policy_configuration.xml"
+for _CALL_SCREENING_POLICY_FILE in \
+    "$WORK_DIR/vendor/etc/audio_policy_configuration_base.xml" \
+    "$WORK_DIR/vendor/etc/audio/sku_kalama_qssi/audio_policy_configuration.xml"; do
+    for _CALL_SCREENING_ROUTE_SINK in \
+        "Earpiece" \
+        "Speaker" \
+        "BT SCO" \
+        "BT SCO Headset" \
+        "BT SCO Car Kit" \
+        "USB Device Out" \
+        "USB Headset Out"; do
+        _PARADIGM_PATCH_CALL_SCREENING_ROUTE_SOURCE \
+            "$_CALL_SCREENING_POLICY_FILE" \
+            "$_CALL_SCREENING_ROUTE_SINK" \
+            "Telephony Rx"
+    done
+    for _CALL_SCREENING_ROUTE_SOURCE in \
+        "Built-In Mic" \
+        "Built-In Back Mic" \
+        "BT SCO Headset Mic" \
+        "USB Device In" \
+        "USB Headset In" \
+        "BLE In"; do
+        _PARADIGM_PATCH_CALL_SCREENING_ROUTE_SOURCE \
+            "$_CALL_SCREENING_POLICY_FILE" \
+            "Telephony Tx" \
+            "$_CALL_SCREENING_ROUTE_SOURCE"
+    done
+done
+_PARADIGM_PATCH_CALL_SCREENING_ROUTE_SOURCE \
+    "$WORK_DIR/vendor/etc/audio_policy_configuration_base.xml" \
+    "Telephony Tx" \
+    "Built-In 2 Mic"
+unset _CALL_SCREENING_POLICY_FILE
+unset _CALL_SCREENING_ROUTE_SINK
+unset _CALL_SCREENING_ROUTE_SOURCE
+_PARADIGM_PATCH_CALL_SCREENING_USECASE_KV \
+    "$WORK_DIR/vendor/etc/usecaseKvManager.xml"
+LOG "- SamsungInCallUI.apk call-screening patch disabled; using framework/vendor route only"
 SET_FLOATING_FEATURE_CONFIG "SEC_FLOATING_FEATURE_AUDIO_CONFIG_MULTISOURCE_SEPARATOR" "{FastScanning_6, SourceSeparator_4, Version_1.3.0}"
+unset -f _PARADIGM_PATCH_CALL_SCREENING_AUDIO_POLICY
+unset -f _PARADIGM_PATCH_CALL_SCREENING_VOICE_TX_RATE
+unset -f _PARADIGM_PATCH_CALL_SCREENING_ROUTE_SOURCE
+unset -f _PARADIGM_PATCH_CALL_SCREENING_USECASE_KV
+unset -f _PARADIGM_SET_VENDOR_FLOATING_FEATURE_CONFIG
 LOG_STEP_OUT
 
 # Now brief
