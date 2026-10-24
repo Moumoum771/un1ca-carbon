@@ -568,6 +568,66 @@ CarbonResult<void> PipelineOrchestrator::Stage8_AssemblePackage() {
     }
     manifest["stages"] = stages_arr;
 
+    // Detailed Forensic Inventory (Per-component & Per-APK Cryptographic Fingerprint)
+    json forensic_inv;
+    json components_obj;
+    std::vector<std::pair<std::string, fs::path>> tracked_components = {
+        {"carbon_branding_settings", project_root_ / "carbon_ours" / "branding_settings"},
+        {"carbon_bootanimation", project_root_ / "carbon_ours" / "bootanimation"},
+        {"carbon_kernel_engine", project_root_ / "carbon_ours" / "kernel_engine"},
+        {"carbon_target_dm1q", project_root_ / "carbon_ours" / "target_dm1q"},
+        {"vendors_rezoss_mods", project_root_ / "vendors_rezoss" / "mods_rezoss"},
+        {"vendors_rezoss_hma", project_root_ / "vendors_rezoss" / "mods_hma"},
+        {"vendors_rezoss_sig", project_root_ / "vendors_rezoss" / "patches_signature"},
+        {"vendors_npl_cosine", project_root_ / "vendors_npl" / "mods_cosine"},
+        {"core_unica_patches", project_root_ / "core_unica" / "patches"},
+        {"core_unica_mods_pif", project_root_ / "core_unica" / "mods" / "pif"},
+        {"core_unica_mods_knoxpatch", project_root_ / "core_unica" / "mods" / "knoxpatch"}
+    };
+
+    for (const auto& [comp_name, comp_path] : tracked_components) {
+        if (fs::exists(comp_path)) {
+            fingerprint::InputHasher h(comp_path);
+            auto h_res = h.ComputeDeepContentHash({".git", ".bak"});
+            if (h_res.is_ok()) {
+                json cinfo;
+                cinfo["sha256"] = h_res.value();
+                cinfo["source_path"] = fs::relative(comp_path, project_root_, ec).string();
+                components_obj[comp_name] = cinfo;
+            }
+        }
+    }
+    forensic_inv["components"] = components_obj;
+
+    // Forensic Artifacts: Modified and compiled APKs / JARs
+    json artifacts_obj = json::array();
+    if (fs::exists(apktool_dir_)) {
+        for (const auto& entry : fs::recursive_directory_iterator(apktool_dir_, ec)) {
+            if (entry.is_directory()) {
+                std::string fname = entry.path().filename().string();
+                if (fname.ends_with(".apk") || fname.ends_with(".jar")) {
+                    std::string rel = fs::relative(entry.path(), apktool_dir_, ec).string();
+                    fs::path work_apk = (rel.rfind("system/", 0) == 0 ? 
+                                         work_dir_ / "system" / rel : 
+                                         work_dir_ / rel);
+                    if (fs::exists(work_apk)) {
+                        auto art_hash = fingerprint::InputHasher::ComputeFileSha256(work_apk);
+                        if (art_hash.is_ok()) {
+                            json ainfo;
+                            ainfo["package_name"] = fname;
+                            ainfo["relative_path"] = rel;
+                            ainfo["sha256"] = art_hash.value();
+                            ainfo["size_bytes"] = fs::file_size(work_apk, ec);
+                            artifacts_obj.push_back(ainfo);
+                        }
+                    }
+                }
+            }
+        }
+    }
+    forensic_inv["modified_apks"] = artifacts_obj;
+    manifest["forensic_inventory"] = forensic_inv;
+
     fs::path manifest_path = out_dir_ / "build_manifest.json";
     std::ofstream mf(manifest_path);
     if (mf.is_open()) {
