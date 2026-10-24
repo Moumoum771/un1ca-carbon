@@ -39,3 +39,6 @@ target_link_libraries(carbon-engine PRIVATE carbon_core)
 # Executável de Testes Unitários e Validação
 add_executable(test_engine tests/test_engine.cpp)
 target_link_libraries(test_engine PRIVATE carbon_core)
+
+add_executable(gen_manifest tests/gen_manifest.cpp)
+target_link_libraries(gen_manifest PRIVATE carbon_core)
