@@ -39,7 +39,26 @@
 4. **⚡ Hardware Display & AMOLED Protection:**
    * Removed experimental S24 Ultra doze auto-brightness tables on `dm1q`, restoring stock Samsung display calibration and protecting against green tint and panel PWM stress.
 
-5. **🧹 Build Pipeline Hygiene:**
+5. **🎛️ Carbon Performance Engine (3 Operation Modes):**
+   * Native One UI dropdown selector embedded in Carbon Settings:
+     * 🍃 **Light:** Clamps Cortex-X3 to 1.97 GHz and Adreno 740 to 348 MHz for maximal battery life and ice-cold thermals.
+     * ⚖️ **Normal:** Stock balanced Snapdragon 8 Gen 2 for Galaxy frequencies.
+     * 🔥 **Performance:** Zero-delay clock ramp (`up_rate_limit_us=0`), aggressive Adreno 740 GPU frequency floor, and turbo I/O.
+
+6. **⚡ ZRAM ZSTD 8 GB & Memory Subsystem Tuning:**
+   * Migrated swap compression algorithm from `lzo-rle` to native **ZSTD** with 8 GB capacity and priority `32758`.
+   * Tuned virtual memory (`swappiness=100`, `vfs_cache_pressure=50`), eliminating background app reloads.
+
+7. **📺 SmartView & Wireless DeX HDCP Bypass:**
+   * System-level HDCP bypass (`wlan.wfd.hdcp=disable`), unlocking seamless Miracast TV mirroring and Samsung Wireless DeX on unlocked bootloaders (Knox 0x1).
+
+8. **🔐 Official ALRI GROUP Cryptographic Release Signing:**
+   * Production builds now signed with dedicated RSA 4096-bit keys issued by **ALRI GROUP** (`OFFICIAL_CARBON_KEYS`), with deep kernel signature verification bypass.
+
+9. **🔬 Deep Forensic Audit Manifest (`build_manifest.json`):**
+   * Every build automatically indexes individual SHA-256 hashes of every mod folder, every recompiled APK/JAR, and packaging metrics.
+
+10. **🧹 Build Pipeline Hygiene:**
    * Integrated `rom_payload.py` quarantining `.bak` files from image generation and OTA packaging.
 
 ---

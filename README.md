@@ -59,10 +59,11 @@ While initial upstream One UI 9 experimental ports were built exclusively for th
 | **Linux Kernel** | GoRhanHee 5.15.216 + KernelSU-Next v3.4.2 + SUSFS |
 | **Recovery** | Team Win Recovery Project (TWRP 3.7.1_12-0) integrated |
 | **Encryption Type** | Authentic Samsung Hardware FBE v2 (No DFE hack) |
+| **Signature Profile**| `🟢 OFFICIAL_CARBON_KEYS` (RSA 4096-bit ALRI GROUP) |
 | **Package Filename**| `UN1CA_Carbon_IX_1.1_dm1q_GZIF.zip` |
-| **Package Size** | **8.05 GB** (8,644,680,502 bytes) |
-| **SHA-1 Checksum** | `2c639ccf447eebe479482408ccf05157c9db29a6` |
-| **SHA-256 Checksum**| `eccace0f815258597a7ff35c6f6a45961f11992e35e8142a19e83c626c367f9d` |
+| **Package Size** | **8.04 GB** (8,631,143,983 bytes) |
+| **SHA-256 Checksum**| `0e1259fb6b447fd5276c2c45a77f9c03f262395f12689ebd07fafe51af09b531` |
+| **Build Fingerprint**| `9d8764dd9310f41b526cd0f3879e141f412fd09bec8f8c5979a80241a57d5e89` |
 | **Download Mirror** | 🔗 **[Google Drive (Official Release Mirror)](https://drive.google.com/file/d/12n76Q7DNkFw9zbyqrgREkDOJSfZDKoff/view?usp=sharing)** |
 
 ---
@@ -106,6 +107,12 @@ Below is the comprehensive technical registry of all modifications, modules, and
 
 ### ⚙️ 1. Native "Carbon Settings" Menu (`SecSettings.apk`)
 Accessible directly at the top level of the primary Samsung Settings app:
+* **Carbon Performance Engine Selector:** Native One UI dropdown selector allowing real-time switching between 3 performance profiles:
+  * 🍃 **Light Mode:** Throttles peak clocks on Prime Cortex-X3 (2.0 GHz) and Adreno 740 GPU (348 MHz) for ice-cold operation and extreme multi-day battery life.
+  * ⚖️ **Normal Mode:** Authentic factory Snapdragon 8 Gen 2 for Galaxy frequencies governed by Qualcomm `walt`.
+  * 🔥 **Performance Mode:** Zero-latency clock ramp (`up_rate_limit_us=0`), continuous Adreno 740 GPU boost, 512 KB UFS I/O readahead, and relaxed SIOP thermal limits.
+* **SmartView & Wireless DeX HDCP Bypass:** Native bypass (`wlan.wfd.hdcp=disable`) allowing flawless Miracast screen mirroring and Samsung Wireless DeX on Knox 0x1 bootloaders.
+* **ZRAM ZSTD Memory Optimizer:** Replaces Samsung's default `lzo-rle` with native **ZSTD compression (8 GB Swap)**, retaining dozens of background apps without reloading.
 * **Allow Application Downgrade:** Allows installing older versions of any application without uninstalling the current package (no data loss).
 * **Disable Signature Verification (CorePatch):** System-level APK signature verification bypass, enabling execution of modified or patched system applications.
 * **Disable Low Target SDK Block:** Enables installation of legacy applications built for older Android releases (Android 5, 6, 7).

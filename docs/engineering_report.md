@@ -180,3 +180,42 @@ Following these resolutions:
 2. **Display Compositor:** Renders at native 120Hz with zero flickering or frame drops.
 3. **Samsung Keyboard:** Operates reliably with multi-language input and FRP compatibility.
 4. **Bootloader & Critical Partitions:** Protected against AVB state rejections and soft-bricks.
+
+---
+
+## 🔬 6. v1.1 Milestone Diagnoses & Resolutions
+
+### 🔴 Failure 10: Knox Matrix Auto-Signout & Samsung Account Session Expiration
+* **Symptom:** ~80 seconds after successful login, the device pushed persistent notifications: *"Session expired. Sign in to your Samsung Account"*.
+* **Root Cause:** Analysis of `dmesg` and logcat proved that the Knox Matrix daemon (`com.samsung.android.kmxservice`) coupled with `/system/bin/fabric_crypto` executed TEE hardware attestations. On bootloader-unlocked devices (Knox 0x1), hardware key minting failed, prompting automated cryptographic session revocation.
+* **Resolution:** Permanently debloated `KmxService.apk`, `fabric_crypto`, and associated SELinux policies across all ROM build configurations. Samsung Account sessions remain permanently authenticated.
+
+---
+
+### 🔴 Failure 11: S24 Ultra Doze Auto-Brightness Overlays on S23 Base (`dm1q`)
+* **Symptom:** Upstream vendor patches introduced `0001-Add-doze-auto-brightness-arrays.patch` to `framework-res__dm1qxxx__auto_generated_rro_product.apk`.
+* **Root Cause:** The patch forced display driver IC (DDIC) lux calibration arrays calibrated for the S24 Ultra LTPO panel onto the S23 flat AMOLED panel, causing PWM flickering and risking panel degradation.
+* **Resolution:** Restricted the patch strictly to `dm3q` (S23 Ultra) and restored pure Samsung factory display calibration for `dm1q`.
+
+---
+
+### 🔴 Failure 12: Wi-Fi Display (SmartView) & Wireless DeX Abort
+* **Symptom:** SmartView scanning either failed to detect screens or immediately terminated session negotiations with `setWifiP2pStatus = false`.
+* **Root Cause:** Miracast and Wireless DeX require HDCP 2.2 content protection mediated by TrustZone / Keymaster. Under Knox 0x1, HDCP key provisioning halts handshake negotiations. Additionally, `apply_modules.sh` lacked `-L` symlink recursion, failing to read module `.prop` files.
+* **Resolution:** Added `find -L` in `apply_modules.sh` and baked system-level HDCP bypass properties (`wlan.wfd.hdcp=disable`, `persist.sys.wfd.hdcp=disable`) into `build.prop`, while activating `newdex` in `floating_feature.xml`.
+
+---
+
+### 🔴 Failure 13: Dalvik VerifyError in `CarbonPerformancePreferenceController`
+* **Symptom:** SecSettings crashed immediately upon opening Carbon Settings with `java.lang.VerifyError: return-object not expected` in `getSliceHighlightMenuRes()I`, `hasAsyncUpdate()Z`, and `isPublicSlice()Z`.
+* **Root Cause:** Smali methods returning primitive integers (`I`) and booleans (`Z`) mistakenly emitted the reference opcode `return-object p0` instead of the primitive `return p0`.
+* **Resolution:** Corrected opcodes in `CarbonPerformancePreferenceController.smali`, restoring full execution verification on Android Runtime (ART).
+
+---
+
+## 🏛️ 7. Carbon Engine C++20 Forensic Architecture
+
+The **Carbon Engine** replaces legacy monolithic shell scripts with an input-addressed Directed Acyclic Graph (DAG) build orchestrator:
+1. **SQLite Cryptographic Ledger (`ledger.db`):** Tracks input content hashes across all 9 build stages.
+2. **Deep Forensic Manifest (`build_manifest.json`):** Records individual SHA-256 signatures for every mod directory, every recompiled APK/JAR, and final distribution packages.
+3. **Official ALRI GROUP Signature (`OFFICIAL_CARBON_KEYS`):** Full transition from generic AOSP test keys to dedicated RSA 4096-bit platform keys issued by **ALRI GROUP**.
