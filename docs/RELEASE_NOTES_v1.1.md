@@ -15,9 +15,10 @@
 ## 📥 Official Download Links & Checksums
 
 * **Package Filename:** `UN1CA_Carbon_IX_1.1_dm1q_GZIF.zip`
-* **Package Size:** `8,631,943,867 bytes` (8.04 GiB)
-* **SHA-256 Checksum:** `f81faa274aa947ef82ed30bf4712ce30f12d0108cab92e7a6928f09a20926732`
-* **Composite Build Fingerprint:** `e61d11fad9a11b37c569a9b3ba77592e7cffe3196786ffd26311e4d9969bf808`
+* **Package Size:** `8,631,143,983 bytes` (8.04 GiB)
+* **SHA-256 Checksum:** `0e1259fb6b447fd5276c2c45a77f9c03f262395f12689ebd07fafe51af09b531`
+* **Composite Build Fingerprint:** `9d8764dd9310f41b526cd0f3879e141f412fd09bec8f8c5979a80241a57d5e89`
+* **Key Signature Profile:** `OFFICIAL_CARBON_KEYS` (RSA 4096-bit ALRI GROUP)
 * **Release Branch:** `carbon-ix-V1.0` (Production Tag `IX-v1.1`)
 
 ---
