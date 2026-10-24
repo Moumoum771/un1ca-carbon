@@ -95,12 +95,12 @@ BUILD()
     find "$OUTPUT_PATH" -type f \( -name "*.orig" -o -name "*.rej" \) -delete
     REBALANCE_DEX
     if $SHORTEN_RESOURCE_PATHS && $APKTOOL_SUPPORTS_SRP; then
-        EVAL "apktool b -j \"$THREAD_COUNT\" -p \"$FRAMEWORK_DIR\" -srp \"$OUTPUT_PATH\"" || exit 1
+        EVAL "apktool b -f -j \"$THREAD_COUNT\" -p \"$FRAMEWORK_DIR\" -srp \"$OUTPUT_PATH\"" || exit 1
     else
         if $SHORTEN_RESOURCE_PATHS && ! $APKTOOL_SUPPORTS_SRP; then
             LOGW "apktool has no -srp (need UN1CA patched apktool); building without resource path shortening"
         fi
-        EVAL "apktool b -j \"$THREAD_COUNT\" -p \"$FRAMEWORK_DIR\" \"$OUTPUT_PATH\"" || exit 1
+        EVAL "apktool b -f -j \"$THREAD_COUNT\" -p \"$FRAMEWORK_DIR\" \"$OUTPUT_PATH\"" || exit 1
     fi
 
     local FILE_NAME
