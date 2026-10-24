@@ -56,4 +56,12 @@
     <string name="unica_updates_title">Actualizaciones de UN1CA</string>
     <string name="unica_vulkan_summary">¡Esto es inestable y puede causar problemas!</string>
     <string name="unica_vulkan_title">Activar renderizador Vulkan</string>
+    <string name="carbon_power_mode_category">Rendimiento y Batería</string>
+    <string name="carbon_power_mode_title">Perfil de Rendimiento Carbon</string>
+    <string name="carbon_power_mode_summary">Alternar entre los modos Ligero, Normal y Rendimiento</string>
+    <string name="carbon_mode_light">🍃 Modo Ligero (Batería y Frío)</string>
+    <string name="carbon_mode_normal">⚖️ Modo Normal (Equilibrado)</string>
+    <string name="carbon_mode_performance">🔥 Modo Rendimiento (Máxima Potencia)</string>
+    <string name="carbon_credits_title">Créditos y Contribuidores</string>
+    <string name="carbon_credits_summary">Ingenieros, mantenedores y proyectos de código abierto</string>
 </resources>

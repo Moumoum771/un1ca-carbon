@@ -138,7 +138,12 @@
     <string name="unica_bootanim_style_title">Boot animation style</string>
     <string name="unica_bootanim_style_carbon">UN1CA Carbon</string>
     <string name="unica_bootanim_style_rezoss">Android 17 (REZOSS)</string>
-    <string name="carbon_power_mode_category">Desempenho &amp; Bateria</string>
-    <string name="carbon_power_mode_title">Perfil de Desempenho Carbon</string>
-    <string name="carbon_power_mode_summary">Alterne entre os modos Light, Normal e Performance</string>
+    <string name="carbon_power_mode_category">Performance &amp; Battery</string>
+    <string name="carbon_power_mode_title">Carbon Performance Profile</string>
+    <string name="carbon_power_mode_summary">Toggle between Light, Normal and Performance modes</string>
+    <string name="carbon_mode_light">🍃 Light Mode (Battery &amp; Cool)</string>
+    <string name="carbon_mode_normal">⚖️ Normal Mode (Balanced)</string>
+    <string name="carbon_mode_performance">🔥 Performance Mode (Max Power)</string>
+    <string name="carbon_credits_title">Credits &amp; Contributors</string>
+    <string name="carbon_credits_summary">Engineers, maintainers and open-source projects</string>
 </resources>

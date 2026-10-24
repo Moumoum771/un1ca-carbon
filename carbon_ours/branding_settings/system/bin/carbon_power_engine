@@ -5,7 +5,7 @@
 #
 
 MODE="$1"
-[ -z "$MODE" ] && MODE=$(getprop persist.carbon.power_mode)
+[ -z "$MODE" ] && MODE=$(getprop persist.sys.carbon.power_mode)
 [ -z "$MODE" ] && MODE="normal"
 
 apply_zram() {
@@ -101,7 +101,7 @@ case "$MODE" in
 
     boot)
         apply_zram
-        CURRENT=$(getprop persist.carbon.power_mode)
+        CURRENT=$(getprop persist.sys.carbon.power_mode)
         [ -z "$CURRENT" ] && CURRENT="normal"
         /system/bin/carbon_power_engine "$CURRENT"
         ;;

@@ -23,7 +23,7 @@
 
 # virtual methods
 .method public displayPreference(Landroidx/preference/PreferenceScreen;)V
-    .locals 5
+    .locals 6
 
     invoke-super {p0, p1}, Lcom/android/settings/core/BasePreferenceController;->displayPreference(Landroidx/preference/PreferenceScreen;)V
 
@@ -46,23 +46,86 @@
 
     new-array v1, v0, [Ljava/lang/CharSequence;
 
-    const-string/jumbo v2, "\ud83c\udf43 Modo Light (Bateria & Frio)"
+    # 1. Light Mode String (Localized)
+    const-string v2, "string"
 
+    const-string v3, "carbon_mode_light"
+
+    invoke-static {v2, v3}, Lio/mesalabs/unica/utils/Utils;->getResourceId(Ljava/lang/String;Ljava/lang/String;)I
+
+    move-result v2
+
+    if-eqz v2, :cond_1
+
+    iget-object v3, p0, Lcom/android/settingslib/core/AbstractPreferenceController;->mContext:Landroid/content/Context;
+
+    invoke-virtual {v3, v2}, Landroid/content/Context;->getString(I)Ljava/lang/String;
+
+    move-result-object v2
+
+    goto :goto_0
+
+    :cond_1
+    const-string/jumbo v2, "\ud83c\udf43 Light (Battery & Cool)"
+
+    :goto_0
     const/4 v3, 0x0
 
     aput-object v2, v1, v3
 
-    const-string/jumbo v2, "\u2696\ufe0f Modo Normal (Equilibrado)"
+    # 2. Normal Mode String (Localized)
+    const-string v2, "string"
 
+    const-string v4, "carbon_mode_normal"
+
+    invoke-static {v2, v4}, Lio/mesalabs/unica/utils/Utils;->getResourceId(Ljava/lang/String;Ljava/lang/String;)I
+
+    move-result v2
+
+    if-eqz v2, :cond_2
+
+    iget-object v4, p0, Lcom/android/settingslib/core/AbstractPreferenceController;->mContext:Landroid/content/Context;
+
+    invoke-virtual {v4, v2}, Landroid/content/Context;->getString(I)Ljava/lang/String;
+
+    move-result-object v2
+
+    goto :goto_1
+
+    :cond_2
+    const-string/jumbo v2, "\u2696\ufe0f Normal (Balanced)"
+
+    :goto_1
     const/4 v4, 0x1
 
     aput-object v2, v1, v4
 
-    const-string/jumbo v2, "\ud83d\udd25 Modo Performance (For\u00e7a M\u00e1xima)"
+    # 3. Performance Mode String (Localized)
+    const-string v2, "string"
 
-    const/4 v4, 0x2
+    const-string v5, "carbon_mode_performance"
 
-    aput-object v2, v1, v4
+    invoke-static {v2, v5}, Lio/mesalabs/unica/utils/Utils;->getResourceId(Ljava/lang/String;Ljava/lang/String;)I
+
+    move-result v2
+
+    if-eqz v2, :cond_3
+
+    iget-object v5, p0, Lcom/android/settingslib/core/AbstractPreferenceController;->mContext:Landroid/content/Context;
+
+    invoke-virtual {v5, v2}, Landroid/content/Context;->getString(I)Ljava/lang/String;
+
+    move-result-object v2
+
+    goto :goto_2
+
+    :cond_3
+    const-string/jumbo v2, "\ud83d\udd25 Performance (Max Power)"
+
+    :goto_2
+    const/4 v5, 0x2
+
+    aput-object v2, v1, v5
 
     invoke-virtual {p1, v1}, Landroidx/preference/DropDownPreference;->setEntries([Ljava/lang/CharSequence;)V
 
@@ -76,19 +139,17 @@
 
     const-string v1, "normal"
 
-    const/4 v2, 0x1
-
-    aput-object v1, v0, v2
+    aput-object v1, v0, v4
 
     const-string v1, "performance"
 
-    aput-object v1, v0, v4
+    aput-object v1, v0, v5
 
     iput-object v0, p1, Landroidx/preference/ListPreference;->mEntryValues:[Ljava/lang/CharSequence;
 
     iget-object p1, p0, Lio/mesalabs/unica/settings/perf/CarbonPerformancePreferenceController;->mPreference:Landroidx/preference/SecDropDownPreference;
 
-    const-string v0, "persist.carbon.power_mode"
+    const-string v0, "persist.sys.carbon.power_mode"
 
     const-string v1, "normal"
 
@@ -102,29 +163,29 @@
 
     move-result v1
 
-    if-eqz v1, :cond_1
+    if-eqz v1, :cond_4
 
     const/4 v0, 0x0
 
-    goto :goto_0
+    goto :goto_3
 
-    :cond_1
+    :cond_4
     const-string v1, "performance"
 
     invoke-virtual {v1, v0}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
 
     move-result v0
 
-    if-eqz v0, :cond_2
+    if-eqz v0, :cond_5
 
     const/4 v0, 0x2
 
-    goto :goto_0
+    goto :goto_3
 
-    :cond_2
+    :cond_5
     const/4 v0, 0x1
 
-    :goto_0
+    :goto_3
     invoke-virtual {p1, v0}, Landroidx/preference/DropDownPreference;->setValueIndex(I)V
 
     iget-object p1, p0, Lio/mesalabs/unica/settings/perf/CarbonPerformancePreferenceController;->mPreference:Landroidx/preference/SecDropDownPreference;
@@ -135,9 +196,7 @@
 
     invoke-virtual {p0}, Ljava/lang/Object;->getClass()Ljava/lang/Class;
 
-    const/4 p1, 0x1
-
-    invoke-static {p0, p1}, Landroidx/preference/SecPreferenceUtils;->applySummaryColor(Landroidx/preference/Preference;Z)V
+    invoke-static {p0, v4}, Landroidx/preference/SecPreferenceUtils;->applySummaryColor(Landroidx/preference/Preference;Z)V
 
     return-void
 .end method
@@ -273,10 +332,14 @@
 
     if-eqz p1, :cond_3
 
-    const-string p1, "persist.carbon.power_mode"
+    :try_start_0
+    const-string p1, "persist.sys.carbon.power_mode"
 
     invoke-static {p1, p2}, Landroid/os/SemSystemProperties;->set(Ljava/lang/String;Ljava/lang/String;)V
+    :try_end_0
+    .catch Ljava/lang/Exception; {:try_start_0 .. :try_end_0} :catch_0
 
+    :catch_0
     iget-object p1, p0, Lio/mesalabs/unica/settings/perf/CarbonPerformancePreferenceController;->mPreference:Landroidx/preference/SecDropDownPreference;
 
     const-string v0, "light"

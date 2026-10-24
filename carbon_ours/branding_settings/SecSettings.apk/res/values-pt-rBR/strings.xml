@@ -62,4 +62,9 @@
     <string name="carbon_power_mode_category">Desempenho &amp; Bateria</string>
     <string name="carbon_power_mode_title">Perfil de Desempenho Carbon</string>
     <string name="carbon_power_mode_summary">Alterne entre os modos Light, Normal e Performance</string>
+    <string name="carbon_mode_light">🍃 Modo Light (Bateria &amp; Frio)</string>
+    <string name="carbon_mode_normal">⚖️ Modo Normal (Equilibrado)</string>
+    <string name="carbon_mode_performance">🔥 Modo Performance (Força Máxima)</string>
+    <string name="carbon_credits_title">Créditos &amp; Contribuidores</string>
+    <string name="carbon_credits_summary">Engenheiros, mantenedores e projetos de código aberto</string>
 </resources>
