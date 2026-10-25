@@ -2,6 +2,8 @@
 
 <div align="center">
 
+<img alt="UN1CA Carbon Banner" src="https://github.com/alrigroup/un1ca-carbon/releases/download/v1.1/banner.jpeg" width="100%"><br><br>
+
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="docs/assets/logo_white.png">
   <source media="(prefers-color-scheme: light)" srcset="docs/assets/logo_dark.png">

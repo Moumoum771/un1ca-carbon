@@ -1,5 +1,11 @@
 # 👑 UN1CA Carbon IX (v1.1) — Official Release Notes
 
+<div align="center">
+  <img alt="UN1CA Carbon Banner" src="https://github.com/alrigroup/un1ca-carbon/releases/download/v1.1/banner.jpeg" width="100%">
+</div>
+
+<br>
+
 **Target Device:** Samsung Galaxy S23 Base Universal (`SM-S911B` & `SM-S9110` / `dm1q`)  
 **OS Version:** One UI 9.0 Stable (Android 17 • SDK 37)  
 **Base Firmware:** `S911BXXUAGZIF` (Official Production Base)  
