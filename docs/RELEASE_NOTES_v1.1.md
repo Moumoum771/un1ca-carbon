@@ -29,6 +29,20 @@
 
 ---
 
+## 📸 Screenshots & Verification Evidence
+
+| Play Integrity (STRONG) | Duck Detector (Clean) | Native Detector (Clean) |
+| :---: | :---: | :---: |
+| <img src="https://github.com/alrigroup/un1ca-carbon/releases/download/v1.1/PIF.jpg" width="250"/> | <img src="https://github.com/alrigroup/un1ca-carbon/releases/download/v1.1/duck.jpg" width="250"/> | <img src="https://github.com/alrigroup/un1ca-carbon/releases/download/v1.1/native.jpg" width="250"/> |
+| **Passes MEETS_STRONG_INTEGRITY** | **100% Anti-Detection Stealth** | **Native Root & Environment Clean** |
+
+| UN1CA Carbon Settings | Software Information (One UI 9.0) |
+| :---: | :---: |
+| <img src="https://github.com/alrigroup/un1ca-carbon/releases/download/v1.1/carbonsettings.jpg" width="250"/> | <img src="https://github.com/alrigroup/un1ca-carbon/releases/download/v1.1/info.jpg" width="250"/> |
+| **Custom Controls & Performance Tuning** | **Android 17 • One UI 9.0 Stable (GZIF)** |
+
+---
+
 ## 🚀 Complete Changelog: What's New from v1.0 to v1.1
 
 ### 1. 🌐 Base Firmware & Multi-Variant Hardware
