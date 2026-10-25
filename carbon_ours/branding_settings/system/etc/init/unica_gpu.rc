@@ -3,7 +3,7 @@
 service unica_gpu /system/bin/unica-gpu
     user root
     group system cache
-    capabilities SYS_RAWIO
+    seclabel u:r:unica_gpu:s0
     disabled
     oneshot
 

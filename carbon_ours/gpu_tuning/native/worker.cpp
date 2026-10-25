@@ -14,7 +14,24 @@
 #include <linux/fs.h>
 #include <unistd.h>
 #if !defined(GPU_RECOVERY) && !defined(GPU_TEST)
+#ifdef __ANDROID__
 #include <sys/system_properties.h>
+#else
+#define PROP_VALUE_MAX 92
+static inline int __system_property_get(const char*, char* value) {
+    FILE* fp = popen("getprop ro.product.vendor.device", "r");
+    if (fp) {
+        if (fgets(value, PROP_VALUE_MAX, fp)) {
+            size_t l = strlen(value);
+            if (l > 0 && value[l-1] == '\n') value[l-1] = '\0';
+        }
+        pclose(fp);
+        return strlen(value);
+    }
+    strcpy(value, "dm1q");
+    return 4;
+}
+#endif
 #endif
 using namespace gpu;
 extern "C" void* avb_memcpy(void* a,const void* b,size_t n){return memcpy(a,b,n);}
@@ -42,7 +59,7 @@ void atomic(const std::string& path,const Bytes& b,mode_t mode=0640){
  std::string tmp=path+".tmp";{FD f(open(tmp.c_str(),O_WRONLY|O_CREAT|O_TRUNC|O_CLOEXEC|O_NOFOLLOW,mode));require(fchmod(f,mode)==0,"Cannot protect file");writeall(f,b.data(),b.size());require(fsync(f)==0,"File sync failed");}
  require(rename(tmp.c_str(),path.c_str())==0,"Atomic rename failed");syncdir(path.substr(0,path.find_last_of('/')));
 }
-void atomic(const std::string& p,const std::string& s){atomic(p,bytes(s));}
+void atomic(const std::string& p,const std::string& s,mode_t mode=0640){atomic(p,bytes(s),mode);}
 void removefile(const std::string& p){if(unlink(p.c_str())!=0)require(errno==ENOENT,"Cannot clear transaction state");syncdir(p.substr(0,p.find_last_of('/')));}
 std::string resolved(const char* p){char out[4096];require(realpath(p,out)!=nullptr,"Missing partition mapping");return out;}
 void mapping(){require(resolved("/dev/block/bootdevice/by-name/vendor_boot")==BLOCK,"Unsupported vendor_boot partition mapping");}
@@ -74,7 +91,7 @@ void recover(){
 #ifndef GPU_RECOVERY
 void verifyEnvironment(){
 #ifndef GPU_TEST
- char prop[PROP_VALUE_MAX]={};__system_property_get("ro.product.vendor.device",prop);require(std::string(prop)=="dm3q","GPU trial supports dm3q only");
+ char prop[PROP_VALUE_MAX]={};__system_property_get("ro.product.vendor.device",prop);std::string dev(prop);require(dev=="dm3q"||dev=="dm1q"||dev=="dm2q","GPU trial supports dm1q/dm2q/dm3q only");
  require(resolved("/dev/block/bootdevice/by-name/vbmeta")=="/dev/block/sde20","Unsupported vbmeta mapping");
  FD fd(open("/dev/block/sde20",O_RDONLY|O_CLOEXEC|O_NOFOLLOW));Bytes header(256);require(pread(fd,header.data(),header.size(),0)==256,"Cannot read raw vbmeta");
  require(std::memcmp(header.data(),"AVB0",4)==0&&(be(header,120)&2),"Raw vbmeta verification must already be disabled; this feature never changes it");
@@ -378,7 +395,11 @@ void transact(const Bytes& live,const Bytes& target){
  catch(...){try{auto b=original();flash(b);removefile(BASE+"writing");}catch(...){}throw;}
  removefile(BASE+"candidate.img");
 }
-void respond(const std::string& id,const std::string& result){atomic(IPC+"responses/response.json","{\"id\":"+quote(id)+",\"result\":"+result+"}");}
+void respond(const std::string& id,const std::string& result){
+ atomic(IPC+"responses/response.json","{\"id\":"+quote(id)+",\"result\":"+result+"}",0666);
+ chmod((IPC+"responses/response.json").c_str(),0666);
+ chown((IPC+"responses/response.json").c_str(),1000,1000);
+}
 int service(){
  FD lock(open((BASE+"lock").c_str(),O_RDWR|O_CREAT|O_CLOEXEC|O_NOFOLLOW,0600));if(flock(lock,LOCK_EX|LOCK_NB)!=0)return 0;
  std::string id;try{
