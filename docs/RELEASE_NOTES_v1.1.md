@@ -7,8 +7,25 @@
 **Kernel:** GoRhanHee Linux 5.15.216 + KernelSU-Next v3.4.2 + SUSFS  
 **Recovery:** Official TWRP 3.7.1_12-0 (`dm1q`) integrated  
 **Release Tag:** `IX-v1.1`  
+**Git Source Commit:** `97eeefb59e7ab570a2f89504baacf4e5b46cf512` (CLEAN)  
 **Signature Profile:** `OFFICIAL_CARBON_KEYS` (RSA 4096-bit ALRI GROUP)  
 **Security Patch:** 2026-10-05  
+
+---
+
+## 📥 Official Download Links & Checksums
+
+| Artefato / Arquivo | Descrição | Link de Download Oficial |
+| :--- | :--- | :--- |
+| **`UN1CA_Carbon_IX_1.1_dm1q_GZIF.zip`** | Pacote Flashable da ROM Completa (8.04 GB) | 🔗 **[Download ZIP Direto](https://drive.google.com/file/d/1unr3tUWE6bpBaLCgJuGhLvDMZ6jZrZIg/view?usp=sharing)** |
+| **`UN1CA_Carbon_IX_1.1_dm1q_GZIF.zip.sha256`** | Checksum SHA-256 Oficial | 🔐 **[Download Checksum](https://drive.google.com/file/d/1e1zTivkk9xtvbuwanhQcJC3dgkRWge4C/view?usp=drive_link)** |
+| **`build_manifest.json`** | Manifesto Criptográfico Enterprise v2 (SLSA/SBOM) | 📄 **[Download Manifest](https://drive.google.com/file/d/1VmotBUTXgiWKGe2sXhAjlvFt2h0uvor5/view?usp=drive_link)** |
+| **`build_forensic_audit.log`** | Relatório de Auditoria Forense Humana | 📋 **[Download Audit Log](https://drive.google.com/file/d/18iXDiZsRi5Nsx2k1D7B6FuEFEiNy0J4Y/view?usp=drive_link)** |
+| **`build_engine.log`** | Log Completo da Compilação C++20 | 📜 **[Download Build Log](https://drive.google.com/file/d/1hyjJr-o74I95CR895s3k_UgEhHiK7HLy/view?usp=drive_link)** |
+| **Pasta Completa Google Drive** | Todos os arquivos e logs em uma única pasta | 📂 **[Acessar Pasta Google Drive](https://drive.google.com/drive/folders/1ynY69aPsvnyndN2VqWr13NyqD6CTEvZn?usp=sharing)** |
+
+* **Package Checksum SHA-256:** `cd77ec82803072cdba05b755ad7d5ff1d75ceaf4efe88281fe932a42d7ed5c8f`
+* **Composite Build Fingerprint:** `633fc8812a6445d964d8a470b8465b9fd625254f17a8a1e1bba0456dc60f9fdb`
 
 ---
 

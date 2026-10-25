@@ -103,10 +103,16 @@ While initial upstream One UI 9 experimental ports were built exclusively for th
 | **Encryption Type** | Authentic Samsung Hardware FBE v2 (No DFE hack) |
 | **Signature Profile**| `🟢 OFFICIAL_CARBON_KEYS` (RSA 4096-bit ALRI GROUP) |
 | **Package Filename**| `UN1CA_Carbon_IX_1.1_dm1q_GZIF.zip` |
-| **Package Size** | **8.04 GB** (8,633,115,489 bytes) |
-| **SHA-256 Checksum**| `ca189c4f6ae5752fe80be9e129bb6a91d2482826a69afda3d7cf813917cb0d15` |
-| **Build Fingerprint**| `efca5cb5419d4b875aaaba2bb23121244164c22416065e56809087902812c01e` |
-| **Download Mirror** | 🔗 **[Google Drive (Official Release Mirror)](https://drive.google.com/file/d/12n76Q7DNkFw9zbyqrgREkDOJSfZDKoff/view?usp=sharing)** |
+| **Package Size** | **8.04 GB** (8,633,551,107 bytes) |
+| **SHA-256 Checksum**| `cd77ec82803072cdba05b755ad7d5ff1d75ceaf4efe88281fe932a42d7ed5c8f` |
+| **Build Fingerprint**| `633fc8812a6445d964d8a470b8465b9fd625254f17a8a1e1bba0456dc60f9fdb` |
+| **Git Source Commit**| `97eeefb59e7ab570a2f89504baacf4e5b46cf512` (CLEAN) |
+| **Download Mirror** | 🔗 **[Google Drive (Official Release Mirror)](https://drive.google.com/file/d/1unr3tUWE6bpBaLCgJuGhLvDMZ6jZrZIg/view?usp=sharing)** |
+| **Full Folder Mirror**| 📂 **[Google Drive Official Folder](https://drive.google.com/drive/folders/1ynY69aPsvnyndN2VqWr13NyqD6CTEvZn?usp=sharing)** |
+| **Forensic Manifest**| 📄 **[build_manifest.json](https://drive.google.com/file/d/1VmotBUTXgiWKGe2sXhAjlvFt2h0uvor5/view?usp=drive_link)** |
+| **Forensic Audit Log**| 📋 **[build_forensic_audit.log](https://drive.google.com/file/d/18iXDiZsRi5Nsx2k1D7B6FuEFEiNy0J4Y/view?usp=drive_link)** |
+| **Full Build Log**   | 📜 **[build_engine.log](https://drive.google.com/file/d/1hyjJr-o74I95CR895s3k_UgEhHiK7HLy/view?usp=drive_link)** |
+| **Checksum File**    | 🔐 **[UN1CA_Carbon_IX_1.1_dm1q_GZIF.zip.sha256](https://drive.google.com/file/d/1e1zTivkk9xtvbuwanhQcJC3dgkRWge4C/view?usp=drive_link)** |
 
 ---
 
