@@ -325,7 +325,13 @@ ADD_TO_WORK_DIR()
             return 0
         fi
     else
-        LOG "- Adding $(sed -e "s|$WORK_DIR||" -e "s|/\.||" <<< "$TARGET_FILE") from ${SOURCE//$SRC_DIR\//}"
+        local SRC_SIZE="dir"
+        local SRC_SHA=""
+        if [ -f "$SOURCE_FILE" ]; then
+            SRC_SIZE="$(stat -c %s "$SOURCE_FILE" 2>/dev/null || echo 0)"
+            SRC_SHA=" (SHA: $(sha256sum "$SOURCE_FILE" | awk '{print substr($1,1,16)}')…)"
+        fi
+        LOG "- Adding $(sed -e "s|$WORK_DIR||" -e "s|/\.||" <<< "$TARGET_FILE") from ${SOURCE//$SRC_DIR\//} [Size: $SRC_SIZE B]$SRC_SHA"
         if [ ! -d "$SOURCE_FILE" ]; then
             mkdir -p "$(dirname "$TARGET_FILE")"
         else

@@ -43,7 +43,12 @@ APPLY_PATCH()
 
     DECODE_APK "$PARTITION" "$FILE" || return 1
 
-    LOG "- Applying \"$(grep "^Subject:" "$PATCH" | sed "s/.*PATCH] //")\" to /$PARTITION/$FILE"
+    local PATCH_NAME="$(grep "^Subject:" "$PATCH" | sed "s/.*PATCH] //")"
+    [ -z "$PATCH_NAME" ] && PATCH_NAME="$(basename "$PATCH")"
+    local PATCH_SHA="$(sha256sum "$PATCH" | awk '{print substr($1,1,16)}')"
+    local PATCH_SIZE="$(stat -c %s "$PATCH" 2>/dev/null || echo 0)"
+
+    LOG "- Applying \"$PATCH_NAME\" (SHA: ${PATCH_SHA}..., ${PATCH_SIZE} B) to /$PARTITION/$FILE"
 	if ! EVAL "LC_ALL=C patch -p1 \
 	-d \"$APKTOOL_DIR/$PARTITION/${FILE//system\//}\" \
 	-N --forward -l \
