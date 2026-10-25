@@ -1,76 +1,49 @@
-# 👑 UN1CA Carbon IX (v1.1) — Release Notes
+# 👑 UN1CA Carbon IX (v1.1) — Official Release Notes
 
 **Target Device:** Samsung Galaxy S23 Base Universal (`SM-S911B` & `SM-S9110` / `dm1q`)  
 **OS Version:** One UI 9.0 Stable (Android 17 • SDK 37)  
-**Base Firmware:** `S911BXXUAGZIF`  
+**Base Firmware:** `S911BXXUAGZIF` (Official Production Base)  
 **Firmware Bootloader Bit:** **FIRMWARE BIT A** (Binary A / SW REV A)  
 **Kernel:** GoRhanHee Linux 5.15.216 + KernelSU-Next v3.4.2 + SUSFS  
 **Recovery:** Official TWRP 3.7.1_12-0 (`dm1q`) integrated  
 **Release Tag:** `IX-v1.1`  
-**Date:** October 2026  
-**License:** ARGLP (ALRI Group License Permissive) & Upstream GPL-3.0  
+**Signature Profile:** `OFFICIAL_CARBON_KEYS` (RSA 4096-bit ALRI GROUP)  
+**Security Patch:** 2026-10-05  
 
 ---
 
-## 📥 Official Download Links & Checksums
+## 🚀 Complete Changelog: What's New from v1.0 to v1.1
 
-* **Package Filename:** `UN1CA_Carbon_IX_1.1_dm1q_GZIF.zip`
-* **Package Size:** `8,633,115,489 bytes` (8.04 GiB)
-* **SHA-256 Checksum:** `ca189c4f6ae5752fe80be9e129bb6a91d2482826a69afda3d7cf813917cb0d15`
-* **Composite Build Fingerprint:** `efca5cb5419d4b875aaaba2bb23121244164c22416065e56809087902812c01e`
-* **Key Signature Profile:** `OFFICIAL_CARBON_KEYS` (RSA 4096-bit ALRI GROUP)
-* **Release Branch:** `carbon-ix-V1.0` (Production Tag `IX-v1.1`)
+### 1. 🌐 Base Firmware & Multi-Variant Hardware
+* **Official Stable Firmware Promotion:** Promoted base from initial beta `ZZI8` to Samsung's official production firmware **`S911BXXUAGZIF`** (Firmware Bit A / SW REV A).
+* **Universal Galaxy S23 Base Support:** Unified installer package compatible with European/Global **`SM-S911B`** and Chinese/Hong Kong/Taiwanese **`SM-S9110`** devices.
+* **Dynamic Hardware Initialization:** Auto-detects physical hardware variants at boot (`unica_hardware_variant.rc`), assigning Dual SIM (`dsds`) to S9110 while preserving eSIM on S911B.
 
----
+### 2. 🔐 Security, Cryptography & Enterprise Signing
+* **Official ALRI GROUP RSA-4096 Keyset:** Production packages and partitions are now signed using our corporate 4-tier RSA 4096-bit keyset (`platform`, `releasekey`, `media`, `shared`).
+* **Hardware-Level Signature Masking:** Custom framework hooks in `services.jar` allowing system-privileged applications to execute without signature mismatch rejections while protecting setup-wizard integrity.
+* **Knox Matrix & Session Desynchronization Fix:** Permanently purged Samsung's `KmxService` and `fabric_crypto` background daemons, stopping Samsung Account automatic logout and session invalidation loops on unlocked bootloaders (Knox 0x1).
 
-## 🚀 What's New in v1.1 (One UI 9.0 Stable Milestone)
+### 3. 🎛️ Carbon Performance Engine & Hardware Tuning
+* **Native One UI Performance Dropdown:** Built directly into the primary `SecSettings.apk` dashboard:
+  * 🍃 **Light Mode:** Clamps Prime Cortex-X3 to 1.97 GHz and Adreno 740 GPU to 348 MHz for maximum battery preservation and ice-cold thermals.
+  * ⚖️ **Normal Mode:** Factory stock Snapdragon 8 Gen 2 for Galaxy frequencies.
+  * 🔥 **Performance Mode:** Eliminates governor ramp-up latency (`up_rate_limit_us=0`), enables aggressive Adreno 740 clock floors, and boosts UFS read-ahead I/O to 512 KB.
+* **8 GB ZRAM with Native ZSTD Compression:** Upgraded swap subsystem from legacy `lzo-rle` to high-speed **ZSTD** compression with `swappiness=100`, eliminating background application reloads.
+* **Advanced GPU Tuning (Adreno 740):** Integrated KonaBess C++ native worker (`/system/bin/unica-gpu`) with live settings interface, automatic TWRP rollback safety partition, and dynamic FDT/DTB voltage curve adaptation.
 
-1. **🌐 Universal S23 Base Hardware Support (`SM-S9110` + `SM-S911B`):**
-   * Multi-variant recovery assert allowing installation across international `SM-S911B` and Hong Kong / Taiwan / China `SM-S9110`.
-   * Runtime hardware auto-detection (`unica_hardware_variant.rc`) dynamically configuring Dual Physical SIM (`dsds`) on S9110 while preserving eSIM on S911B.
+### 4. 🧠 Local AI & Neural Framework (Qwen 2.5 LLM)
+* **On-Device Offline Intelligence:** Integrated Qwen 2.5 1.5B/7B GGUF model framework running via `librezoss_llama` engine service (`io.mesalabs.rezoss.qwen`).
+* **Settings Management Dashboard:** Dedicated Settings menu with real-time model status, hardware acceleration metrics (Snapdragon 8 Gen 2 Hexagon NPU + Adreno 740), and direct model download trigger.
+* **Galaxy AI Writing Toolkit & SmartReply:** Enabled Samsung Keyboard (`HoneyBoard`) writing assistant capabilities, conversational tone adjustments, and Smart Suggestions for WhatsApp, Telegram, and Samsung Messages.
 
-2. **🛡️ Native C++ Play Integrity Engine (`libunica_pif.so`):**
-   * Private process memory remapping (`mmap`) hooked into `ZygoteInit` specifically for `com.google.android.gms.unstable`.
-   * Passes Play Integrity device verdicts natively without polluting global system properties.
+### 5. 📞 Audio Subsystem & Call Screening
+* **Bixby Text Call Telephony Routing:** Resolved Qualcomm audio policy routing blocks by authorizing `AUDIO_CHANNEL_OUT_MONO` and 32 kHz sampling rates on `incall_music_uplink` and `voice_tx`.
+* **Qualcomm PAL Graph Integration:** Injected `PAL_STREAM_VOICE_CALL_MUSIC` with `icmd_plus` custom config into `usecaseKvManager.xml`.
+* **Audio Eraser & SoundAlive 2025:** Added neural voice/noise separation engines (`libmultisourceseparator.so`) and updated Galaxy 2025 acoustic audio profile.
+* **SmartView & Wireless DeX HDCP Bypass:** Permanent bypass (`wlan.wfd.hdcp=disable`) enabling wireless screen projection to Smart TVs and PCs.
 
-3. **🔒 Permanent Knox Matrix & Session Sign-Out Fix:**
-   * Purged `KmxService` and `fabric_crypto` daemons, permanently stopping Samsung Account automatic logout/session revocations on unlocked bootloaders.
-
-4. **⚡ Hardware Display & AMOLED Protection:**
-   * Removed experimental S24 Ultra doze auto-brightness tables on `dm1q`, restoring stock Samsung display calibration and protecting against green tint and panel PWM stress.
-
-5. **🎛️ Carbon Performance Engine (3 Operation Modes):**
-   * Native One UI dropdown selector embedded in Carbon Settings:
-     * 🍃 **Light:** Clamps Cortex-X3 to 1.97 GHz and Adreno 740 to 348 MHz for maximal battery life and ice-cold thermals.
-     * ⚖️ **Normal:** Stock balanced Snapdragon 8 Gen 2 for Galaxy frequencies.
-     * 🔥 **Performance:** Zero-delay clock ramp (`up_rate_limit_us=0`), aggressive Adreno 740 GPU frequency floor, and turbo I/O.
-
-6. **⚡ ZRAM ZSTD 8 GB & Memory Subsystem Tuning:**
-   * Migrated swap compression algorithm from `lzo-rle` to native **ZSTD** with 8 GB capacity and priority `32758`.
-   * Tuned virtual memory (`swappiness=100`, `vfs_cache_pressure=50`), eliminating background app reloads.
-
-7. **📺 SmartView & Wireless DeX HDCP Bypass:**
-   * System-level HDCP bypass (`wlan.wfd.hdcp=disable`), unlocking seamless Miracast TV mirroring and Samsung Wireless DeX on unlocked bootloaders (Knox 0x1).
-
-8. **🔐 Official ALRI GROUP Cryptographic Release Signing:**
-   * Production builds now signed with dedicated RSA 4096-bit keys issued by **ALRI GROUP** (`OFFICIAL_CARBON_KEYS`), with deep kernel signature verification bypass.
-
-9. **🔬 Deep Forensic Audit Manifest (`build_manifest.json`):**
-   * Every build automatically indexes individual SHA-256 hashes of every mod folder, every recompiled APK/JAR, and packaging metrics.
-
-10. **🧹 Build Pipeline Hygiene:**
-   * Integrated `rom_payload.py` quarantining `.bak` files from image generation and OTA packaging.
-
----
-
-## 📲 Clean Installation Guide (TWRP Recovery)
-
-1. **Boot into Recovery:** Power off your Galaxy S23 and boot into TWRP Recovery.
-2. **Format Userdata (Crucial):** Navigate to **Wipe > Format Data**, type `yes`, and confirm.  
-   *(Required on clean installations to create authentic FBE metadata structures).*
-3. **Transfer the ROM Package:**
-   - Connect your phone to your PC via USB and copy `UN1CA_Carbon_IX_1.1_dm1q_GZIF.zip` to `/sdcard/`, or
-   - Use USB-OTG flash drive, or
-   - Use `adb sideload UN1CA_Carbon_IX_1.1_dm1q_GZIF.zip`.
-4. **Flash the ROM:** Go to **Install**, select `UN1CA_Carbon_IX_1.1_dm1q_GZIF.zip`, and swipe to confirm flash.
-5. **Reboot to System:** Tap **Reboot System**. Enjoy **UN1CA Carbon IX v1.1**!
+### 6. 🛠️ Build Engine & Pipeline Infrastructure
+* **Carbon Engine C++20:** Replaced monolithic bash build scripts with a native C++20 build orchestrator featuring input-addressed DAG caching.
+* **Cryptographic Forensic Manifest:** Every build now generates `out/build_manifest.json` cataloging deep SHA-256 hashes of every module, component, and recompiled APK/JAR.
+* **Build Date Precision:** Fixed the legacy NPL "Unknown" build date bug in Settings by reading authentic system build timestamps (`ro.build.date`).

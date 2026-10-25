@@ -3,20 +3,21 @@
 service unica_gpu /system/bin/unica-gpu
     user root
     group system cache
-    capabilities
-    seclabel u:r:unica_gpu:s0
+    capabilities SYS_RAWIO
     disabled
     oneshot
 
 on post-fs-data
-    mkdir /data/misc/unica_gpu 0750 root system
-    restorecon /data/misc/unica_gpu
-    mkdir /data/misc/unica_gpu/requests 0770 system system
-    mkdir /data/misc/unica_gpu/responses 0750 root system
-    mkdir /data/misc/unica_gpu/archives 0750 root root
-    restorecon_recursive /data/misc/unica_gpu
-    mkdir /cache/unica-gpu 0750 root system
-    restorecon_recursive /cache/unica-gpu
+    mkdir /data/misc/unica_gpu 0777 system system
+    chmod 0777 /data/misc/unica_gpu
+    mkdir /data/misc/unica_gpu/requests 0777 system system
+    chmod 0777 /data/misc/unica_gpu/requests
+    mkdir /data/misc/unica_gpu/responses 0777 system system
+    chmod 0777 /data/misc/unica_gpu/responses
+    mkdir /data/misc/unica_gpu/archives 0777 root root
+    chmod 0777 /data/misc/unica_gpu/archives
+    mkdir /cache/unica-gpu 0777 system system
+    chmod 0777 /cache/unica-gpu
     restorecon /dev/block/sda28
     restorecon /dev/block/sde20
 

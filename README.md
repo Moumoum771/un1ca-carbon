@@ -12,7 +12,49 @@
 
 **Next-Generation One UI 9 Custom ROM for Samsung Galaxy S23 Series**  
 *Release Version: **IX v1.1** (One UI 9.0 Stable • Android 17 • SDK 37)*  
-*Engineered, Ported & Stabilized for Galaxy S23 Base (`SM-S911B` / `SM-S9110` / `dm1q`)*
+*Engineered, Ported & Stabilized for Galaxy S23 Base (`SM-S911B` / `SM-S9110` / `dm1q`)*  
+*Official Base Firmware: `S911BXXUAGZIF` (SW REV: A • Binary A)*  
+*Cryptographic Signature: `OFFICIAL_CARBON_KEYS` (RSA 4096-bit ALRI GROUP)*
+
+---
+
+## 🚀 What's New in v1.1 (Full Changelog from v1.0)
+
+Since the initial **v1.0** milestone, UN1CA Carbon IX has evolved from an experimental port into an enterprise-grade, daily-driver operating system. Below is the technical breakdown of everything introduced between `v1.0` and `v1.1`:
+
+### 1. 🌐 Base Firmware & Multi-Variant Hardware
+* **Official Stable Firmware Promotion:** Promoted from One UI 9 beta `ZZI8` to the official Samsung production base **`S911BXXUAGZIF`** (Firmware Bit A / SW REV A).
+* **Universal Galaxy S23 Base Support:** Unified installer package compatible with both European/Global **`SM-S911B`** and Chinese/Hong Kong/Taiwanese **`SM-S9110`** models.
+* **Dynamic SIM Hardware Adaptation:** Integrated runtime hardware initialization (`unica_hardware_variant.rc`) automatically enabling Dual Physical SIM (`dsds`) on S9110 devices while preserving eSIM capabilities on S911B hardware.
+
+### 2. 🔐 Security, Cryptography & Enterprise Signing
+* **Official ALRI GROUP RSA-4096 Keyset:** Completely decoupled from AOSP public test-keys (`CN=Android`). All production artifacts and system partitions are now cryptographically signed using our 4-tier dedicated RSA 4096-bit keyset (`platform`, `releasekey`, `media`, `shared`).
+* **Hardware-Level Signature Masking:** Custom framework hooks in `services.jar` allowing system-privileged applications to execute without signature mismatch rejections while protecting setup-wizard integrity.
+* **Knox Matrix & Session Desynchronization Fix:** Permanently purged Samsung's `KmxService` and `fabric_crypto` background daemons, stopping Samsung Account automatic logout and session invalidation loops on unlocked bootloaders (Knox 0x1).
+
+### 3. 🎛️ Carbon Performance Engine & Hardware Tuning
+* **Native One UI Performance Dropdown:** Built directly into the primary `SecSettings.apk` dashboard:
+  * 🍃 **Light Mode:** Clamps Prime Cortex-X3 to 1.97 GHz and Adreno 740 GPU to 348 MHz for maximum battery preservation and ice-cold thermals.
+  * ⚖️ **Normal Mode:** Factory stock Snapdragon 8 Gen 2 for Galaxy frequencies.
+  * 🔥 **Performance Mode:** Eliminates governor ramp-up latency (`up_rate_limit_us=0`), enables aggressive Adreno 740 clock floors, and boosts UFS read-ahead I/O to 512 KB.
+* **8 GB ZRAM with Native ZSTD Compression:** Upgraded swap subsystem from legacy `lzo-rle` to high-speed **ZSTD** compression with `swappiness=100`, eliminating background application reloads.
+* **Advanced GPU Tuning (Adreno 740):** Integrated KonaBess C++ native worker (`/system/bin/unica-gpu`) with live settings interface, automatic TWRP rollback safety partition, and dynamic FDT/DTB voltage curve adaptation.
+
+### 4. 🧠 Local AI & Neural Framework (Qwen 2.5 LLM)
+* **On-Device Offline Intelligence:** Integrated Qwen 2.5 1.5B/7B GGUF model framework running via `librezoss_llama` engine service (`io.mesalabs.rezoss.qwen`).
+* **Settings Management Dashboard:** Dedicated Settings menu with real-time model status, hardware acceleration metrics (Snapdragon 8 Gen 2 Hexagon NPU + Adreno 740), and direct model download trigger.
+* **Galaxy AI Writing Toolkit & SmartReply:** Enabled Samsung Keyboard (`HoneyBoard`) writing assistant capabilities, conversational tone adjustments, and Smart Suggestions for WhatsApp, Telegram, and Samsung Messages.
+
+### 5. 📞 Audio Subsystem & Call Screening
+* **Bixby Text Call Telephony Routing:** Resolved Qualcomm audio policy routing blocks by authorizing `AUDIO_CHANNEL_OUT_MONO` and 32 kHz sampling rates on `incall_music_uplink` and `voice_tx`.
+* **Qualcomm PAL Graph Integration:** Injected `PAL_STREAM_VOICE_CALL_MUSIC` with `icmd_plus` custom config into `usecaseKvManager.xml`.
+* **Audio Eraser & SoundAlive 2025:** Added neural voice/noise separation engines (`libmultisourceseparator.so`) and updated Galaxy 2025 acoustic audio profile.
+* **SmartView & Wireless DeX HDCP Bypass:** Permanent bypass (`wlan.wfd.hdcp=disable`) enabling wireless screen projection to Smart TVs and PCs.
+
+### 6. 🛠️ Build Engine & Pipeline Infrastructure
+* **Carbon Engine C++20:** Replaced monolithic bash build scripts with a native C++20 build orchestrator featuring input-addressed DAG caching.
+* **Cryptographic Forensic Manifest:** Every build now generates `out/build_manifest.json` cataloging deep SHA-256 hashes of every module, component, and recompiled APK/JAR.
+* **Build Date Precision:** Fixed the legacy NPL "Unknown" build date bug in Settings by reading authentic system build timestamps (`ro.build.date`).
 
 ---
 
@@ -198,6 +240,18 @@ To grant and manage superuser permissions, users should install the official Ker
 * **Official Release:** [KernelSU-Next v3.4.2](https://github.com/KernelSU-Next/KernelSU-Next/releases/tag/v3.4.2)
 * **Standard vs. Spoofed Package:** The choice between the standard release APK (`KernelSU_Next_v3.4.2_33355-release.apk`) and the spoofed manager package is **100% up to the user** based on personal preferences, banking detection evasion strategies, and hiding configurations.
 * **Offline Convenience:** During ROM installation, the flashable installer automatically extracts the official untouched KernelSU-Next APK to `/sdcard/KernelSU_Next.apk` so it is immediately accessible for installation without requiring internet access.
+
+### 🧩 Recommended KernelSU Modules Suite (100% Play Integrity, Stealth & Optimal Execution)
+To achieve full device certification (**MEETS_STRONG_INTEGRITY**), complete banking app stealth, and the best One UI 9.0 stability, we officially recommend the following curated KernelSU module stack:
+
+| Module / Project | Purpose & Role | Repository Link |
+| :--- | :--- | :---: |
+| **Hybrid Mount (OverlayFS)** | **Fundamental Pre-requisite:** Uses native Linux `OverlayFS` instead of legacy magic mount, enabling flawless, crash-free module loading on One UI 9. | [meta-hybrid_mount](https://github.com/Hybrid-Mount/meta-hybrid_mount) |
+| **SUSFS for KernelSU** | **Root & Kernel Stealth:** Userspace companion module for the kernel-level SUSFS driver integrated into our GoRhanHee kernel, hiding root, mounts, and unlocked bootloader status from strict banking/security apps. | [susfs4ksu-module](https://github.com/sidex15/susfs4ksu-module) |
+| **TrickyStoreOSS** | **Hardware Keystore Interceptor:** Intercepts Keystore attestation requests to inject authentic certificate chains, providing the cryptographic basis to pass Play Integrity. | [TrickyStoreOSS](https://github.com/beakthoven/TrickyStoreOSS) |
+| **Integrity-Box** | **Comprehensive Play Integrity Engine:** In conjunction with TrickyStore, delivers complete Google Play attestation passes (**DEVICE & STRONG integrity**) with automated fingerprint updates. | [Integrity-Box](https://github.com/MeowDump/Integrity-Box) |
+| **ZygiskNext** | **Standalone Zygisk Architecture:** High-performance, clean Zygote injection layer built specifically for KernelSU, ensuring seamless compatibility for Zygisk-dependent tools. | [ZygiskNext](https://github.com/LSPosed/ZygiskNext) |
+| **Vector Xposed Framework** | **Modern LSPosed Successor:** Cutting-edge ART/Xposed framework maintained by JingMatrix, fully optimized for Android 15/16/17 (One UI 9.0) runtime hooks. | [Vector](https://github.com/JingMatrix/Vector) |
 
 ---
 

@@ -73,9 +73,54 @@
 .end method
 
 .method public getSummary()Ljava/lang/CharSequence;
-    .locals 1
+    .locals 5
 
-    const-string p0, "ro.npl.build.date"
+    const-string v0, "ro.unica.timestamp"
+
+    const-string v1, ""
+
+    invoke-static {v0, v1}, Landroid/os/SemSystemProperties;->get(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
+
+    move-result-object v0
+
+    if-eqz v0, :cond_fallback
+
+    invoke-virtual {v0}, Ljava/lang/String;->isEmpty()Z
+
+    move-result v1
+
+    if-nez v1, :cond_fallback
+
+    :try_start_0
+    invoke-static {v0}, Ljava/lang/Long;->parseLong(Ljava/lang/String;)J
+
+    move-result-wide v0
+
+    const-wide/16 v2, 0x3e8
+
+    mul-long/2addr v0, v2
+
+    const/4 v2, 0x2
+
+    invoke-static {v2}, Ljava/text/DateFormat;->getDateInstance(I)Ljava/text/DateFormat;
+
+    move-result-object v2
+
+    new-instance v3, Ljava/util/Date;
+
+    invoke-direct {v3, v0, v1}, Ljava/util/Date;-><init>(J)V
+
+    invoke-virtual {v2, v3}, Ljava/text/DateFormat;->format(Ljava/util/Date;)Ljava/lang/String;
+
+    move-result-object p0
+    :try_end_0
+    .catch Ljava/lang/Exception; {:try_start_0 .. :try_end_0} :catch_0
+
+    return-object p0
+
+    :catch_0
+    :cond_fallback
+    const-string p0, "ro.build.date"
 
     const-string v0, "Unknown"
 

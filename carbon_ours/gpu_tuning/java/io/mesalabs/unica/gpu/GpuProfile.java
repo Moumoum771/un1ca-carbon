@@ -19,12 +19,14 @@ final class GpuProfile {
     static boolean stockFrequency(int table,long value){try{for(Row row:stock().tables[table].rows)if(row.frequency==value)return true;}catch(Exception impossible){throw new IllegalStateException(impossible);}return false;}
     static GpuProfile stock()throws Exception {return fromTables("My GPU profile","Pinned Samsung S918BXXUAZZI8 table defaults",new JSONArray(StockTables.JSON));}
     static GpuProfile fromTables(String name,String firmware,JSONArray tables)throws Exception {
-        JSONObject o=new JSONObject().put("format","unica-konabess-profile").put("version",2).put("device","dm3q").put("gpu","Adreno740v2").put("table","kalama-v2-bins").put("name",name).put("source_firmware",firmware).put("tables",tables);return fromJson(o);
+        JSONObject o=new JSONObject().put("format","unica-konabess-profile").put("version",2).put("device","dm1q").put("gpu","Adreno740v2").put("table","kalama-v2-bins").put("name",name).put("source_firmware",firmware).put("tables",tables);return fromJson(o);
     }
     private static GpuProfile fromJson(JSONObject o)throws Exception {
         long version=integer(o,"version");boolean legacy=version==1;
         fields(o,"format","version","device","gpu","table","name","source_firmware",legacy?"power_levels":"tables");
-        if(!"unica-konabess-profile".equals(o.get("format"))||(version!=1&&version!=2)||!"dm3q".equals(o.get("device"))||!"Adreno740v2".equals(o.get("gpu"))||!(legacy?"kalama-v2-table0":"kalama-v2-bins").equals(o.get("table")))throw new IllegalArgumentException("Profile format or target GPU does not match this device");
+        String dev=String.valueOf(o.get("device"));
+        boolean validDev="dm1q".equals(dev)||"dm2q".equals(dev)||"dm3q".equals(dev);
+        if(!"unica-konabess-profile".equals(o.get("format"))||(version!=1&&version!=2)||!validDev||!"Adreno740v2".equals(o.get("gpu"))||!(legacy?"kalama-v2-table0":"kalama-v2-bins").equals(o.get("table")))throw new IllegalArgumentException("Profile format or target GPU does not match this device");
         if(legacy){
             GpuProfile p=stock();p.name=plain(o,"name",80);p.firmware=plain(o,"source_firmware",256);JSONArray a=o.getJSONArray("power_levels");if(a.length()!=10)throw new IllegalArgumentException("Legacy profile needs ten levels");
             for(int i=0;i<10;i++){JSONObject row=a.getJSONObject(i);fields(row,"index","frequency_hz","rpmh_level");if(integer(row,"index")!=i)throw new IllegalArgumentException("Bad legacy index");p.tables[0].rows.get(i).frequency=integer(row,"frequency_hz");p.tables[0].rows.get(i).voltage=bounded(row,"rpmh_level",1,480);}p.validate();return p;
@@ -59,7 +61,7 @@ final class GpuProfile {
         if(depth!=0||quoted)throw new IllegalArgumentException("Truncated profile JSON");JSONTokener t=new JSONTokener(text);Object o=t.nextValue();if(!(o instanceof JSONObject)||t.nextClean()!=0)throw new IllegalArgumentException("Expected one JSON profile");return (JSONObject)o;
     }
     static String decode(byte[] bytes)throws Exception {if(bytes.length==0||bytes.length>MAX_BYTES)throw new IllegalArgumentException("Profile must be 1–32768 bytes");return StandardCharsets.UTF_8.newDecoder().onMalformedInput(CodingErrorAction.REPORT).onUnmappableCharacter(CodingErrorAction.REPORT).decode(ByteBuffer.wrap(bytes)).toString();}
-    byte[] encode()throws Exception {validate();JSONObject o=new JSONObject().put("format","unica-konabess-profile").put("version",2).put("device","dm3q").put("gpu","Adreno740v2").put("table","kalama-v2-bins").put("name",name).put("source_firmware",firmware).put("tables",tablesJson());return (o.toString(2)+"\n").getBytes(StandardCharsets.UTF_8);}
+    byte[] encode()throws Exception {validate();JSONObject o=new JSONObject().put("format","unica-konabess-profile").put("version",2).put("device","dm1q").put("gpu","Adreno740v2").put("table","kalama-v2-bins").put("name",name).put("source_firmware",firmware).put("tables",tablesJson());return (o.toString(2)+"\n").getBytes(StandardCharsets.UTF_8);}
     static void fields(JSONObject o,String... names)throws Exception {Set<String> allowed=new HashSet<>(Arrays.asList(names));Iterator<String> keys=o.keys();while(keys.hasNext())if(!allowed.contains(keys.next()))throw new IllegalArgumentException("Unknown profile field");for(String name:names)if(!o.has(name))throw new IllegalArgumentException("Missing profile field: "+name);}
     static long integer(JSONObject o,String key)throws Exception {Object v=o.get(key);if(!(v instanceof Integer)&&!(v instanceof Long))throw new IllegalArgumentException("Expected whole number: "+key);return ((Number)v).longValue();}
     private static int bounded(JSONObject o,String key,int min,int max)throws Exception {long v=integer(o,key);if(v<min||v>max)throw new IllegalArgumentException(key+" must be "+min+"–"+max);return (int)v;}

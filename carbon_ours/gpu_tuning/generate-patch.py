@@ -6,7 +6,7 @@ import datetime
 import shutil
 import sys
 
-output = Path(__file__).resolve().parent.parent / 'smali/system/priv-app/SecSettings/SecSettings.apk/0005-Add-Advanced-GPU-Tuning.patch'
+output = Path(__file__).resolve().parent.parent / 'branding_settings/smali/system/priv-app/SecSettings/SecSettings.apk/0005-Add-Advanced-GPU-Tuning.patch'
 parts = ['From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001\n'
          'From: UN1CA <unica@local>\nSubject: [PATCH] Add native Advanced GPU Tuning trial\n\n'
          'Generated from settings/gpu/java by gpu/build.sh.\n\n']

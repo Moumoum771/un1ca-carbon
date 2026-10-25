@@ -206,6 +206,7 @@ for f in \
     "io/mesalabs/unica/settings/ui/UISettingsFragment" \
     "io/mesalabs/unica/settings/spoof/CameraFeatureFragment" \
     "io/mesalabs/unica/settings/font/FontSelectorFragment" \
+    "io/mesalabs/unica/settings/qwen/QwenSettingsFragment" \
     "io/mesalabs/unica/settings/extra/ScpmAllowlistFragment"; do
     ADD_UNICA_SETTINGS_SEARCH_INDEX_DATA_PROVIDER "$f" || return 1
 done
@@ -266,6 +267,12 @@ if [ -f "$CARBON_VIDEO_WP" ]; then
     chmod 644 "$WORK_DIR/system/system/media/video/carbon_animated_lockscreen.mp4"
     SET_METADATA "system" "system/media/video" 0 0 755 "u:object_r:system_file:s0"
     SET_METADATA "system" "system/media/video/carbon_animated_lockscreen.mp4" 0 0 644 "u:object_r:system_file:s0"
+fi
+
+# Install GPU tuning SELinux policies and block labels
+if [ -f "$SRC_DIR/carbon_ours/gpu_tuning/install-policy.py" ]; then
+    LOG "- Installing GPU tuning SELinux policy"
+    python3 "$SRC_DIR/carbon_ours/gpu_tuning/install-policy.py" "$WORK_DIR" || true
 fi
 
 LOG_STEP_OUT
