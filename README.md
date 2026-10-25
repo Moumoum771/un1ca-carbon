@@ -116,20 +116,39 @@ While initial upstream One UI 9 experimental ports were built exclusively for th
 
 ---
 
-## 📲 Clean Installation Guide (TWRP Recovery)
+## 📲 Installation Guide & Prerequisites
 
-Follow this verified installation workflow to ensure flawless first boot:
+### ⚠️ CRITICAL BOOTLOADER & FIRMWARE BIT A NOTICE:
+Before attempting to flash UN1CA Carbon, identify which scenario applies to your current device state:
 
-1. **Boot into Recovery:** Power off your Galaxy S23 and boot into TWRP Recovery.
-2. **Format Userdata (Crucial):** Navigate to **Wipe > Format Data**, type `yes`, and confirm.  
-   *(Required on clean installations to create authentic FBE metadata structures).*
-3. **Transfer the ROM Package:**
-   - Connect your phone to your PC via USB and copy `UN1CA_Carbon_IX_1.1_dm1q_GZIF.zip` to `/sdcard/`, or
-   - Use USB-OTG flash drive, or
+---
+
+#### 🟢 Scenario A: You Are ALREADY on a Bit A (One UI 9 / Android 17) Base
+If your device is already running an official Bit A firmware (such as previous One UI 9 builds, ZZI8, or GZIF):
+1. **Boot into TWRP Recovery.**
+2. *(Clean install recommended)*: Navigate to **Wipe > Format Data**, type `yes`, and confirm.
+3. **Flash UN1CA Carbon:**
+   - Copy `UN1CA_Carbon_IX_1.1_dm1q_GZIF.zip` to USB-OTG / storage and install, **OR**
    - Use `adb sideload UN1CA_Carbon_IX_1.1_dm1q_GZIF.zip`.
-4. **Flash the ROM:** Go to **Install**, select `UN1CA_Carbon_IX_1.1_dm1q_GZIF.zip`, and swipe to confirm flash.  
-   *(The installer will flash system partitions, GoRhanHee kernel, TWRP recovery, and extract `KernelSU_Next.apk`).*
-5. **Reboot:** Tap **Reboot System** and enjoy UN1CA Carbon IX!
+   > **⏳ CRITICAL SIDELOAD BEHAVIOR:** During `adb sideload`, transmission takes a little longer. When the progress hits ~43%–47% or information disappears from your PC terminal, **IT IS NOT FINISHED!** The TWRP recovery is actively decompressing and writing multiple gigabytes of EROFS partitions directly to physical UFS blocks. **DO NOT UNPLUG OR MANUALLY REBOOT!** Wait patiently until the blue **"Reboot System"** button appears on the device screen.
+4. **Reboot:** Tap **Reboot System** and enjoy!
+
+---
+
+#### 🔴 Scenario B: You Are Coming from a Different Firmware BIT (Bit 9 or Android 14/15/16)
+If your phone is running an older bootloader base (e.g., Bit 9), you **MUST** upgrade your underlying low-level bootloader, modem, and vendor partitions to Bit A first.
+
+> **⛔ DO NOT FLASH OFFICIAL PURE SAMSUNG STOCK VIA FRIJA/SAMFIRM/SMART SWITCH:**  
+> If you flash an unmodified, pure official Samsung stock firmware from Frija, SamFirm, or Smart Switch, **YOUR BOOTLOADER WILL BE AUTOMATICALLY RELOCKED**, permanently destroying your ability to flash TWRP, custom ROMs, and ROOT on your device!
+
+**The Proper Upgrade Path:**
+1. **Flash the Patched Bit A Odin Package:** Download and flash the modified One UI 9.0 Bit A firmware via Odin (specifically patched to prevent bootloader relocking):  
+   🔗 **[One UI 9.0 (A17) Odin-Flashable Patched Bit A Firmware (XDA)](https://xdaforums.com/t/rom-oneui-9-beta-s918b-s916b-s911b-port-dm3q-dm2q-dm1q.4688925/)**
+2. **First Boot (Mandatory Initial Handshake):** Allow the patched base firmware to boot into the initial Samsung setup wizard screen at least once. This allows the hardware to initialize NVRAM, modem enclaves, and partition structures. Power off the device.
+3. **Flash TWRP Recovery:** Enter Download Mode and flash TWRP (`recovery.tar`) via Odin.
+4. **Format Data:** Boot directly into TWRP, go to **Wipe > Format Data**, type `yes`, and confirm.
+5. **Install UN1CA Carbon:** Flash the ROM zip via TWRP Install or `adb sideload` (observing the wait warning above).
+6. **Reboot System!**
 
 ---
 
@@ -297,16 +316,21 @@ To grant and manage superuser permissions, users should install the official Ker
 * **Offline Convenience:** During ROM installation, the flashable installer automatically extracts the official untouched KernelSU-Next APK to `/sdcard/KernelSU_Next.apk` so it is immediately accessible for installation without requiring internet access.
 
 ### 🧩 Recommended KernelSU Modules Suite (100% Play Integrity, Stealth & Optimal Execution)
-To achieve full device certification (**MEETS_STRONG_INTEGRITY**), complete banking app stealth, and the best One UI 9.0 stability, we officially recommend the following curated KernelSU module stack:
 
-| Module / Project | Purpose & Role | Repository Link |
+To achieve **100% test pass rates across all verification suites**, complete banking app stealth, and total root invisibility, we officially recommend the following curated module stack:
+
+* **Complete Root Cloaking & Stealth:** By pairing **KernelSU-Next v3.4.2** with the kernel-level **SUSFS** driver integrated into our GoRhanHee Linux 5.15 kernel, root binaries, mounts, and zygote modifications remain completely invisible to strict banking, enterprise, and government apps.
+* **App Privacy & Isolation (HMA OSS):** Seamlessly isolate installed applications and prevent intrusive telemetry scanning by pairing the stack with our native **Hide My Applist (HMA)** submenu located directly in **Settings > UN1CA Carbon Settings > Spoof Settings**.
+* **100% Google Play Integrity Pass:** Using **TrickyStoreOSS** + **Integrity-Box**, device attestation requests are intercepted to deliver genuine passes (**MEETS_DEVICE_INTEGRITY** & **MEETS_STRONG_INTEGRITY**) without breaking Google Wallet.
+
+| Recommended Module | Purpose & Role | Repository Link |
 | :--- | :--- | :---: |
-| **Hybrid Mount (OverlayFS)** | **Fundamental Pre-requisite:** Uses native Linux `OverlayFS` instead of legacy magic mount, enabling flawless, crash-free module loading on One UI 9. | [meta-hybrid_mount](https://github.com/Hybrid-Mount/meta-hybrid_mount) |
-| **SUSFS for KernelSU** | **Root & Kernel Stealth:** Userspace companion module for the kernel-level SUSFS driver integrated into our GoRhanHee kernel, hiding root, mounts, and unlocked bootloader status from strict banking/security apps. | [susfs4ksu-module](https://github.com/sidex15/susfs4ksu-module) |
-| **TrickyStoreOSS** | **Hardware Keystore Interceptor:** Intercepts Keystore attestation requests to inject authentic certificate chains, providing the cryptographic basis to pass Play Integrity. | [TrickyStoreOSS](https://github.com/beakthoven/TrickyStoreOSS) |
-| **Integrity-Box** | **Comprehensive Play Integrity Engine:** In conjunction with TrickyStore, delivers complete Google Play attestation passes (**DEVICE & STRONG integrity**) with automated fingerprint updates. | [Integrity-Box](https://github.com/MeowDump/Integrity-Box) |
-| **ZygiskNext** | **Standalone Zygisk Architecture:** High-performance, clean Zygote injection layer built specifically for KernelSU, ensuring seamless compatibility for Zygisk-dependent tools. | [ZygiskNext](https://github.com/LSPosed/ZygiskNext) |
-| **Vector Xposed Framework** | **Modern LSPosed Successor:** Cutting-edge ART/Xposed framework maintained by JingMatrix, fully optimized for Android 15/16/17 (One UI 9.0) runtime hooks. | [Vector](https://github.com/JingMatrix/Vector) |
+| **Hybrid Mount (OverlayFS)** | **Fundamental Requirement:** Employs native Linux `OverlayFS` instead of legacy magic mount, guaranteeing crash-free module loading on One UI 9. | [meta-hybrid_mount](https://github.com/Hybrid-Mount/meta-hybrid_mount) |
+| **SUSFS for KernelSU** | **Root & Kernel Stealth:** Userspace companion for the GoRhanHee kernel-level SUSFS driver, masking root, mounts, and bootloader status. | [susfs4ksu-module](https://github.com/sidex15/susfs4ksu-module) |
+| **TrickyStoreOSS** | **Hardware Keystore Interceptor:** Intercepts Keystore attestation requests to inject valid certificate chains. | [TrickyStoreOSS](https://github.com/beakthoven/TrickyStoreOSS) |
+| **Integrity-Box** | **Play Integrity Certification:** Works alongside TrickyStore to guarantee full attestation passes with automated fingerprint updates. | [Integrity-Box](https://github.com/MeowDump/Integrity-Box) |
+| **ZygiskNext** | **Standalone Zygisk Layer:** High-performance Zygote injection architecture built specifically for modern KernelSU setups. | [ZygiskNext](https://github.com/LSPosed/ZygiskNext) |
+| **Vector Xposed Framework** | **Modern LSPosed Successor:** High-performance ART/Xposed framework optimized for Android 15/16/17 (One UI 9.0) runtime hooks. | [Vector](https://github.com/JingMatrix/Vector) |
 
 ---
 
