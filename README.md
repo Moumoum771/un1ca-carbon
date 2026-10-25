@@ -227,6 +227,55 @@ Accessible directly at the top level of the primary Samsung Settings app:
 
 ---
 
+## 🔐 Cryptographic Architecture: Private Keys vs. AOSP Test-Keys
+
+A foundational architectural decision of **UN1CA Carbon IX** is our strict rejection of default public AOSP test-keys (`CN=Android`). All production packages and partitions are cryptographically signed using our dedicated **4-Tier RSA 4096-bit Keyset** issued and held exclusively by **ALRI GROUP**:
+
+* 🔑 **Platform Key:** Signs the operating system core, `framework.jar`, and privileged managers.
+* 🔑 **Release Key:** Cryptographically anchors OTA updates and system package signatures.
+* 🔑 **Media Key:** Governs onboard media frameworks and audio routing engines.
+* 🔑 **Shared Key:** Authenticates shared runtime data enclaves between system applications.
+
+### ⚠️ The Fatal Vulnerability of AOSP Public Test-Keys
+In generic custom ROMs, the default cryptographic keys (located in `build/make/target/product/security/`) are **open-source and publicly downloadable by anyone on the internet**:
+1. **Total Privilege Escalation (`signature` / `signatureOrSystem`):** Android automatically grants root-level system permissions and private API access to any installed APK that shares the same signature as the operating system.
+2. **Malware Ingress:** On a ROM signed with public test-keys, **any malicious application on the web compiled with that public key automatically inherits full System UID (1000) privileges**. It can silently read internal databases, intercept keystrokes, and compromise private data without triggering a single permission prompt or root request.
+3. **Google Play Integrity Gating:** Modern integrity engines flag public `test-keys` as uncertified development environments, breaking banking apps, Google Wallet, and DRM streaming.
+
+### 🔓 Developer Freedom: Integrated Signature Bypass Toggles
+While UN1CA Carbon enforces private RSA-4096 keys by default, **we believe in absolute user freedom**. If you are a modder or developer who needs to install patched system applications, you do **not** need to flash insecure test-keys. Simply navigate to **Settings > UN1CA Carbon Settings** and enable our built-in toggles:
+* **Disable Signature Verification (CorePatch):** Disables system signature checks on demand.
+* **Allow Application Downgrade:** Permits installing older versions of any application without wiping data.
+* **Disable Low Target SDK Block:** Enables installing legacy applications built for older Android releases.
+
+---
+
+## ⚠️ Hardware Compatibility Notice: SM-S911B vs. SM-S9110
+
+* **Primary Validated Device:** **Samsung Galaxy S23 Base International (`SM-S911B` / `dm1q`)** — 100% tested, validated, and verified on real hardware by the core engineering team.
+* **Experimental Support for `SM-S9110` (China / Hong Kong / Taiwan):**  
+  We have implemented multi-variant installer asserts and runtime dual-SIM physical adaptation (`unica_hardware_variant.rc`) for the `SM-S9110`.  
+  > **DISCLAIMER:** Support for `SM-S9110` is strictly **EXPERIMENTAL and NOT GUARANTEED to function flawlessly**. The ALRI Development team does **NOT** have physical `SM-S9110` units in hand to perform physical bench verification. Users flashing on `SM-S9110` hardware do so at their own discretion.
+
+---
+
+## 🧠 Privacy-First On-Device AI (Qwen 2.5 LLM)
+
+Unlike proprietary cloud AI features that stream your private texts, notes, and browsing history to remote third-party data centers, **UN1CA Carbon implements an on-device local intelligence engine**:
+* **100% Offline Execution:** Runs Qwen 2.5 Instruct neural models entirely within device silicon via the Snapdragon 8 Gen 2 Hexagon NPU and Adreno 740 GPU.
+* **Zero Telemetry & Zero Cloud Dependency:** Your data, prompts, and summaries never leave your phone.
+* **In-Settings Management:** Features a dedicated dashboard displaying engine status, model storage location, and a direct download trigger with SHA-256 integrity verification.
+
+---
+
+## 🎛️ Selective Performance & Hardware Customization
+
+* **Carbon Performance Engine:** Select between 🍃 **Light** (battery saver, clamped clocks), ⚖️ **Normal** (balanced stock), and 🔥 **Performance** (zero-latency ramp, aggressive clock floors, 512KB turbo I/O) directly from Settings.
+* **Advanced GPU Tuning (Adreno 740):** Modify physical GPU tables and voltage curves via KonaBess C++ with an automated recovery rollback safety partition.
+* **Switchable Boot Animations:** Choose between the exclusive **Carbon Animated Suite** and classic One UI / Rezoss boot animations directly from Settings, accompanied by custom vintage boot audio playback.
+
+---
+
 ## 🤝 Open Source, Non-Profit & Community Contributions
 
 **UN1CA Carbon is built 100% for the community as a strictly non-profit, open-source initiative.**
