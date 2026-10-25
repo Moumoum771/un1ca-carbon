@@ -102,7 +102,7 @@
     <string name="carbon_qwen_download_success">Download do Qwen 2.5 concluído com sucesso!</string>
     <string name="carbon_qwen_download_failed">Falha no download: %1$s</string>
     <string name="carbon_qwen_test_missing_title">Modelo Ausente</string>
-    <string name="carbon_qwen_test_missing_msg">O modelo neural Qwen 2.5 ainda não foi baixado.\nToque em \'Baixar Modelo Qwen 2.5\' acima para instalá-lo no chip.</string>
+    <string name="carbon_qwen_test_missing_msg">"O modelo neural Qwen 2.5 ainda não foi baixado.\nToque em \"Baixar Modelo Qwen 2.5\" acima para instalá-lo no chip."</string>
     <string name="carbon_qwen_test_success_title">Teste de Inferência Local</string>
     <string name="carbon_qwen_test_success_msg">Modelo: Qwen 2.5 1.5B (GGUF Q4_K_M)\nStatus: Arquivo pronto no armazenamento\nAceleração: Snapdragon 8 Gen 2 (Hexagon NPU + Adreno 740)\n\nMotor pronto para conexões de resumo e processamento local.</string>
 </resources>

@@ -181,7 +181,7 @@
     <string name="carbon_qwen_download_success">Qwen 2.5 model downloaded successfully!</string>
     <string name="carbon_qwen_download_failed">Download failed: %1$s</string>
     <string name="carbon_qwen_test_missing_title">Model Missing</string>
-    <string name="carbon_qwen_test_missing_msg">The Qwen 2.5 neural model has not been downloaded yet.\nTap \'Download Qwen 2.5 Model\' above to install it.</string>
+    <string name="carbon_qwen_test_missing_msg">"The Qwen 2.5 neural model has not been downloaded yet.\nTap \"Download Qwen 2.5 Model\" above to install it."</string>
     <string name="carbon_qwen_test_success_title">Local Inference Test</string>
     <string name="carbon_qwen_test_success_msg">Model: Qwen 2.5 1.5B (GGUF Q4_K_M)\nStatus: Ready in storage\nAcceleration: Snapdragon 8 Gen 2 (Hexagon NPU + Adreno 740)\n\nLocal inference engine ready for on-device summaries.</string>
 </resources>

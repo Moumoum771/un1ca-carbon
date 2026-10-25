@@ -99,7 +99,7 @@
     <string name="carbon_qwen_download_success">¡Modelo Qwen 2.5 descargado correctamente!</string>
     <string name="carbon_qwen_download_failed">Error en la descarga: %1$s</string>
     <string name="carbon_qwen_test_missing_title">Modelo Ausente</string>
-    <string name="carbon_qwen_test_missing_msg">El modelo neuronal Qwen 2.5 aún no se ha descargado.\nToque \'Descargar Modelo Qwen 2.5\' arriba para instalarlo.</string>
+    <string name="carbon_qwen_test_missing_msg">"El modelo neuronal Qwen 2.5 aún no se ha descargado.\nToque \"Descargar Modelo Qwen 2.5\" arriba para instalarlo."</string>
     <string name="carbon_qwen_test_success_title">Prueba de Inferencia Local</string>
     <string name="carbon_qwen_test_success_msg">Modelo: Qwen 2.5 1.5B (GGUF Q4_K_M)\nEstado: Listo en almacenamiento\nAceleración: Snapdragon 8 Gen 2 (Hexagon NPU + Adreno 740)\n\nMotor de inferencia listo para resúmenes locales.</string>
 </resources>
