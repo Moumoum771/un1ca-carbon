@@ -1,1 +1,65 @@
+name: Build UN1CA Carbon Multi-Device
 
+on:
+  workflow_dispatch:
+    inputs:
+      force_download:
+        description: 'Force re-download firmware assets'
+        required: false
+        default: false
+        type: boolean
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        target: [dm1q, a70q]
+
+    steps:
+      - name: Maximize Build Disk Space
+        uses: easimon/maximize-build-space@master
+        with:
+          root-reserve-mb: 16384
+          swap-size-mb: 8192
+          remove-dotnet: 'true'
+          remove-android: 'true'
+          remove-postgresql: 'true'
+          remove-codeql: 'true'
+
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Install Build Dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            bc bison build-essential ccache curl flex g++-multilib gcc-multilib \
+            git gnupg gperf imagemagick lib32ncurses5-dev lib32readline-dev \
+            lib32z1-dev liblz4-tool libncurses5 libncurses5-dev libsdl1.2-dev \
+            libssl-dev libxml2 libxml2-utils lzop pngcrush rsync schedtool \
+            squashfs-tools xsltproc yasm zlib1g-dev python3 python3-pip python3-venv
+
+      - name: Configure Git Identity
+        run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
+
+      - name: Execute Carbon Build Pipeline for ${{ matrix.target }}
+        run: |
+          chmod +x make_carbon.sh
+          if [ "${{ inputs.force_download }}" == "true" ]; then
+            ./make_carbon.sh ${{ matrix.target }} -f
+          else
+            ./make_carbon.sh ${{ matrix.target }}
+          fi
+
+      - name: Upload Build Artifacts (${{ matrix.target }})
+        uses: actions/upload-artifact@v4
+        with:
+          name: un1ca-carbon-${{ matrix.target }}-artifacts
+          path: |
+            out/target/${{ matrix.target }}/*.img
+            out/target/${{ matrix.target }}/*.zip
+          retention-days: 7

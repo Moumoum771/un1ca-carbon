@@ -10,7 +10,7 @@
 # =============================================================================
 # UN1CA Carbon Build Orchestrator
 # Project: UN1CA Carbon (Version: IX • One UI 9.0 • Android 17 • SDK 37)
-# Device:  Samsung Galaxy S23 Series (dm1q / dm2q / dm3q)
+# Multi-Device Build Pipeline (dm1q / a70q)
 # =============================================================================
 
 set -eo pipefail
@@ -19,13 +19,9 @@ ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 TARGET_DEVICE="dm1q"
 
 # Configurable Telemetry Debloater (default: true)
-# Can be toggled via environment variable: DEBLOAT_TELEMETRY=false ./make_carbon.sh
-# Or via CLI arguments: ./make_carbon.sh --no-telemetry-debloat
 export DEBLOAT_TELEMETRY="${DEBLOAT_TELEMETRY:-true}"
 
 # Configurable Boot Animation (default: "carbon")
-# - "carbon" : Custom UN1CA Carbon animation (p1.mp4 24fps intro + breathing pulse loop)
-# - "stock"  : Stock UN1CA / Samsung QMG animation
 export BOOTANIMATION_STYLE="${BOOTANIMATION_STYLE:-carbon}"
 
 CLEAN_ARGS=()
@@ -47,7 +43,7 @@ for arg in "$@"; do
             CLEAN_ARGS+=("$arg")
             ;;
         *)
-            if [ "$TARGET_DEVICE" = "dm1q" ] && [ -d "$ROOT_DIR/carbon_ours/target_$arg" -o -d "$ROOT_DIR/target/$arg" ]; then
+            if [ -d "$ROOT_DIR/carbon_ours/target_$arg" -o -d "$ROOT_DIR/target/$arg" ]; then
                 TARGET_DEVICE="$arg"
             else
                 CLEAN_ARGS+=("$arg")
@@ -57,8 +53,8 @@ for arg in "$@"; do
 done
 
 echo "============================================================"
-echo "      UN1CA CARBON — ROM BUILD PIPELINE                     "
-echo "  Version: IX (One UI 9.0 • Android 17)                     "
+echo "    UN1CA CARBON — ROM BUILD PIPELINE                     "
+echo "  Version: IX (One UI 9.0 • Android 17)                    "
 echo "  Target: $TARGET_DEVICE                                    "
 echo "  Organization: ALRI Development (ALRIGROUP)                "
 echo "  Lead Developer: Alexsander \"AlexsAR\" ALRI (@alexsanderalri)"
@@ -100,9 +96,13 @@ for cfg in "$ROOT_DIR"/carbon_ours/configs/*.sh; do
     ln -s "$cfg" "$ROOT_DIR/unica/configs/$cname"
 done
 
-# 2. Target links
-rm -f "$ROOT_DIR/target/dm1q"
-ln -s "$ROOT_DIR/carbon_ours/target_dm1q" "$ROOT_DIR/target/dm1q"
+# 2. Dynamic Target Links (Automatically links all target folders found in carbon_ours/)
+for t_dir in "$ROOT_DIR"/carbon_ours/target_*; do
+    [ -d "$t_dir" ] || continue
+    t_name="$(basename "$t_dir" | sed 's/target_//')"
+    rm -f "$ROOT_DIR/target/$t_name"
+    ln -s "$t_dir" "$ROOT_DIR/target/$t_name"
+done
 
 # 3. Vendors modules links
 rm -f "$ROOT_DIR/unica/mods/rezoss" "$ROOT_DIR/unica/mods/hma" "$ROOT_DIR/unica/patches/signature" "$ROOT_DIR/unica/mods/cosine"
