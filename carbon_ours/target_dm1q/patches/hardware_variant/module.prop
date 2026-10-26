@@ -1,6 +1,0 @@
-id=dm1q_hardware_variant
-name=Galaxy S23 Universal Hardware Variant Configuration
-version=1.0
-versionCode=1
-author=ALRI Development (AlexsAR & AlexsanderALRI)
-description=Dynamic runtime hardware autodetection and SIM slot configuration for SM-S911B (Global) and SM-S9110 (HK/TW/CN).
