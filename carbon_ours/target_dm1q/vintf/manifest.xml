@@ -2,9 +2,19 @@
     Input:
         system/libhidl/vintfdata/manifest.xml
         device/qcom/qssi/framework_manifest.xml
-        vendor/qcom/proprietary/commonsys/gps-release/qcc_manifest.xml
+        vendor/samsung/frameworks/interfaces/security/ucm/crypto/1.0/manifest.xml
 -->
 <manifest version="9.0" type="framework">
+    <hal format="hidl" max-level="6">
+        <name>android.frameworks.displayservice</name>
+        <transport>hwbinder</transport>
+        <fqname>@1.0::IDisplayService/default</fqname>
+    </hal>
+    <hal format="hidl" max-level="5">
+        <name>android.frameworks.schedulerservice</name>
+        <transport>hwbinder</transport>
+        <fqname>@1.0::ISchedulingPolicyService/default</fqname>
+    </hal>
     <hal format="aidl">
         <name>android.frameworks.sensorservice</name>
         <fqname>ISensorManager/default</fqname>
@@ -33,12 +43,7 @@
         <name>netutils-wrapper</name>
         <version>1.0</version>
     </hal>
-    <hal format="hidl">
-        <name>vendor.qti.hardware.qccsyshal</name>
-        <transport>hwbinder</transport>
-        <fqname>@1.2::IQccsyshal/qccsyshal</fqname>
-    </hal>
-    <hal format="hidl">
+    <hal format="hidl" max-level="6">
         <name>vendor.qti.hardware.radio.atcmdfwd</name>
         <transport>hwbinder</transport>
         <fqname>@1.0::IAtCmdFwd/AtCmdFwdService</fqname>
@@ -49,6 +54,11 @@
         <fqname>@1.0::ISystemEvent/default</fqname>
         <fqname>@1.0::ISystemResource/default</fqname>
     </hal>
+    <hal format="hidl">
+        <name>vendor.samsung.frameworks.security.ucm.crypto</name>
+        <transport>hwbinder</transport>
+        <fqname>@1.0::ISehUcmKeystore/default</fqname>
+    </hal>
     <system-sdk>
         <version>29</version>
         <version>30</version>
@@ -58,6 +68,5 @@
         <version>34</version>
         <version>35</version>
         <version>36</version>
-        <version>37</version>
     </system-sdk>
 </manifest>
