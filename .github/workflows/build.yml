@@ -111,5 +111,6 @@ jobs:
 
       - name: Execute Carbon Build via Orchestrator
         run: |
+          set -x
           chmod +x make_carbon.sh
           ./make_carbon.sh ${{ matrix.target }}
