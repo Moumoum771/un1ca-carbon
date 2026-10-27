@@ -121,13 +121,14 @@ cd "$ROOT_DIR"
 source "$ROOT_DIR/core_unica/buildenv.sh" "$TARGET_DEVICE"
 
 echo "==> Building required dependencies <=="
-"$ROOT_DIR/scripts/internal/build_dependencies.sh" || "$ROOT_DIR/core_unica/scripts/internal/build_dependencies.sh" || true
+"$ROOT_DIR/core_unica/scripts/build_dependencies.sh" || "$ROOT_DIR/core_unica/scripts/internal/build_dependencies.sh" || true
+
 # Sequential Execution Pipeline
 echo "==> [1/3] Downloading firmware..."
-"$ROOT_DIR/scripts/download_fw.sh" "${CLEAN_ARGS[@]}"
+"$ROOT_DIR/core_unica/scripts/download_fw.sh" "${CLEAN_ARGS[@]}"
 
 echo "==> [2/3] Extracting firmware..."
-"$ROOT_DIR/scripts/extract_fw.sh" "${CLEAN_ARGS[@]}"
+"$ROOT_DIR/core_unica/scripts/extract_fw.sh" "${CLEAN_ARGS[@]}"
 
 echo "==> [3/3] Building ROM..."
-exec "$ROOT_DIR/scripts/make_rom.sh" -r -f "${CLEAN_ARGS[@]}"
+exec "$ROOT_DIR/core_unica/scripts/make_rom.sh" -r -f "${CLEAN_ARGS[@]}"
