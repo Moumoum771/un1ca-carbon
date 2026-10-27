@@ -10,7 +10,6 @@
 # =============================================================================
 # UN1CA Carbon Build Orchestrator
 # Project: UN1CA Carbon (Version: IX • One UI 9.0 • Android 17 • SDK 37)
-# Device:  Samsung Galaxy S23 Series (dm1q / dm2q / dm3q)
 # =============================================================================
 
 set -eo pipefail
@@ -43,7 +42,7 @@ for arg in "$@"; do
             CLEAN_ARGS+=("$arg")
             ;;
         *)
-            if [ "$TARGET_DEVICE" = "dm1q" ] && [ -d "$ROOT_DIR/carbon_ours/target_$arg" -o -d "$ROOT_DIR/target/$arg" ]; then
+            if [ -d "$ROOT_DIR/carbon_ours/target_$arg" ] || [ -d "$ROOT_DIR/target/$arg" ]; then
                 TARGET_DEVICE="$arg"
             else
                 CLEAN_ARGS+=("$arg")
@@ -96,15 +95,14 @@ for cfg in "$ROOT_DIR"/carbon_ours/configs/*.sh; do
     ln -s "$cfg" "$ROOT_DIR/unica/configs/$cname"
 done
 
-# 2. Target links
-rm -f "$ROOT_DIR/target/dm1q"
-ln -s "$ROOT_DIR/carbon_ours/target_dm1q" "$ROOT_DIR/target/dm1q"
+# 2. Dynamic Target links (automatically maps target_$TARGET_DEVICE configs/patches)
+rm -f "$ROOT_DIR/target/$TARGET_DEVICE"
+ln -s "$ROOT_DIR/carbon_ours/target_$TARGET_DEVICE" "$ROOT_DIR/target/$TARGET_DEVICE"
 
 # 3. Vendors modules links
 rm -f "$ROOT_DIR/unica/mods/rezoss" "$ROOT_DIR/unica/mods/hma" "$ROOT_DIR/unica/patches/signature" "$ROOT_DIR/unica/mods/cosine"
 ln -s "$ROOT_DIR/vendors_rezoss/mods_rezoss" "$ROOT_DIR/unica/mods/rezoss"
 ln -s "$ROOT_DIR/vendors_rezoss/mods_hma" "$ROOT_DIR/unica/mods/hma"
-ln -s "$ROOT_DIR/vendors_rezOSS/patches_signature" "$ROOT_DIR/unica/patches/signature" 2>/dev/null || true
 ln -s "$ROOT_DIR/vendors_rezoss/patches_signature" "$ROOT_DIR/unica/patches/signature" 2>/dev/null || true
 ln -s "$ROOT_DIR/vendors_npl/mods_cosine" "$ROOT_DIR/unica/mods/cosine"
 
