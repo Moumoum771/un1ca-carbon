@@ -120,6 +120,8 @@ echo ""
 cd "$ROOT_DIR"
 source "$ROOT_DIR/core_unica/buildenv.sh" "$TARGET_DEVICE"
 
+echo "==> Building required dependencies <=="
+"$ROOT_DIR/scripts/internal/build_dependencies.sh" || "$ROOT_DIR/core_unica/scripts/internal/build_dependencies.sh" || true
 # Sequential Execution Pipeline
 echo "==> [1/3] Downloading firmware..."
 "$ROOT_DIR/scripts/download_fw.sh" "${CLEAN_ARGS[@]}"
