@@ -1,4 +1,4 @@
-name: CI
+name: Build :)
 
 on:
   workflow_dispatch:
@@ -43,9 +43,19 @@ jobs:
       - name: Generate CI matrix
         id: generate-matrix
         run: |
-          matrix="$(find target -mindepth 1 -maxdepth 1 -type d -printf '%f\n' \
-            | sort | jq -R -s -c 'split("\n") | map(select(length > 0))')"
-          echo "$matrix"
+          if [ -d "target" ] && [ "$(ls -A target)" ]; then
+            matrix="$(find target -mindepth 1 -maxdepth 1 -type d -printf '%f\n' | sort | jq -R -s -c 'split("\n") | map(select(length > 0))')"
+          elif [ -d "carbon_ours" ]; then
+            matrix="$(find carbon_ours -mindepth 1 -maxdepth 1 -type d -name 'target_*' -printf '%f\n' | sed 's/target_//' | sort | jq -R -s -c 'split("\n") | map(select(length > 0))')"
+          else
+            matrix='["dm1q", "a70q"]'
+          fi
+          
+          if [ "$matrix" = "[]" ] || [ -z "$matrix" ]; then
+            matrix='["dm1q", "a70q"]'
+          fi
+
+          echo "matrix=$matrix"
           echo "matrix=$matrix" >> "$GITHUB_OUTPUT"
 
   build:
@@ -86,13 +96,11 @@ jobs:
           DEBIAN_FRONTEND=noninteractive sudo apt install -yq \
             attr ccache clang ffmpeg libbrotli-dev libbz2-dev \
             libgtest-dev libprotobuf-dev libunwind-dev libpcre2-dev \
-            libzstd-dev linux-modules-extra-$(uname -r) lld protobuf-compiler webp \
+            libzstd-dev lld protobuf-compiler webp \
             libncurses-dev lib32ncurses-dev libncursesw6
           sudo modprobe erofs f2fs
           git config --global user.name "github-actions[bot]"
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          echo -n "${{ secrets.PLATFORM_KEY_PK8 }}" | base64 --decode > security/unica_platform.pk8
-          echo -n "${{ secrets.PLATFORM_KEY_PEM }}" | base64 --decode > security/unica_platform.x509.pem
 
       - name: Set up JDK 17
         uses: actions/setup-java@v4
@@ -103,6 +111,6 @@ jobs:
 
       - name: Execute Carbon Build via Orchestrator
         run: |
+          set -x
           chmod +x make_carbon.sh
-          # Invoke your custom orchestrator script passing the matrix target
           ./make_carbon.sh ${{ matrix.target }}
